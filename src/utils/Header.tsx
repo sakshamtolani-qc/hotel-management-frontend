@@ -1,4 +1,4 @@
-import { SearchAndFilter } from '@/components/SearchAndFilter';
+import { SearchAndFilter } from '@/utils/SearchAndFilter';
 import logo from '@/assets/logo.png';
 
 export const Header = () => {

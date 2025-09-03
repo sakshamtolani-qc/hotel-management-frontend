@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
+import { Button } from "../../utils/button";
+import { Input } from "../../utils/input";
+import { Label } from "../../utils/label";
 import { apiFetch } from "../../lib/utils";
 import { useAuth } from "../../providers/providers";
 import "./LoginPage.css";

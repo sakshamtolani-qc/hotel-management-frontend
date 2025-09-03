@@ -1,5 +1,5 @@
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card } from '@/utils/card';
+import { Badge } from '@/utils/badge';
 import type { Room } from '@/store/roomStore';
 
 

@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/utils/button';
 import { useRoomStore, RoomStatus } from '@/store/roomStore';
 import { useMemo } from 'react';
 

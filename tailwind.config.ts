@@ -3,10 +3,11 @@ import type { Config } from "tailwindcss";
 export default {
 	darkMode: ["class"],
 	content: [
+		"./index.html",
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
+		"./src/**/*.{js,ts,jsx,tsx}",
 	],
 	prefix: "",
 	theme: {
@@ -18,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'poppins': ['Poppins', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -34,7 +38,11 @@ export default {
 >>>>>>> 0ddf930d (Implement Room List View)
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					50: '#FFFFFF',
+					100: '#EFF0F2', 
+					500: '#484848',
+					900: '#212121',
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',

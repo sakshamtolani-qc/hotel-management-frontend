@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
@@ -11,35 +10,13 @@ import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
-=======
-import * as React from "react";
-import { Slot } from "@radix-ui/react-slot";
-import { PanelLeft } from "lucide-react";
 
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
->>>>>>> 0ddf930d (Implement Room List View)
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-<<<<<<< HEAD
 } from "@/components/ui/tooltip"
-=======
-} from "@/components/ui/tooltip";
-
-import { cva } from "class-variance-authority";         // runtime
-import type { VariantProps } from "class-variance-authority"; // type-only
-
->>>>>>> 0ddf930d (Implement Room List View)
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

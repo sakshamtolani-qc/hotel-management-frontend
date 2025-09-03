@@ -1,9 +1,9 @@
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Separator } from "../ui/separator";
-
+import { Button } from "../../utils/button";
+import { Card, CardContent } from "../../utils/card";
+import { Input } from "../../utils/input";
+import { Label } from "../../utils/label";
+import { Separator } from "../../utils/separator";
+import "./SignUp.css";
 export const SignUp = () => {
   return (
     <div className="signup-container">

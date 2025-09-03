@@ -1,5 +1,5 @@
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/utils/checkbox';
+import { Label } from '@/utils/label';
 import { Wifi, Bed, User } from 'lucide-react';
 
 interface AmenityFilterProps {

@@ -1,5 +1,5 @@
-import { Slider } from '@/components/ui/slider';
-import { Label } from '@/components/ui/label';
+import { Slider } from '@/utils/slider';
+import { Label } from '@/utils/label';
 
 interface PriceRangeFilterProps {
   value: { min: number; max: number };

@@ -20,7 +20,11 @@ import { Controller, FormProvider, useFormContext } from "react-hook-form"
 >>>>>>> 0ddf930d (Implement Room List View)
 
 import { cn } from "@/lib/utils"
+<<<<<<< HEAD:src/components/ui/form.tsx
 import { Label } from "@/components/ui/label"
+=======
+import { Label } from "@/utils/label"
+>>>>>>> e92c883a (Implement Room List View):src/utils/form.tsx
 
 <<<<<<< HEAD
 =======

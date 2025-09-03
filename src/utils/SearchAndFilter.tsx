@@ -1,7 +1,7 @@
 import { Filter } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Separator } from '@/components/ui/separator';
+import { Button } from '@/utils/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/utils/popover';
+import { Separator } from '@/utils/separator';
 import { useRoomStore } from '@/store/roomStore';
 import { useState, useEffect } from 'react';
 import { SearchInput } from './SearchInput';
