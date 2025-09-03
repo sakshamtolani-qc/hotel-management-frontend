@@ -1,8 +1,13 @@
-import {LoginPage} from './components/LoginPage'
-import './App.css'
+import { LoginPage } from "./components/LoginPage";
+import { AuthProvider } from "./providers/providers";
+import "./App.css";
 
 function App() {
-  return <LoginPage />
+  return (
+    <AuthProvider>
+      <LoginPage />
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
