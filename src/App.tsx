@@ -3,7 +3,11 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+<<<<<<< HEAD
 import Index from "./pages/Index";
+=======
+import Index from "./pages/index";
+>>>>>>> 0ddf930d (Implement Room List View)
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

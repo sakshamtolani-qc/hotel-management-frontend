@@ -18,7 +18,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+<<<<<<< HEAD
         checkout: "bg-checkout text-checkout-foreground hover:bg-checkout/90",
+=======
+>>>>>>> 0ddf930d (Implement Room List View)
       },
       size: {
         default: "h-10 px-4 py-2",

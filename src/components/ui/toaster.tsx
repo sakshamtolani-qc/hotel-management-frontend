@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useToast } from "@/hooks/use-toast"
 import {
   Toast,
@@ -30,4 +31,12 @@ export function Toaster() {
       <ToastViewport />
     </ToastProvider>
   )
+=======
+"use client"
+
+import { Toaster as Sonner } from "sonner"
+
+export function Toaster() {
+  return <Sonner />
+>>>>>>> 0ddf930d (Implement Room List View)
 }

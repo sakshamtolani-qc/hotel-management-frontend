@@ -1,6 +1,7 @@
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"
+<<<<<<< HEAD
 import {
   Controller,
   ControllerProps,
@@ -9,10 +10,22 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form"
+=======
+
+// types must use `import type`
+import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form"
+
+// values (runtime) use normal import
+import { Controller, FormProvider, useFormContext } from "react-hook-form"
+>>>>>>> 0ddf930d (Implement Room List View)
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0ddf930d (Implement Room List View)
 const Form = FormProvider
 
 type FormFieldContextValue<

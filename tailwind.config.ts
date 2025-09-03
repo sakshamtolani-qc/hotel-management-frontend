@@ -24,11 +24,14 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+<<<<<<< HEAD
 				brand: {
 					primary: 'hsl(var(--brand-primary))',
 					secondary: 'hsl(var(--brand-secondary))',
 					accent: 'hsl(var(--brand-accent))'
 				},
+=======
+>>>>>>> 0ddf930d (Implement Room List View)
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
@@ -37,6 +40,7 @@ export default {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
+<<<<<<< HEAD
 				success: {
 					DEFAULT: 'hsl(var(--success))',
 					foreground: 'hsl(var(--success-foreground))'
@@ -49,6 +53,8 @@ export default {
 					DEFAULT: 'hsl(var(--checkout))',
 					foreground: 'hsl(var(--checkout-foreground))'
 				},
+=======
+>>>>>>> 0ddf930d (Implement Room List View)
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
@@ -69,6 +75,17 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+<<<<<<< HEAD
+=======
+				status: {
+					vacant: 'hsl(var(--status-vacant))',
+					'vacant-foreground': 'hsl(var(--status-vacant-foreground))',
+					occupied: 'hsl(var(--status-occupied))',
+					'occupied-foreground': 'hsl(var(--status-occupied-foreground))',
+					dirty: 'hsl(var(--status-dirty))',
+					'dirty-foreground': 'hsl(var(--status-dirty-foreground))'
+				},
+>>>>>>> 0ddf930d (Implement Room List View)
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

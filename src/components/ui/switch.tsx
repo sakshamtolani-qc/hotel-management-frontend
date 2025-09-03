@@ -24,4 +24,8 @@ const Switch = React.forwardRef<
 ))
 Switch.displayName = SwitchPrimitives.Root.displayName
 
+<<<<<<< HEAD
 export { Switch }
+=======
+export { Switch }
+>>>>>>> 0ddf930d (Implement Room List View)

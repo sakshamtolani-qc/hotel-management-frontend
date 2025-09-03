@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 /* Professional hotel reservation system design tokens */
 @layer base {
   :root {
@@ -39,13 +40,54 @@
     --warning-foreground: 0 0% 100%;
     --checkout: 142 76% 36%;
     --checkout-foreground: 0 0% 100%;
+=======
+/* Hotel Management Dashboard Design System - Professional & Modern */
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 215 25% 27%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 27%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 27%;
+
+    /* Brand Colors - Professional Hotel Management */
+    --primary: 215 28% 17%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 215 25% 27%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 215 25% 27%;
+>>>>>>> 0ddf930d (Implement Room List View)
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
+<<<<<<< HEAD
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
+=======
+    /* Status Colors */
+    --status-vacant: 142 71% 45%;
+    --status-vacant-foreground: 0 0% 100%;
+    --status-occupied: 215 25% 27%;
+    --status-occupied-foreground: 0 0% 100%;
+    --status-dirty: 45 93% 47%;
+    --status-dirty-foreground: 215 25% 27%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 215 28% 17%;
+>>>>>>> 0ddf930d (Implement Room List View)
 
     --radius: 0.5rem;
 
