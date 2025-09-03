@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -15,21 +14,9 @@ export default defineConfig(({ mode }) => ({
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
-=======
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react-swc"
-import path from "path"
-
-export default defineConfig({
-  plugins: [react()],
->>>>>>> 0ddf930d (Implement Room List View)
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
-<<<<<<< HEAD
 }));
-=======
-})
->>>>>>> 0ddf930d (Implement Room List View)

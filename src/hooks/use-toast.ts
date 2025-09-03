@@ -4,10 +4,14 @@ import type {
   ToastActionElement,
   ToastProps,
 <<<<<<< HEAD
+<<<<<<< HEAD
 } from "@/components/ui/toast"
 =======
 } from "@/utils/toast"
 >>>>>>> e92c883a (Implement Room List View)
+=======
+} from "@/components/ui/toast"
+>>>>>>> de23ad80 (Reservation List Page)
 
 const TOAST_LIMIT = 1
 const TOAST_REMOVE_DELAY = 1000000

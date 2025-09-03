@@ -11,8 +11,4 @@ User-agent: facebookexternalhit
 Allow: /
 
 User-agent: *
-<<<<<<< HEAD
 Allow: /
-=======
-Allow: /
->>>>>>> 0ddf930d (Implement Room List View)

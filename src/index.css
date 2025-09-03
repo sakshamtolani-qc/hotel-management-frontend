@@ -92,7 +92,6 @@
   }
 }
 
-<<<<<<< HEAD
 /* Hotel Management Dashboard Design System - Professional & Modern */
 
 @layer base {
@@ -199,17 +198,11 @@
   }
 }
 
-=======
->>>>>>> e92c883a (Implement Room List View)
 @layer base {
   * {
     @apply border-border;
   }
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> e92c883a (Implement Room List View)
   body {
     @apply bg-background text-foreground;
   }

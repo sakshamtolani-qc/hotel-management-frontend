@@ -3,11 +3,18 @@ import type { Config } from "tailwindcss";
 export default {
 	darkMode: ["class"],
 	content: [
+<<<<<<< HEAD
 		"./index.html",
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{js,ts,jsx,tsx}",
+=======
+		"./pages/**/*.{ts,tsx}",
+		"./components/**/*.{ts,tsx}",
+		"./app/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}",
+>>>>>>> de23ad80 (Reservation List Page)
 	],
 	prefix: "",
 	theme: {
@@ -19,9 +26,12 @@ export default {
 			}
 		},
 		extend: {
+<<<<<<< HEAD
 			fontFamily: {
 				'poppins': ['Poppins', 'sans-serif'],
 			},
+=======
+>>>>>>> de23ad80 (Reservation List Page)
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -43,6 +53,16 @@ export default {
 					100: '#EFF0F2', 
 					500: '#484848',
 					900: '#212121',
+=======
+				brand: {
+					primary: 'hsl(var(--brand-primary))',
+					secondary: 'hsl(var(--brand-secondary))',
+					accent: 'hsl(var(--brand-accent))'
+				},
+				primary: {
+					DEFAULT: 'hsl(var(--primary))',
+					foreground: 'hsl(var(--primary-foreground))'
+>>>>>>> de23ad80 (Reservation List Page)
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -135,4 +155,8 @@ export default {
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
+<<<<<<< HEAD
 } satisfies Config;
+=======
+} satisfies Config;
+>>>>>>> de23ad80 (Reservation List Page)
