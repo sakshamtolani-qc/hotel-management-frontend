@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/utils/tabs';
+import { Button } from '@/utils/button';
 import { Reservation, ReservationFilters } from '@/types/reservation';
 import ReservationCard from './ReservationCard';
 import SearchFilter from './SearchFilter';

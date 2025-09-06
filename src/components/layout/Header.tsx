@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import { Button } from '@/utils/button';
 import { User } from 'lucide-react';
 import Logo from '@/assets/logo.png';
 

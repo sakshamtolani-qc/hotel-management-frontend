@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/utils/button';
+import { Input } from '@/utils/input';
 import { Send, Facebook, Instagram } from 'lucide-react';
 import Logo from '@/assets/logo.png';
 

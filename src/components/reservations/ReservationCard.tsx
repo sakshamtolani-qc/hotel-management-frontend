@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/utils/button';
+import { Card, CardContent } from '@/utils/card';
+import { Badge } from '@/utils/badge';
 import { Reservation } from '@/types/reservation';
 import { Calendar, Users, Clock } from 'lucide-react';
 
