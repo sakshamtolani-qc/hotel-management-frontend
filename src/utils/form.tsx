@@ -1,16 +1,17 @@
 import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"
-
-// types must use `import type`
-import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form"
-
-// values (runtime) use normal import
-import { Controller, FormProvider, useFormContext } from "react-hook-form"
+import {
+  Controller,
+  ControllerProps,
+  FieldPath,
+  FieldValues,
+  FormProvider,
+  useFormContext,
+} from "react-hook-form"
 
 import { cn } from "@/lib/utils"
-import { Label } from "@/utils/label"
-
+import { Label } from "./label"
 
 const Form = FormProvider
 
