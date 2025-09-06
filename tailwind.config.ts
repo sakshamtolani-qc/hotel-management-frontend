@@ -3,11 +3,10 @@ import type { Config } from "tailwindcss";
 export default {
 	darkMode: ["class"],
 	content: [
-		"./index.html",
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{js,ts,jsx,tsx}",
+		"./src/**/*.{ts,tsx}",
 	],
 	prefix: "",
 	theme: {
@@ -19,9 +18,6 @@ export default {
 			}
 		},
 		extend: {
-			fontFamily: {
-				'poppins': ['Poppins', 'sans-serif'],
-			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -30,11 +26,7 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))',
-					50: '#FFFFFF',
-					100: '#EFF0F2', 
-					500: '#484848',
-					900: '#212121',
+					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -60,13 +52,13 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				status: {
-					vacant: 'hsl(var(--status-vacant))',
-					'vacant-foreground': 'hsl(var(--status-vacant-foreground))',
-					occupied: 'hsl(var(--status-occupied))',
-					'occupied-foreground': 'hsl(var(--status-occupied-foreground))',
-					dirty: 'hsl(var(--status-dirty))',
-					'dirty-foreground': 'hsl(var(--status-dirty-foreground))'
+				hotel: {
+					warm: 'hsl(var(--hotel-warm))',
+					'warm-foreground': 'hsl(var(--hotel-warm-foreground))',
+					sage: 'hsl(var(--hotel-sage))',
+					'sage-foreground': 'hsl(var(--hotel-sage-foreground))',
+					neutral: 'hsl(var(--hotel-neutral))',
+					dark: 'hsl(var(--hotel-dark))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
