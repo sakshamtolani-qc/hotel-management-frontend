@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SignUp } from "./pages/SignUp/SignUp";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./providers/providers";
+import { Dashboard } from "./components/Dashboard/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound/NotFound";
@@ -25,7 +26,8 @@ const App = () => (
             <Route path="/signup" element={<SignUp />} />
             <Route path="/reservations" element={<ReservationsPage />} />
             {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
