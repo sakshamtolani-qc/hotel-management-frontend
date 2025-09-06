@@ -4,6 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
 import { globalIgnores } from 'eslint/config'
+import unusedImports from 'eslint-plugin-unused-imports'
 
 export default tseslint.config([
   globalIgnores(['dist']),
@@ -18,6 +19,19 @@ export default tseslint.config([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    plugins: {
+      'unused-imports': unusedImports,
+    },
+    rules: {
+      // Remove unused imports automatically
+      'unused-imports/no-unused-imports': 'error',
+
+      // Warn for unused variables, but ignore those starting with "_"
+      'unused-imports/no-unused-vars': [
+        'warn',
+        { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
+      ],
     },
   },
 ])

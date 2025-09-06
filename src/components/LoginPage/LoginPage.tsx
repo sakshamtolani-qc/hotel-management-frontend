@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { apiFetch } from "../lib/utils";
-import { useAuth } from "../providers/providers";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { apiFetch } from "../../lib/utils";
+import { useAuth } from "../../providers/providers";
+import "./LoginPage.css";
 
 export const LoginPage = () => {
   const { login } = useAuth();
@@ -49,7 +50,7 @@ export const LoginPage = () => {
       <div className="main-content">
         {/* Left side image/logo/hero text */}
         <div className="image-section">
-          <img src="/bedroom.jpg" alt="Bedroom interior" />
+          <img className="bedroom-image" src="/bedroom.jpg" alt="Bedroom interior"/>
 
           <div className="logo-section">
             <img src="/logo.svg" alt="Logo" />
