@@ -2,13 +2,8 @@ import * as React from "react"
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-<<<<<<< HEAD:src/components/ui/pagination.tsx
-import type { ButtonProps } from "@/components/ui/button"; // type-only import
-import { buttonVariants } from "@/components/ui/button";   // runtime value import
-=======
 import type { ButtonProps } from "@/utils/button"; // type-only import
 import { buttonVariants } from "@/utils/button";   // runtime value import
->>>>>>> e92c883a (Implement Room List View):src/utils/pagination.tsx
 
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (

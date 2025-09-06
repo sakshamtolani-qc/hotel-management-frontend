@@ -5,31 +5,18 @@ import { PanelLeft } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 
-<<<<<<< HEAD:src/components/ui/sidebar.tsx
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-
-import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Skeleton } from "@/components/ui/skeleton";
-=======
 import { Button } from "@/utils/button";
 import { Input } from "@/utils/input";
 import { Separator } from "@/utils/separator";
 
 import { Sheet, SheetContent } from "@/utils/sheet";
 import { Skeleton } from "@/utils/skeleton";
->>>>>>> e92c883a (Implement Room List View):src/utils/sidebar.tsx
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-<<<<<<< HEAD:src/components/ui/sidebar.tsx
-} from "@/components/ui/tooltip";
-=======
 } from "@/utils/tooltip";
->>>>>>> e92c883a (Implement Room List View):src/utils/sidebar.tsx
 
 import { cva } from "class-variance-authority";         // runtime
 import type { VariantProps } from "class-variance-authority"; // type-only

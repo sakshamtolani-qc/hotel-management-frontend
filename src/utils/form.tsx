@@ -9,11 +9,7 @@ import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form"
 import { Controller, FormProvider, useFormContext } from "react-hook-form"
 
 import { cn } from "@/lib/utils"
-<<<<<<< HEAD:src/components/ui/form.tsx
-import { Label } from "@/components/ui/label"
-=======
 import { Label } from "@/utils/label"
->>>>>>> e92c883a (Implement Room List View):src/utils/form.tsx
 
 
 const Form = FormProvider
