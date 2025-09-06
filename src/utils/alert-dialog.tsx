@@ -1,12 +1,9 @@
 import * as React from "react"
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog"
 
-import { cn } from "@/lib/utils"
-<<<<<<< HEAD:src/components/ui/alert-dialog.tsx
+import { cn } from "@/lib/utils"AD:src/components/ui/alert-dialog.tsx
 import { buttonVariants } from "@/components/ui/button"
-=======
-import { buttonVariants } from "@/utils/button"
->>>>>>> e92c883a (Implement Room List View):src/utils/alert-dialog.tsx
+
 
 const AlertDialog = AlertDialogPrimitive.Root
 
@@ -140,8 +137,5 @@ export {
   AlertDialogDescription,
   AlertDialogAction,
   AlertDialogCancel,
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 0ddf930d (Implement Room List View)
+
