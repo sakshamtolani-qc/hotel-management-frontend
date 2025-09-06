@@ -3,11 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
-<<<<<<< HEAD:src/components/ui/calender.tsx
-import { buttonVariants } from "@/components/ui/button";
-=======
 import { buttonVariants } from "@/utils/button";
->>>>>>> e92c883a (Implement Room List View):src/utils/calender.tsx
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -55,13 +51,6 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
-<<<<<<< HEAD
-      components={{
-        IconLeft: ({ ..._props }) => <ChevronLeft className="h-4 w-4" />,
-        IconRight: ({ ..._props }) => <ChevronRight className="h-4 w-4" />,
-      }}
-=======
->>>>>>> 0ddf930d (Implement Room List View)
       {...props}
     />
   );

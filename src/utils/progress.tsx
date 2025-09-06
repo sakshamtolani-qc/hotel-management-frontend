@@ -23,8 +23,4 @@ const Progress = React.forwardRef<
 ))
 Progress.displayName = ProgressPrimitive.Root.displayName
 
-<<<<<<< HEAD
 export { Progress }
-=======
-export { Progress }
->>>>>>> 0ddf930d (Implement Room List View)

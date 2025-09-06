@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,4 +19,3 @@ export async function apiFetch(
     },
   });
 }
->>>>>>> 0ddf930d (Implement Room List View)

@@ -3,18 +3,11 @@ import type { Config } from "tailwindcss";
 export default {
 	darkMode: ["class"],
 	content: [
-<<<<<<< HEAD
 		"./index.html",
 		"./pages/**/*.{ts,tsx}",
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{js,ts,jsx,tsx}",
-=======
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
->>>>>>> de23ad80 (Reservation List Page)
 	],
 	prefix: "",
 	theme: {
@@ -26,26 +19,15 @@ export default {
 			}
 		},
 		extend: {
-<<<<<<< HEAD
 			fontFamily: {
 				'poppins': ['Poppins', 'sans-serif'],
 			},
-=======
->>>>>>> de23ad80 (Reservation List Page)
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
-<<<<<<< HEAD
-				brand: {
-					primary: 'hsl(var(--brand-primary))',
-					secondary: 'hsl(var(--brand-secondary))',
-					accent: 'hsl(var(--brand-accent))'
-				},
-=======
->>>>>>> 0ddf930d (Implement Room List View)
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))',
@@ -53,36 +35,11 @@ export default {
 					100: '#EFF0F2', 
 					500: '#484848',
 					900: '#212121',
-=======
-				brand: {
-					primary: 'hsl(var(--brand-primary))',
-					secondary: 'hsl(var(--brand-secondary))',
-					accent: 'hsl(var(--brand-accent))'
-				},
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
->>>>>>> de23ad80 (Reservation List Page)
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
 				},
-<<<<<<< HEAD
-				success: {
-					DEFAULT: 'hsl(var(--success))',
-					foreground: 'hsl(var(--success-foreground))'
-				},
-				warning: {
-					DEFAULT: 'hsl(var(--warning))',
-					foreground: 'hsl(var(--warning-foreground))'
-				},
-				checkout: {
-					DEFAULT: 'hsl(var(--checkout))',
-					foreground: 'hsl(var(--checkout-foreground))'
-				},
-=======
->>>>>>> 0ddf930d (Implement Room List View)
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
@@ -103,8 +60,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-<<<<<<< HEAD
-=======
 				status: {
 					vacant: 'hsl(var(--status-vacant))',
 					'vacant-foreground': 'hsl(var(--status-vacant-foreground))',
@@ -113,7 +68,6 @@ export default {
 					dirty: 'hsl(var(--status-dirty))',
 					'dirty-foreground': 'hsl(var(--status-dirty-foreground))'
 				},
->>>>>>> 0ddf930d (Implement Room List View)
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -155,8 +109,4 @@ export default {
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
-<<<<<<< HEAD
 } satisfies Config;
-=======
-} satisfies Config;
->>>>>>> de23ad80 (Reservation List Page)
