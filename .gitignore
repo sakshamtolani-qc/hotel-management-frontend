@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-node_modules
-=======
 # Node dependencies
 node_modules/
 node_modules
@@ -53,4 +50,3 @@ coverage/
 # Temporary
 tmp/
 temp/
->>>>>>> 646c7a7d664354fa98109c0652d31ba241139b21
