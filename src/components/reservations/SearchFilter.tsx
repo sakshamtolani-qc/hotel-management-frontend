@@ -1,7 +1,5 @@
 import { Input } from '@/utils/input';
-import { Button } from '@/utils/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/utils/select';
-import { Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { ReservationFilters } from '@/types/reservation';
 
 interface SearchFilterProps {
