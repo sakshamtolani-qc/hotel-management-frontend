@@ -89,3 +89,9 @@
     background-position: 200% 0;
   }
 }
+.card-title {
+  font-weight: 600;
+  font-size: 28.4911px;
+  line-height: 43px;
+  color: #333333;
+}

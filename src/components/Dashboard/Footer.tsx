@@ -8,38 +8,43 @@ export const Footer: React.FC = () => {
     <footer className="bg-gray-100 py-16">
       <div className="max-w-7xl mx-auto px-6">
         {/* Grievance Form */}
-        <div className="mb-12">
-          <div className="flex items-center space-x-4">
-            <div>
-              <h3 className="font-semibold text-gray-900">Grievance/Feedback</h3>
-              <p className="text-sm text-gray-600">Stay Upto Date</p>
-            </div>
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <input
-                  type="email"
-                  placeholder="Your Email..."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 pr-12 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                />
-                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                  <Send className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
+    <div className="mb-12">
+      <div className="flex items-center space-x-16">
+        {/* Left Title */}
+        <div>
+          <h3 className="font-montserrat font-bold text-[18px] leading-[20px] text-[#484848]">
+            Grievance/Feedback
+          </h3>
+          <p className="font-montserrat font-medium text-[14px] leading-[20px] text-[#484848]">
+            Stay Upto Date
+          </p>
+        </div>
+
+        {/* Input Field */}
+        <div className="flex-1 max-w-3xl">
+          <div className="relative">
+            <input
+              type="email"
+              placeholder="Your Email..."
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full h-[52px] pl-6 pr-16 rounded-full border border-[#E8EAEC] bg-white font-montserrat font-medium text-[14px] text-[#9A9A9A] focus:outline-none focus:ring-2 focus:ring-gray-700"
+            />
+            <button className="absolute right-0 top-0 w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#9A9A9A] hover:bg-gray-700 transition">
+              <img src='/ph_paper-plane.svg'/>
+              
+            </button>
           </div>
         </div>
+      </div>
+    </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div className="col-span-1">
             <div className="flex items-center space-x-2 mb-4">
-              <img src="/logo.svg" alt="Quorium Consulting" className="w-12 h-12" />
-              <div>
-                <div className="text-xl font-bold text-gray-900">QUORIUM</div>
-                <div className="text-sm text-gray-600">CONSULTING</div>
-              </div>
+              <img src="/logo_big.svg" alt="Quorium Consulting" className="logo" />
+            
             </div>
           </div>
 
