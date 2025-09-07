@@ -136,8 +136,8 @@ const UserList: React.FC = () => {
         <div className="hero-container">
           <div className="hero-content">
             <h1 className="hero-title">
-              HEY (first_name)!<br />
-              HERE'S WHAT'S HAPPENING<br />
+              HEY John!<br />
+              HERE'S WHAT'S HAPPENING
               TODAY.
             </h1>
             <button className="view-report-btn">VIEW REPORT</button>
