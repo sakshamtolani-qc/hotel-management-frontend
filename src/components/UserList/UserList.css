@@ -99,7 +99,7 @@
 
 .hero-content {
   flex: 1;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .hero-title {
@@ -513,4 +513,43 @@
 .logo {
   width: 150px;  /* adjust size */
   height: auto;  /* keep aspect ratio */
+}
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.left-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  color: #666;
+  margin-right: 0.5rem;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #333;
+  width: 200px;
 }
