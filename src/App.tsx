@@ -7,7 +7,7 @@ import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./providers/providers";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
 
 const queryClient = new QueryClient();
 

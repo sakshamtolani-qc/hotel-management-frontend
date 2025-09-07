@@ -1,0 +1,331 @@
+/* Enhanced Loader Animations */
+
+/* Shimmer effect for skeleton loaders */
+@keyframes shimmer {
+  0% { 
+    transform: translateX(-100%) skewX(-12deg); 
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(200%) skewX(-12deg); 
+    opacity: 0;
+  }
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Smooth pulse animation */
+@keyframes smooth-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+/* Bouncing dots animation */
+@keyframes bounce-dots {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+/* Rotating loader */
+@keyframes rotate-smooth {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Wave animation for bars */
+@keyframes wave {
+  0%, 100% {
+    height: 20px;
+    opacity: 0.7;
+  }
+  50% {
+    height: 40px;
+    opacity: 1;
+  }
+}
+
+/* Glowing effect */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(33, 33, 33, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(33, 33, 33, 0.4);
+  }
+}
+
+/* Typing dots animation */
+@keyframes typing-dots {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+/* Progress bar fill animation */
+@keyframes progress-fill {
+  0% {
+    width: 0%;
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Apply animations */
+.animate-shimmer {
+  animation: shimmer 2s infinite ease-in-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out;
+}
+
+.animate-smooth-pulse {
+  animation: smooth-pulse 2s infinite ease-in-out;
+}
+
+.animate-bounce-dots {
+  animation: bounce-dots 1.4s infinite ease-in-out;
+}
+
+.animate-rotate-smooth {
+  animation: rotate-smooth 1s linear infinite;
+}
+
+.animate-wave {
+  animation: wave 1s infinite ease-in-out;
+}
+
+.animate-glow {
+  animation: glow 2s infinite ease-in-out;
+}
+
+.animate-typing-dots {
+  animation: typing-dots 1.4s infinite ease-in-out;
+}
+
+.animate-float {
+  animation: float 3s infinite ease-in-out;
+}
+
+/* Loader container styles */
+.loader-container {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Enhanced skeleton loader */
+.skeleton-item {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #EFF0F2 25%, #f5f5f5 50%, #EFF0F2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Button loader enhancements */
+.button-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: rotate-smooth 0.8s linear infinite;
+}
+
+/* Page loader backdrop */
+.page-loader-backdrop {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Enhanced card skeleton */
+.card-skeleton {
+  border: 1px solid #EFF0F2;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-skeleton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+  z-index: 1;
+}
+
+/* Room card specific skeleton */
+.room-card-skeleton {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.room-image-skeleton {
+  height: 200px;
+  background: linear-gradient(135deg, #EFF0F2 0%, #f8f9fa 100%);
+  position: relative;
+}
+
+.room-image-skeleton::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23484848'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='1' d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'/%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+/* Search loader specific styles */
+.search-loader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(239, 240, 242, 0.3);
+  border-radius: 6px;
+}
+
+/* Progress loader styles */
+.progress-loader {
+  width: 100%;
+  max-width: 400px;
+}
+
+.progress-bar {
+  height: 6px;
+  background: #EFF0F2;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #212121 0%, #484848 100%);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 100%);
+  animation: shimmer 2s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .animate-fade-in {
+    animation-duration: 0.4s;
+  }
+  
+  .room-image-skeleton {
+    height: 160px;
+  }
+  
+  .progress-loader {
+    max-width: 100%;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .skeleton-item {
+    background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+  }
+  
+  .page-loader-backdrop {
+    background: rgba(0, 0, 0, 0.9);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer,
+  .animate-bounce-dots,
+  .animate-rotate-smooth,
+  .animate-wave,
+  .animate-glow,
+  .animate-typing-dots,
+  .animate-float {
+    animation: none;
+  }
+  
+  .animate-fade-in {
+    animation: none;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
