@@ -1,9 +1,9 @@
 import React from 'react';
-import { Header } from './Header';
-import { HeroSection } from './HeroSection';
-import { MetricsSection } from './MetricsSection';
-import { AnalyticsSection } from './AnalyticsSection';
-import { Footer } from './Footer';
+import { Header } from '../../components/Dashboard/Header';
+import { HeroSection } from '../../components/Dashboard/HeroSection';
+import { MetricsSection } from '../../components/Dashboard/MetricsSection';
+import { AnalyticsSection } from '../../components/Dashboard/AnalyticsSection';
+import { Footer } from '../../components/Dashboard/Footer';
 import { useDashboardData } from '../../hooks/useDashboardData';
 import './Dashboard.css';
 
