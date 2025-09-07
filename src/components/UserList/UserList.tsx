@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Plus, ChevronDown, User } from 'lucide-react';
 import { Footer } from './Footer';
-import Loader from '../Loader/Loader';
+import { PageLoader, SearchLoader } from '../Loader/Loader';
 import { Link } from 'react-router-dom';
 import './UserList.css';
 
@@ -21,6 +21,11 @@ const UserList: React.FC = () => {
     { id: 3, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
     { id: 4, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
     { id: 5, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 6, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 7, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 8, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 9, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 10, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
   ]);
 
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees);
@@ -34,7 +39,7 @@ const UserList: React.FC = () => {
   const [searchLoading, setSearchLoading] = useState(false);
 
   const statusFilters = ['Active', 'InActive', 'Half Day', 'On Leave'];
-  const employeesPerPage = 5;
+  const employeesPerPage = 10;
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
@@ -102,38 +107,16 @@ const UserList: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="page-loader">
-        <Loader /> {/* Full page loader */}
-      </div>
+      <PageLoader text='Loading Users...' />
     );
   }
 
   return (
-    <div className="user-list-page">
+    <div className="user-list-page mt-5">
       {/* Header */}
-      <header className="header">
-        <div className="header-container">
-          <div className="logo-container">
-            <img src="/logo2.svg" alt="Quorium Consulting" />
-            
-          </div>
-          
-          <nav className="navigation">
-            <a href="/dashboard" className="nav-link">Hotel Analytics</a>
-            <a href="/home" className="nav-link">Home</a>
-            <a href="/employees" className="nav-link active">Employee's List</a>
-          </nav>
-
-            <div className="hidden lg:flex items-center">
-          <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
-            <User className="w-5 h-5 text-white" />
-          </div>
-        </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
-      <section className="hero-section">
+      {/* <section className="hero-section">
         <div className="hero-container">
           <div className="hero-content">
             <h1 className="hero-title">
@@ -147,7 +130,7 @@ const UserList: React.FC = () => {
             <img src="/Greetings.svg" alt="Person working" className="hero-illustration" />
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Employee List Section */}
       <section className="employee-section">
@@ -207,7 +190,7 @@ const UserList: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              {searchLoading && <Loader size="small" />} {/* Search loader */}
+              {searchLoading && <SearchLoader/>} {/* Search loader */}
             </div>
           </div>
 

@@ -1,5 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./Loader.css"
+
+// Try to import useLoading if available, with fallback
+let useLoading: (() => { setIsLoading: (loading: boolean) => void }) | null = null;
+try {
+  const { useLoading: importedUseLoading } = require('../App'); // Adjust path as needed
+  useLoading = importedUseLoading;
+} catch {
+  // Fallback if context is not available
+  useLoading = null;
+}
 
 // Enhanced Main Loader Component
 const Loader = ({ 
@@ -7,8 +17,21 @@ const Loader = ({
   text = 'Loading...', 
   fullScreen = false,
   showText = true,
-  variant = 'default' // 'default', 'dots', 'pulse', 'bars', 'hotel'
+  variant = 'default', // 'default', 'dots', 'pulse', 'bars', 'hotel'
+  autoManageContext = false // New prop to automatically manage loading context
 }) => {
+  // Auto-manage loading context if enabled
+  useEffect(() => {
+    if (autoManageContext && useLoading) {
+      const loadingContext = useLoading();
+      loadingContext.setIsLoading(true);
+      
+      return () => {
+        loadingContext.setIsLoading(false);
+      };
+    }
+  }, [autoManageContext]);
+
   const sizeClasses = {
     small: 'w-8 h-8',
     medium: 'w-12 h-12', 
@@ -17,7 +40,7 @@ const Loader = ({
   };
 
   const containerClasses = fullScreen 
-    ? 'fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm z-50 flex items-center justify-center'
+    ? 'fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm z-50 flex items-center justify-center page-loader'
     : 'flex items-center justify-center p-4';
 
   const renderSpinner = () => {
@@ -152,6 +175,7 @@ const Loader = ({
       style={{ fontFamily: 'Poppins, sans-serif' }}
       role="status" 
       aria-live="polite"
+      data-loading="true"
     >
       <div className="flex flex-col items-center space-y-6">
         {/* Animated logo/brand area */}
@@ -200,9 +224,9 @@ const Loader = ({
   );
 };
 
-// Enhanced Page Loader with better visuals
+// Enhanced Page Loader with better visuals and auto context management
 export const PageLoader = ({ text = "Loading page...", variant = "hotel" }) => (
-  <Loader fullScreen={true} size="large" text={text} variant={variant} />
+  <Loader fullScreen={true} size="large" text={text} variant={variant} autoManageContext={true} />
 );
 
 // Inline Loader with variants
@@ -212,7 +236,7 @@ export const InlineLoader = ({ size = "medium", text = "Loading...", variant = "
 
 // Enhanced Button Loader
 export const ButtonLoader = ({ text = "Loading..." }) => (
-  <div className="flex items-center justify-center space-x-3">
+  <div className="flex items-center justify-center space-x-3" data-loading="true">
     <div className="relative">
       <div 
         className="w-4 h-4 rounded-full border-2 animate-spin"
@@ -229,7 +253,7 @@ export const ButtonLoader = ({ text = "Loading..." }) => (
 
 // Enhanced Skeleton Loader with shimmer effect
 export const SkeletonLoader = ({ lines = 3, className = '', height = 'h-4' }) => (
-  <div className={`space-y-3 ${className}`}>
+  <div className={`space-y-3 ${className}`} data-loading="true">
     {Array.from({ length: lines }).map((_, index) => (
       <div key={index} className="relative overflow-hidden rounded">
         <div 
@@ -251,122 +275,128 @@ export const SkeletonLoader = ({ lines = 3, className = '', height = 'h-4' }) =>
 
 // Enhanced Card Skeleton with shimmer
 export const CardSkeletonLoader = ({ variant = "default" }) => {
-  if (variant === "room") {
-    return (
-      <div 
-        className="border rounded-lg overflow-hidden animate-pulse"
-        style={{ borderColor: '#EFF0F2' }}
-      >
-        {/* Room image placeholder */}
+  const cardContent = (() => {
+    if (variant === "room") {
+      return (
         <div 
-          className="h-48 relative overflow-hidden"
-          style={{ backgroundColor: '#EFF0F2' }}
+          className="border rounded-lg overflow-hidden animate-pulse"
+          style={{ borderColor: '#EFF0F2' }}
+          data-loading="true"
         >
+          {/* Room image placeholder */}
           <div 
-            className="absolute inset-0 -skew-x-12 animate-shimmer"
-            style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-              animation: 'shimmer 2s infinite'
-            }}
-          />
-        </div>
-        
-        {/* Room details */}
-        <div className="p-6">
-          <div className="flex justify-between items-start mb-3">
-            <div className="space-y-2 flex-1">
+            className="h-48 relative overflow-hidden"
+            style={{ backgroundColor: '#EFF0F2' }}
+          >
+            <div 
+              className="absolute inset-0 -skew-x-12 animate-shimmer"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                animation: 'shimmer 2s infinite'
+              }}
+            />
+          </div>
+          
+          {/* Room details */}
+          <div className="p-6">
+            <div className="flex justify-between items-start mb-3">
+              <div className="space-y-2 flex-1">
+                <div 
+                  className="h-5 w-3/4 rounded"
+                  style={{ backgroundColor: '#EFF0F2' }}
+                />
+                <div 
+                  className="h-4 w-1/2 rounded"
+                  style={{ backgroundColor: '#EFF0F2' }}
+                />
+              </div>
               <div 
-                className="h-5 w-3/4 rounded"
-                style={{ backgroundColor: '#EFF0F2' }}
-              />
-              <div 
-                className="h-4 w-1/2 rounded"
+                className="w-16 h-8 rounded-full"
                 style={{ backgroundColor: '#EFF0F2' }}
               />
             </div>
-            <div 
-              className="w-16 h-8 rounded-full"
-              style={{ backgroundColor: '#EFF0F2' }}
-            />
+            
+            <div className="space-y-2 mb-4">
+              <div 
+                className="h-3 w-full rounded"
+                style={{ backgroundColor: '#EFF0F2' }}
+              />
+              <div 
+                className="h-3 w-5/6 rounded"
+                style={{ backgroundColor: '#EFF0F2' }}
+              />
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <div 
+                className="h-6 w-20 rounded"
+                style={{ backgroundColor: '#EFF0F2' }}
+              />
+              <div 
+                className="h-10 w-24 rounded-lg"
+                style={{ backgroundColor: '#EFF0F2' }}
+              />
+            </div>
           </div>
-          
-          <div className="space-y-2 mb-4">
+        </div>
+      );
+    }
+
+    return (
+      <div 
+        className="border rounded-lg p-6 animate-pulse overflow-hidden relative"
+        style={{ borderColor: '#EFF0F2' }}
+        data-loading="true"
+      >
+        <div className="flex items-center space-x-4 mb-4">
+          <div 
+            className="w-12 h-12 rounded-full"
+            style={{ backgroundColor: '#EFF0F2' }}
+          />
+          <div className="space-y-2 flex-1">
             <div 
-              className="h-3 w-full rounded"
+              className="h-4 w-1/2 rounded"
               style={{ backgroundColor: '#EFF0F2' }}
             />
             <div 
-              className="h-3 w-5/6 rounded"
-              style={{ backgroundColor: '#EFF0F2' }}
-            />
-          </div>
-          
-          <div className="flex justify-between items-center">
-            <div 
-              className="h-6 w-20 rounded"
-              style={{ backgroundColor: '#EFF0F2' }}
-            />
-            <div 
-              className="h-10 w-24 rounded-lg"
+              className="h-3 w-1/3 rounded"
               style={{ backgroundColor: '#EFF0F2' }}
             />
           </div>
         </div>
+        <div className="space-y-3">
+          <div 
+            className="h-3 w-full rounded"
+            style={{ backgroundColor: '#EFF0F2' }}
+          />
+          <div 
+            className="h-3 w-5/6 rounded"
+            style={{ backgroundColor: '#EFF0F2' }}
+          />
+          <div 
+            className="h-3 w-4/6 rounded"
+            style={{ backgroundColor: '#EFF0F2' }}
+          />
+        </div>
+        
+        {/* Shimmer overlay */}
+        <div 
+          className="absolute inset-0 -skew-x-12 animate-shimmer pointer-events-none"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+            animation: 'shimmer 2s infinite'
+          }}
+        />
       </div>
     );
-  }
+  })();
 
-  return (
-    <div 
-      className="border rounded-lg p-6 animate-pulse overflow-hidden relative"
-      style={{ borderColor: '#EFF0F2' }}
-    >
-      <div className="flex items-center space-x-4 mb-4">
-        <div 
-          className="w-12 h-12 rounded-full"
-          style={{ backgroundColor: '#EFF0F2' }}
-        />
-        <div className="space-y-2 flex-1">
-          <div 
-            className="h-4 w-1/2 rounded"
-            style={{ backgroundColor: '#EFF0F2' }}
-          />
-          <div 
-            className="h-3 w-1/3 rounded"
-            style={{ backgroundColor: '#EFF0F2' }}
-          />
-        </div>
-      </div>
-      <div className="space-y-3">
-        <div 
-          className="h-3 w-full rounded"
-          style={{ backgroundColor: '#EFF0F2' }}
-        />
-        <div 
-          className="h-3 w-5/6 rounded"
-          style={{ backgroundColor: '#EFF0F2' }}
-        />
-        <div 
-          className="h-3 w-4/6 rounded"
-          style={{ backgroundColor: '#EFF0F2' }}
-        />
-      </div>
-      
-      {/* Shimmer overlay */}
-      <div 
-        className="absolute inset-0 -skew-x-12 animate-shimmer pointer-events-none"
-        style={{
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-          animation: 'shimmer 2s infinite'
-        }}
-      />
-    </div>
-  );
+  return cardContent;
 };
 
 // Typing Animation Loader
 export const TypingLoader = ({ text = "Processing..." }) => (
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center space-x-2" data-loading="true">
     <span style={{ color: '#212121' }}>{text}</span>
     <div className="flex space-x-1">
       {[0, 1, 2].map((index) => (
@@ -386,7 +416,7 @@ export const TypingLoader = ({ text = "Processing..." }) => (
 
 // Progress Bar Loader
 export const ProgressLoader = ({ progress = 0, text = "Loading..." }) => (
-  <div className="w-full max-w-md mx-auto">
+  <div className="w-full max-w-md mx-auto" data-loading="true">
     <div className="flex justify-between items-center mb-2">
       <span className="text-sm font-medium" style={{ color: '#212121' }}>
         {text}
@@ -409,7 +439,7 @@ export const ProgressLoader = ({ progress = 0, text = "Loading..." }) => (
 
 // Search Loader
 export const SearchLoader = () => (
-  <div className="flex items-center space-x-2">
+  <div className="flex items-center space-x-2" data-loading="true">
     <div className="relative">
       <svg 
         className="w-5 h-5 animate-spin" 

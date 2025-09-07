@@ -1,3 +1,4 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Toaster } from "@/utils/toaster";
 import { Toaster as Sonner } from "@/utils/sonner";
 import { TooltipProvider } from "@/utils/tooltip";
@@ -14,15 +15,123 @@ import UserList from "./components/UserList/UserList";
 import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
 
-const queryClient = new QueryClient();
+// Loading Context
+interface LoadingContextType {
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
+  loadingCount: number;
+  incrementLoading: () => void;
+  decrementLoading: () => void;
+}
 
-const Layout = ({ children }: { children: React.ReactNode }) => (
-  <>
-    <Header />
-    <main>{children}</main>
-    <Footer />
-  </>
-);
+const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
+
+export const useLoading = () => {
+  const context = useContext(LoadingContext);
+  if (context === undefined) {
+    throw new Error('useLoading must be used within a LoadingProvider');
+  }
+  return context;
+};
+
+const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [loadingCount, setLoadingCount] = useState(0);
+
+  const isLoading = loadingCount > 0;
+
+  const setIsLoading = (loading: boolean) => {
+    setLoadingCount(loading ? 1 : 0);
+  };
+
+  const incrementLoading = () => {
+    setLoadingCount(prev => prev + 1);
+  };
+
+  const decrementLoading = () => {
+    setLoadingCount(prev => Math.max(0, prev - 1));
+  };
+
+  return (
+    <LoadingContext.Provider value={{
+      isLoading,
+      setIsLoading,
+      loadingCount,
+      incrementLoading,
+      decrementLoading
+    }}>
+      {children}
+    </LoadingContext.Provider>
+  );
+};
+
+// Enhanced Layout component that hides header/footer during loading
+const Layout = ({ children }: { children: React.ReactNode }) => {
+  const { isLoading } = useLoading();
+
+  // Check for any loader elements in the DOM
+  const [hasLoaderInDOM, setHasLoaderInDOM] = useState(false);
+
+  useEffect(() => {
+    const checkForLoaders = () => {
+      // Check for various loader classes and elements
+      const loaderSelectors = [
+        '.page-loader',
+        '[data-loading="true"]',
+        '.loader',
+        '.loading',
+        '[role="status"]',
+        '.animate-spin',
+        '.animate-pulse'
+      ];
+      
+      const hasAnyLoader = loaderSelectors.some(selector => {
+        const elements = document.querySelectorAll(selector);
+        return elements.length > 0 && Array.from(elements).some(el => 
+          el.getBoundingClientRect().width > 0 && el.getBoundingClientRect().height > 0
+        );
+      });
+      
+      setHasLoaderInDOM(hasAnyLoader);
+    };
+
+    // Initial check
+    checkForLoaders();
+
+    // Set up mutation observer to watch for loader changes
+    const observer = new MutationObserver(() => {
+      setTimeout(checkForLoaders, 50); // Small delay to ensure DOM is updated
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class', 'data-loading', 'role']
+    });
+
+    // Also check periodically
+    const interval = setInterval(checkForLoaders, 500);
+
+    return () => {
+      observer.disconnect();
+      clearInterval(interval);
+    };
+  }, []);
+
+  const shouldHideHeaderFooter = isLoading || hasLoaderInDOM;
+
+  return (
+    <>
+      {!shouldHideHeaderFooter && <Header />}
+      <main className={shouldHideHeaderFooter ? "min-h-screen" : ""}>
+        {children}
+      </main>
+      {!shouldHideHeaderFooter && <Footer />}
+    </>
+  );
+};
+
+const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -30,71 +139,73 @@ const App = () => (
       <Toaster />
       <Sonner />
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            {/* No header/footer */}
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUp />} />
+        <LoadingProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* No header/footer */}
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUp />} />
 
-            {/* With header/footer */}
-            <Route
-              path="/rooms"
-              element={
-                <Layout>
-                  <RoomsPage />
-                </Layout>
-              }
-            />
-            <Route
-              path="/reservations"
-              element={
-                <Layout>
-                  <ReservationsPage />
-                </Layout>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <Layout>
-                  <Dashboard />
-                </Layout>
-              }
-            />
-            <Route
-              path="/home"
-              element={
-                <Layout>
-                  <UserList />
-                </Layout>
-              }
-            />
-            <Route
-              path="/employees"
-              element={
-                <Layout>
-                  <UserList />
-                </Layout>
-              }
-            />
-            <Route
-              path="/"
-              element={
-                <Layout>
-                  <UserList />
-                </Layout>
-              }
-            />
-            <Route
-              path="*"
-              element={
-                <Layout>
-                  <NotFound />
-                </Layout>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+              {/* With header/footer (conditional based on loading) */}
+              <Route
+                path="/rooms"
+                element={
+                  <Layout>
+                    <RoomsPage />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/reservations"
+                element={
+                  <Layout>
+                    <ReservationsPage />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <Layout>
+                    <Dashboard />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/home"
+                element={
+                  <Layout>
+                    <UserList />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/employees"
+                element={
+                  <Layout>
+                    <UserList />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  <Layout>
+                    <UserList />
+                  </Layout>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <Layout>
+                    <NotFound />
+                  </Layout>
+                }
+              />
+            </Routes>
+          </BrowserRouter>
+        </LoadingProvider>
       </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>

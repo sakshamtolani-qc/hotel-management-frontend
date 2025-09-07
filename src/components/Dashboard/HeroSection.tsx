@@ -12,7 +12,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ firstName }) => {
         <div className="flex justify-between items-center">
           <div className=" w-[700px]">
             <h1 className="text-5xl font-bold text-gray-900 mb-4">
-              HEY ({firstName}_name)!<br />
+              HEY {firstName}!<br />
               HERE'S WHAT'S HAPPENING<br />
               TODAY.
             </h1>

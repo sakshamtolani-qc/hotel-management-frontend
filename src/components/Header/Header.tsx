@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigation } from '../../hooks/useNavigation';
 import { User, Menu, X, ChevronDown, Settings, LogOut, Bell } from 'lucide-react';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 interface DropdownItem {
   label: string;
@@ -43,7 +44,7 @@ const navigationItems: NavItem[] = [
   {
     label: 'Staff & Operations',
     dropdown: [
-      { label: 'Employee List', path: '/api/reservations', description: 'Staff directory and management' },
+      { label: 'Employee List', path: '/employees', description: 'Staff directory and management' },
       { label: 'Schedules', path: '/schedules', description: 'Staff scheduling and shifts' },
       { label: 'Housekeeping', path: '/housekeeping', description: 'Room cleaning and maintenance' },
       { label: 'Maintenance', path: '/maintenance', description: 'Property maintenance requests' }
@@ -167,9 +168,9 @@ export const Header: React.FC = () => {
     <header className={`header-container ${isHeaderVisible ? 'header-visible' : 'header-hidden'}`}>
       <div className="header-content-full">
         <div className="header-mobile-wrapper">
-          <div className="logo-container">
+          <Link className="logo-container" to="/dashboard">
             <img src="/logo2.svg" alt="Quorium Consulting" className="logo" />
-          </div>
+          </Link>
 
           {/* Mobile menu button */}
           <button

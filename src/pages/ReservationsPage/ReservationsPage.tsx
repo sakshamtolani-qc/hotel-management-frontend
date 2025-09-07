@@ -5,7 +5,7 @@ import ReservationForm from "@/components/Reservations/ReservationForm";
 
 const Index = () => {
     return (
-        <div className="min-h-screen bg-background">
+        <div className="min-h-screen bg-background mt-16">
             <HeroSection />
 
             {/* Main Content */}

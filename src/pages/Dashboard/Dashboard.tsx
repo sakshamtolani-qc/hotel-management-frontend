@@ -9,7 +9,7 @@ export const Dashboard: React.FC = () => {
   const { metrics, hotelAnalytics, roomActivity, firstName } = useDashboardData();
 
   return (
-    <div className="dashboard">
+    <div className="dashboard mt-6">
       <HeroSection firstName={firstName} />
       <MetricsSection metrics={metrics} />
       <AnalyticsSection 
