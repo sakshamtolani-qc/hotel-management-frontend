@@ -8,6 +8,7 @@ import { AuthProvider } from "./providers/providers";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound";
+import UserList from "./components/UserList/UserList";
 
 const queryClient = new QueryClient();
 
@@ -22,8 +23,12 @@ const App = () => (
             <Route path="/rooms" element={<RoomsPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/dashboard" element={<UserList />} />
+            <Route path="/home" element={<UserList />} />
+            <Route path="/employees" element={<UserList />} />
+            <Route path="/" element={<UserList />} />
             {/* Catch-all route */}
-            <Route path="*" element={<NotFound />} />
+             <Route path="*" element={<UserList />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
