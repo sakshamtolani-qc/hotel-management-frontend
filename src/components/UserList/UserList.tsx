@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Filter, Plus, ChevronDown, User } from 'lucide-react';
-import {Footer} from './Footer';
+import { Filter, Plus, User } from 'lucide-react';
 import './UserList.css';
 
 interface Employee {
@@ -90,27 +89,6 @@ const UserList: React.FC = () => {
 
   return (
     <div className="user-list-page">
-      {/* Header */}
-      <header className="header">
-        <div className="header-container">
-          <div className="logo-container">
-            <img src="/logo2.svg" alt="Quorium Consulting" />
-            
-          </div>
-          
-          <nav className="navigation">
-            <a href="/dashboard" className="nav-link">Hotel Analytics</a>
-            <a href="/home" className="nav-link">Home</a>
-            <a href="/employees" className="nav-link active">Employee's List</a>
-          </nav>
-
-            <div className="hidden lg:flex items-center">
-          <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
-            <User className="w-5 h-5 text-white" />
-          </div>
-        </div>
-        </div>
-      </header>
 
       {/* Hero Section */}
       <section className="hero-section">
@@ -253,8 +231,6 @@ const UserList: React.FC = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

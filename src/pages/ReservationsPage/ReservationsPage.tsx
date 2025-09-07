@@ -1,13 +1,11 @@
-import Header from "@/components/Layout/Header";
+
 import HeroSection from "@/components/HeroSection/HeroSection";
 import RoomCard from "@/components/Rooms/RoomCard";
 import ReservationForm from "@/components/Reservations/ReservationForm";
-import Footer from "@/components/Layout/Footer";
 
 const Index = () => {
     return (
         <div className="min-h-screen bg-background">
-            <Header />
             <HeroSection />
 
             {/* Main Content */}
@@ -38,8 +36,6 @@ const Index = () => {
                     </div>
                 </div>
             </main>
-
-            <Footer />
         </div>
     );
 };

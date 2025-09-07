@@ -1,0 +1,272 @@
+/* Header Container - Full Width with Scroll Animation */
+.header-container {
+  @apply w-full fixed top-0 left-0 right-0 bg-white border-b border-gray-200 shadow-sm z-50;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.header-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.header-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.header-content-full {
+  @apply w-full flex items-center justify-between px-6 py-4;
+  max-width: none; /* Remove max-width constraint for full width */
+}
+.right-section {
+  @apply flex items-center space-x-6;
+}
+
+.header-mobile-wrapper {
+  @apply flex items-center justify-between w-full lg:w-auto;
+}
+
+.logo-container {
+  @apply flex items-center space-x-2;
+}
+
+.logo {
+  @apply h-8 w-auto;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-button {
+  @apply lg:hidden p-2 hover:bg-gray-100 rounded-md transition-colors;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  @apply hidden lg:flex; /* remove flex-1 justify-center */
+}
+
+.nav-menu {
+  @apply flex space-x-1;
+}
+
+.nav-item-container {
+  @apply relative;
+}
+
+.nav-item {
+  @apply flex items-center px-4 py-2 text-gray-700 font-medium hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all duration-200 ease-in-out;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  @apply absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out transform translate-y-1 group-hover:translate-y-0 z-50;
+}
+
+.dropdown-content {
+  @apply py-2;
+}
+
+.dropdown-item {
+  @apply w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100 last:border-b-0;
+}
+
+.dropdown-item-label {
+  @apply text-gray-900 font-medium text-sm;
+}
+
+.dropdown-item-description {
+  @apply text-gray-500 text-xs mt-1 leading-tight;
+}
+
+/* User Avatar Desktop with Profile Dropdown */
+.user-avatar-desktop {
+  @apply hidden lg:flex items-center;
+}
+
+.profile-dropdown-container {
+  @apply relative;
+}
+
+.avatar-container {
+  @apply w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer;
+}
+
+/* Profile Dropdown Menu */
+.profile-dropdown-menu {
+  @apply absolute top-full right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50;
+  animation: profileDropdownFadeIn 0.2s ease-out forwards;
+}
+
+.profile-dropdown-content {
+  @apply py-2;
+}
+
+.profile-dropdown-item {
+  @apply w-full flex items-center px-4 py-3 hover:bg-gray-50 transition-colors duration-150 border-b border-gray-100 last:border-b-0;
+}
+
+.profile-item-icon {
+  @apply flex-shrink-0 mr-3 text-gray-500;
+}
+
+.profile-item-content {
+  @apply flex-1 min-w-0;
+}
+
+.profile-item-label {
+  @apply text-gray-900 font-medium text-sm;
+}
+
+.profile-item-description {
+  @apply text-gray-500 text-xs mt-1 leading-tight;
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  @apply absolute top-full left-0 right-0 bg-white border-b border-gray-200 lg:hidden z-50 shadow-lg;
+}
+
+.mobile-nav {
+  @apply flex flex-col px-6 py-4 max-h-96 overflow-y-auto;
+}
+
+.mobile-nav-item {
+  @apply border-b border-gray-100 last:border-b-0;
+}
+
+.mobile-nav-button {
+  @apply w-full flex items-center justify-between py-3 text-gray-700 hover:text-gray-900 transition-colors text-left;
+}
+
+/* Mobile Dropdown */
+.mobile-dropdown {
+  @apply pl-4 pb-2;
+}
+
+.mobile-dropdown-item {
+  @apply w-full text-left py-2 px-3 hover:bg-gray-50 rounded-md transition-colors;
+}
+
+.mobile-dropdown-label {
+  @apply text-gray-800 font-medium text-sm;
+}
+
+.mobile-dropdown-description {
+  @apply text-gray-500 text-xs mt-1;
+}
+
+/* Mobile User Section with Profile Menu */
+.mobile-user-section {
+  @apply pt-4 border-t border-gray-200 mt-4;
+}
+
+.mobile-settings-title {
+  @apply flex items-center space-x-2 mb-3 text-gray-700 font-medium text-sm;
+}
+
+.mobile-profile-menu {
+  @apply space-y-1;
+}
+
+.mobile-profile-item {
+  @apply w-full flex items-center px-3 py-2 hover:bg-gray-50 rounded-md transition-colors;
+}
+
+.mobile-profile-icon {
+  @apply flex-shrink-0 mr-3 text-gray-500;
+}
+
+.mobile-profile-content {
+  @apply flex-1 min-w-0 text-left;
+}
+
+.mobile-profile-label {
+  @apply text-gray-800 font-medium text-sm;
+}
+
+.mobile-profile-description {
+  @apply text-gray-500 text-xs mt-1;
+}
+
+/* Animations */
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes profileDropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.nav-item-container:hover .dropdown-menu {
+  animation: dropdownFadeIn 0.2s ease-out forwards;
+}
+
+/* Enhanced Hover Effects */
+.nav-item:hover {
+  @apply shadow-sm;
+}
+
+.dropdown-item:hover {
+  @apply pl-5;
+  transition: padding-left 0.15s ease-out;
+}
+
+.profile-dropdown-item:hover .profile-item-icon {
+  @apply text-gray-700;
+}
+
+/* Scroll-based Header Animation Enhancement */
+.header-container {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+  .header-content-full {
+    @apply px-4 py-3;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu {
+    @apply max-h-screen;
+  }
+  
+  .mobile-nav {
+    @apply max-h-80;
+  }
+  
+  .header-content-full {
+    @apply px-3 py-2;
+  }
+}
+
+/* Enhanced Mobile Profile Section */
+@media (max-width: 640px) {
+  .mobile-profile-menu {
+    @apply space-y-0.5;
+  }
+  
+  .mobile-profile-item {
+    @apply px-2 py-2;
+  }
+}

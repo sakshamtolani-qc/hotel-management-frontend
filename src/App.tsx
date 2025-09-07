@@ -6,12 +6,23 @@ import { SignUp } from "./pages/SignUp/SignUp";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./providers/providers";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
-import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound/NotFound";
 import ReservationsPage from "@/pages/ReservationsPage/ReservationsPage";
 import UserList from "./components/UserList/UserList";
+import { Header } from "@/components/Header/Header";
+import { Footer } from "@/components/Footer/Footer";
+
 const queryClient = new QueryClient();
+
+const Layout = ({ children }: { children: React.ReactNode }) => (
+  <>
+    <Header />
+    <main>{children}</main>
+    <Footer />
+  </>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -21,18 +32,67 @@ const App = () => (
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/rooms" element={<RoomsPage />} />
+            {/* No header/footer */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/reservations" element={<ReservationsPage />} />
-            {/* Catch-all route */}
-             <Route path="/dashboard" element={<UserList />} />
-            <Route path="/home" element={<UserList />} />
-            <Route path="/employees" element={<UserList />} />
-            <Route path="/" element={<UserList />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-           {/* <Route path="/" element={<Navigate to="/dashboard" replace />} /> */}
-           <Route path="*" element={<UserList />} />
+
+            {/* With header/footer */}
+            <Route
+              path="/rooms"
+              element={
+                <Layout>
+                  <RoomsPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/reservations"
+              element={
+                <Layout>
+                  <ReservationsPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <Layout>
+                  <Dashboard />
+                </Layout>
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <Layout>
+                  <UserList />
+                </Layout>
+              }
+            />
+            <Route
+              path="/employees"
+              element={
+                <Layout>
+                  <UserList />
+                </Layout>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <Layout>
+                  <UserList />
+                </Layout>
+              }
+            />
+            <Route
+              path="*"
+              element={
+                <Layout>
+                  <NotFound />
+                </Layout>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
