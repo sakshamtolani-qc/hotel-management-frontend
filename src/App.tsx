@@ -3,17 +3,19 @@ import { Toaster } from "@/utils/toaster";
 import { Toaster as Sonner } from "@/utils/sonner";
 import { TooltipProvider } from "@/utils/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SignUp } from "./pages/SignUp/SignUp";
+import { SignUp } from "./pages/SignUpPage/SignUpPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./providers/providers";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound/NotFound";
-import ReservationsPage from "@/pages/ReservationsPage/ReservationsPage";
-import UserList from "./components/UserList/UserList";
+import ReservationsPage from "@/pages/CreateReservationsPage/CreateReservationsPage";
+import UserList from "./pages/UserListPage/UserListPage";
 import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
+import ReservationsList from '@/pages/ReservationsListPage/ReservationsListPage';
+import { mockReservations } from "@/data/mockReservations";
 
 // Loading Context
 interface LoadingContextType {
@@ -83,14 +85,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         '.animate-spin',
         '.animate-pulse'
       ];
-      
+
       const hasAnyLoader = loaderSelectors.some(selector => {
         const elements = document.querySelectorAll(selector);
-        return elements.length > 0 && Array.from(elements).some(el => 
+        return elements.length > 0 && Array.from(elements).some(el =>
           el.getBoundingClientRect().width > 0 && el.getBoundingClientRect().height > 0
         );
       });
-      
+
       setHasLoaderInDOM(hasAnyLoader);
     };
 
@@ -156,10 +158,18 @@ const App = () => (
                 }
               />
               <Route
-                path="/reservations"
+                path="/reservations/create"
                 element={
                   <Layout>
                     <ReservationsPage />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/reservations"
+                element={
+                  <Layout>
+                    <ReservationsList reservations={mockReservations} />
                   </Layout>
                 }
               />
@@ -181,14 +191,6 @@ const App = () => (
               />
               <Route
                 path="/employees"
-                element={
-                  <Layout>
-                    <UserList />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/"
                 element={
                   <Layout>
                     <UserList />

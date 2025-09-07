@@ -1,6 +1,6 @@
 import React from 'react';
-import { MetricCard } from '../ui/MetricCard';
-import { MiniChart } from '../ui/MiniChart';
+import { MetricCard } from '../../utils/MetricCard';
+import { MiniChart } from '../../utils/MiniChart';
 import { DashboardMetrics } from '../../hooks/useDashboardData';
 
 interface MetricsSectionProps {

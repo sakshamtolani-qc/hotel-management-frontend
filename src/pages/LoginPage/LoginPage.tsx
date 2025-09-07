@@ -5,6 +5,8 @@ import { Label } from "../../utils/label";
 import { apiFetch } from "../../lib/utils";
 import { useAuth } from "../../providers/providers";
 import "./LoginPage.css";
+import { ButtonLoader, PageLoader } from "../../components/Loader/Loader"; // adjust path if needed
+import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   const { login } = useAuth();
@@ -36,8 +38,7 @@ export const LoginPage = () => {
       const data = await res.json();
       login(data.token, data.user); // expects { token, user }
 
-      // ✅ Redirect after login (if using react-router-dom)
-      // navigate("/dashboard");
+      // navigate("/dashboard"); // optional redirect
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -71,7 +72,7 @@ export const LoginPage = () => {
               <div className="auth-icon">
                 <img src="/auth btn.svg" alt="Auth btn" />
               </div>
-              <div className="auth-title">LogIn</div>
+              <div className="auth-title">Login</div>
             </div>
 
             <form onSubmit={handleSubmit} className="form-fields space-y-4">
@@ -107,7 +108,8 @@ export const LoginPage = () => {
                 className="login-button w-full"
                 disabled={loading}
               >
-                {loading ? "Logging in..." : "LogIn"}
+                {/* ✅ Show loader inside button */}
+                {loading ? <ButtonLoader text="Logging in..." /> : "LogIn"}
               </Button>
             </form>
 
@@ -121,11 +123,14 @@ export const LoginPage = () => {
               <span className="signup-text">
                 Don&apos;t have an account?{" "}
               </span>
-              <span className="signup-link-text">SignUp</span>
+              <Link className="signup-link-text" to="/signup">SignUp</Link>
             </div>
           </div>
         </div>
       </div>
+
+      {/* ✅ Full screen loader (optional, if you want to block UI during login) */}
+      {loading && <PageLoader text="Logging you in..." variant="hotel" />}
     </div>
   );
 };

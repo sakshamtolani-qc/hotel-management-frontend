@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Plus, ChevronDown, User } from 'lucide-react';
-import { Footer } from './Footer';
-import { PageLoader, SearchLoader } from '../Loader/Loader';
-import { Link } from 'react-router-dom';
-import './UserList.css';
+import { Search, Filter, Plus } from 'lucide-react';
+import { PageLoader, SearchLoader } from '../../components/Loader/Loader';
+import './UserListPage.css';
 
 interface Employee {
   id: number;
@@ -113,24 +111,6 @@ const UserList: React.FC = () => {
 
   return (
     <div className="user-list-page mt-5">
-      {/* Header */}
-
-      {/* Hero Section */}
-      {/* <section className="hero-section">
-        <div className="hero-container">
-          <div className="hero-content">
-            <h1 className="hero-title">
-              HEY John!<br />
-              HERE'S WHAT'S HAPPENING
-              TODAY.
-            </h1>
-            <button className="view-report-btn">VIEW REPORT</button>
-          </div>
-          <div className="hero-image">
-            <img src="/Greetings.svg" alt="Person working" className="hero-illustration" />
-          </div>
-        </div>
-      </section> */}
 
       {/* Employee List Section */}
       <section className="employee-section">
