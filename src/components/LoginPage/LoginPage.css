@@ -1,4 +1,30 @@
-/* Bedroom image styles */
+/* ---------- Main Container ---------- */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Split layout */
+.main-content {
+  display: flex;
+  flex: 1;
+}
+
+/* ---------- Left Section (Image + Logo + Hero Text) ---------- */
+.image-section {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 16px 0 0 16px;
+  overflow: hidden;
+}
+
 .bedroom-image {
   width: 100%;
   height: 100%;
@@ -6,10 +32,140 @@
   object-position: center;
 }
 
-.field-group .field-input {
+/* Logo top-left */
+.logo-section {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.logo-section img {
+  width: 140px;
+}
+
+/* Hero text bottom-left */
+.hero-text {
+  position: absolute;
+  bottom: 50px;
+  left: 40px;
+  color: #000;
+}
+
+.hero-text h1 {
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ---------- Right Section (Form) ---------- */
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  border-radius: 0 16px 16px 0;
+}
+
+.form-container {
+  width: 80%;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Auth header */
+.auth-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.auth-icon img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 8px;
+}
+
+.auth-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ---------- Input Fields ---------- */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
   text-align: left;
 }
 
-.field-group .field-label {
-  text-align: left;
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.field-input {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.field-input:focus {
+  border-color: #000;
+}
+
+/* ---------- Login Button ---------- */
+.login-button {
+  margin-top: 12px;
+  background: #000 !important;
+  color: #fff !important;
+  border-radius: 6px;
+  font-size: 14px;
+  padding: 10px;
+  transition: background 0.2s;
+}
+
+.login-button:hover {
+  background: #333 !important;
+}
+
+/* ---------- Divider ---------- */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.divider-text {
+  margin: 0 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* ---------- Signup Link ---------- */
+.signup-link {
+  font-size: 13px;
+  color: #666;
+}
+
+.signup-link-text {
+  color: #007bff;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.signup-link-text:hover {
+  text-decoration: underline;
 }
