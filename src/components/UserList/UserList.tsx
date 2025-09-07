@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Search, Filter, Plus, ChevronDown } from 'lucide-react';
-import Footer from '../layout/Footer';
+import { Search, Filter, Plus, ChevronDown, User } from 'lucide-react';
+import {Footer} from './Footer';
 import './UserList.css';
 
 interface Employee {
@@ -104,9 +104,11 @@ const UserList: React.FC = () => {
             <a href="/employees" className="nav-link active">Employee's List</a>
           </nav>
 
-          <div className="profile-container">
-            <div className="profile-avatar"></div>
+            <div className="hidden lg:flex items-center">
+          <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
+            <User className="w-5 h-5 text-white" />
           </div>
+        </div>
         </div>
       </header>
 
@@ -122,7 +124,7 @@ const UserList: React.FC = () => {
             <button className="view-report-btn">VIEW REPORT</button>
           </div>
           <div className="hero-image">
-            <img src="/hero-image.svg" alt="Person working" className="hero-illustration" />
+            <img src="/Greetings.svg" alt="Person working" className="hero-illustration" />
           </div>
         </div>
       </section>
@@ -175,7 +177,7 @@ const UserList: React.FC = () => {
               </button>
             </div>
 
-            <div className="search-container">
+            {/* <div className="search-container">
               <Search className="search-icon" />
               <input
                 type="text"
@@ -184,13 +186,13 @@ const UserList: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-            </div>
+            </div> */}
           </div>
 
           {/* Employee Table */}
           <div className="table-container">
             <table className="employee-table">
-              <thead>
+              {/* <thead>
                 <tr>
                   <th className="table-header">Name</th>
                   <th 
@@ -218,7 +220,7 @@ const UserList: React.FC = () => {
                     Status <ChevronDown className="sort-icon" />
                   </th>
                 </tr>
-              </thead>
+              </thead> */}
               <tbody>
                 {currentEmployees.map((employee) => (
                   <tr key={employee.id} className="table-row">
