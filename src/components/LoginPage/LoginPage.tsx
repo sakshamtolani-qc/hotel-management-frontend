@@ -4,7 +4,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { apiFetch } from "../../lib/utils";
 import { useAuth } from "../../providers/providers";
-import "./LoginPage.css";
+import "./LoginPage.css"; 
 
 export const LoginPage = () => {
   const { login } = useAuth();

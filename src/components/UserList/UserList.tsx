@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Filter, Plus, ChevronDown, User } from 'lucide-react';
+import { Search, Filter, Plus } from 'lucide-react';
 import { Footer } from './Footer';
 import { PageLoader, SearchLoader } from '../Loader/Loader';
+import { PageLoader, SearchLoader } from '../Loader/Loader';
 import { Link } from 'react-router-dom';
+import {Header} from '../Header/Header'; // ✅ Import Header
 import './UserList.css';
 
 interface Employee {
@@ -26,6 +28,11 @@ const UserList: React.FC = () => {
     { id: 8, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
     { id: 9, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
     { id: 10, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 6, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 7, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 8, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 9, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 10, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
   ]);
 
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees);
@@ -39,6 +46,7 @@ const UserList: React.FC = () => {
   const [searchLoading, setSearchLoading] = useState(false);
 
   const statusFilters = ['Active', 'InActive', 'Half Day', 'On Leave'];
+  const employeesPerPage = 10;
   const employeesPerPage = 10;
 
   useEffect(() => {
@@ -107,6 +115,7 @@ const UserList: React.FC = () => {
 
   if (loading) {
     return (
+      <PageLoader text='Loading Users...' />
       <PageLoader text='Loading Users...' />
     );
   }
@@ -190,6 +199,7 @@ const UserList: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+              {searchLoading && <SearchLoader/>} {/* Search loader */}
               {searchLoading && <SearchLoader/>} {/* Search loader */}
             </div>
           </div>
