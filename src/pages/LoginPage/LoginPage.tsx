@@ -5,9 +5,8 @@ import { Label } from "../../utils/label";
 import { apiFetch } from "../../lib/utils";
 import { useAuth } from "../../providers/providers";
 import "./LoginPage.css";
-
-// ✅ Import loaders
 import { ButtonLoader, PageLoader } from "../../components/Loader/Loader"; // adjust path if needed
+import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   const { login } = useAuth();
@@ -124,7 +123,7 @@ export const LoginPage = () => {
               <span className="signup-text">
                 Don&apos;t have an account?{" "}
               </span>
-              <span className="signup-link-text">SignUp</span>
+              <Link className="signup-link-text" to="/signup">SignUp</Link>
             </div>
           </div>
         </div>

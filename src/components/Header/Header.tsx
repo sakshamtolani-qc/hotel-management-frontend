@@ -36,6 +36,7 @@ const navigationItems: NavItem[] = [
     label: 'Hotel Management',
     dropdown: [
       { label: 'Reservations', path: '/reservations', description: 'Manage bookings and reservations' },
+      { label: 'Create Reservation', path: '/reservations/create', description: 'Create a reservation' },
       { label: 'Rooms', path: '/rooms', description: 'Room availability and management' },
       { label: 'Guests', path: '/guests', description: 'Guest information and history' },
       { label: 'Check-in/Out', path: '/checkin', description: 'Guest check-in and check-out' }

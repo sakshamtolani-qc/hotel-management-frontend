@@ -4,10 +4,11 @@ import { Card, CardContent } from "../../utils/card";
 import { Input } from "../../utils/input";
 import { Label } from "../../utils/label";
 import { Separator } from "../../utils/separator";
-import "./SignUp.css";
+import "./SignUpPage.css";
 
 // ✅ Import loaders
 import { ButtonLoader, PageLoader } from "../../components/Loader/Loader"; // adjust path
+import { Link } from "react-router-dom";
 
 export const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -204,7 +205,7 @@ export const SignUp = () => {
 
               <div className="login-section">
                 <span className="login-text">Already have an account? </span>
-                <span className="login-link">Login</span>
+                <Link className="login-link" to="/login">Login</Link>
               </div>
             </CardContent>
           </Card>

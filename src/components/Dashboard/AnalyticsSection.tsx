@@ -5,7 +5,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-} from "../ui/card";
+} from "../../utils/card";
 import { HotelAnalytics, RoomActivity } from '../../hooks/useDashboardData';
 
 interface AnalyticsSectionProps {
