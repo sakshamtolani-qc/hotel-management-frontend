@@ -8,6 +8,7 @@ import { AuthProvider } from "./providers/providers";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound/NotFound";
+import ReservationsPage from "@/pages/ReservationsPage/ReservationsPage";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/rooms" element={<RoomsPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/reservations" element={<ReservationsPage />} />
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
