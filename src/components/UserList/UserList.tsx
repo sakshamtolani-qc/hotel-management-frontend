@@ -177,7 +177,8 @@ const UserList: React.FC = () => {
               </button>
             </div>
 
-            {/* <div className="search-container">
+            {/* Search bar */}
+            <div className="search-container">
               <Search className="search-icon" />
               <input
                 type="text"
@@ -186,7 +187,7 @@ const UserList: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-            </div> */}
+            </div>
           </div>
 
           {/* Employee Table */}
