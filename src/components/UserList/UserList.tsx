@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Filter, Plus, ChevronDown, User } from 'lucide-react';
-import {Footer} from './Footer';
+import { Footer } from './Footer';
+import Loader from '../Loader/Loader';
+import { Link } from 'react-router-dom';
 import './UserList.css';
 
 interface Employee {
@@ -14,45 +16,59 @@ interface Employee {
 
 const UserList: React.FC = () => {
   const [employees] = useState<Employee[]>([
-    { id: 1, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 2, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 3, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 4, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 5, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 1, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
+    { id: 2, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
+    { id: 3, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 4, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
+    { id: 5, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
   ]);
 
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('');
-  const [showStatusDropdown, setShowStatusDropdown] = useState(false);
   const [showFiltersDropdown, setShowFiltersDropdown] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Employee; direction: 'asc' | 'desc' } | null>(null);
 
+  const [loading, setLoading] = useState(true);
+  const [searchLoading, setSearchLoading] = useState(false);
+
   const statusFilters = ['Active', 'InActive', 'Half Day', 'On Leave'];
   const employeesPerPage = 5;
 
-  // Filter employees based on search and status
-  React.useEffect(() => {
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
     let filtered = employees;
 
     if (searchTerm) {
-      filtered = filtered.filter(emp => 
-        emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        emp.phoneNo.includes(searchTerm) ||
-        emp.role.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      setSearchLoading(true);
+      const timer = setTimeout(() => {
+        filtered = filtered.filter(emp =>
+          emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          emp.phoneNo.includes(searchTerm) ||
+          emp.role.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        if (statusFilter) {
+          filtered = filtered.filter(emp => emp.status === statusFilter);
+        }
+        setFilteredEmployees(filtered);
+        setCurrentPage(1);
+        setSearchLoading(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    } else {
+      if (statusFilter) {
+        filtered = filtered.filter(emp => emp.status === statusFilter);
+      }
+      setFilteredEmployees(filtered);
+      setCurrentPage(1);
     }
-
-    if (statusFilter && statusFilter !== '') {
-      filtered = filtered.filter(emp => emp.status === statusFilter);
-    }
-
-    setFilteredEmployees(filtered);
-    setCurrentPage(1);
   }, [searchTerm, statusFilter, employees]);
 
-  // Sort functionality
   const handleSort = (key: keyof Employee) => {
     let direction: 'asc' | 'desc' = 'asc';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
@@ -69,16 +85,12 @@ const UserList: React.FC = () => {
     setFilteredEmployees(sortedEmployees);
   };
 
-  // Pagination
   const totalPages = Math.ceil(filteredEmployees.length / employeesPerPage);
   const startIndex = (currentPage - 1) * employeesPerPage;
   const currentEmployees = filteredEmployees.slice(startIndex, startIndex + employeesPerPage);
 
   const handleFilterClick = (filter: string) => {
-    if (filter === 'Active') setStatusFilter('Active');
-    else if (filter === 'InActive') setStatusFilter('InActive');
-    else if (filter === 'Half Day') setStatusFilter('Half Day');
-    else if (filter === 'On Leave') setStatusFilter('On Leave');
+    setStatusFilter(filter);
     setShowFiltersDropdown(false);
   };
 
@@ -88,6 +100,14 @@ const UserList: React.FC = () => {
     setShowFiltersDropdown(false);
   };
 
+  if (loading) {
+    return (
+      <div className="page-loader">
+        <Loader /> {/* Full page loader */}
+      </div>
+    );
+  }
+
   return (
     <div className="user-list-page">
       {/* Header */}
@@ -95,20 +115,19 @@ const UserList: React.FC = () => {
         <div className="header-container">
           <div className="logo-container">
             <img src="/logo2.svg" alt="Quorium Consulting" />
-            
           </div>
-          
+
           <nav className="navigation">
-            <a href="/dashboard" className="nav-link">Hotel Analytics</a>
-            <a href="/home" className="nav-link">Home</a>
-            <a href="/employees" className="nav-link active">Employee's List</a>
+            <Link to="/dashboard" className="nav-link">Hotel Analytics</Link>
+            <Link to="/home" className="nav-link">Home</Link>
+            <Link to="/employees" className="nav-link active">Employee's List</Link>
           </nav>
 
-            <div className="hidden lg:flex items-center">
-          <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
-            <User className="w-5 h-5 text-white" />
+          <div className="hidden lg:flex items-center">
+            <div className="w-8 h-8 bg-gray-900 rounded-full flex items-center justify-center">
+              <User className="w-5 h-5 text-white" />
+            </div>
           </div>
-        </div>
         </div>
       </header>
 
@@ -139,19 +158,19 @@ const UserList: React.FC = () => {
           <div className="controls-container">
             <div className="left-controls">
               <div className="filters-container">
-                <button 
+                <button
                   className="filters-btn"
                   onClick={() => setShowFiltersDropdown(!showFiltersDropdown)}
                 >
                   <Filter className="filter-icon" />
                   Filters
                 </button>
-                
+
                 {showFiltersDropdown && (
                   <div className="filters-dropdown">
                     <div className="dropdown-header">Status</div>
                     <div className="filter-options">
-                      <button 
+                      <button
                         className={`filter-option ${statusFilter === '' ? 'active' : ''}`}
                         onClick={clearFilters}
                       >
@@ -177,7 +196,7 @@ const UserList: React.FC = () => {
               </button>
             </div>
 
-            {/* Search bar */}
+            {/* Search bar with loader */}
             <div className="search-container">
               <Search className="search-icon" />
               <input
@@ -187,41 +206,13 @@ const UserList: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+              {searchLoading && <Loader size="small" />} {/* Search loader */}
             </div>
           </div>
 
           {/* Employee Table */}
           <div className="table-container">
             <table className="employee-table">
-              {/* <thead>
-                <tr>
-                  <th className="table-header">Name</th>
-                  <th 
-                    className="table-header sortable"
-                    onClick={() => handleSort('phoneNo')}
-                  >
-                    Phone No. <ChevronDown className="sort-icon" />
-                  </th>
-                  <th 
-                    className="table-header sortable"
-                    onClick={() => handleSort('date')}
-                  >
-                    Date <ChevronDown className="sort-icon" />
-                  </th>
-                  <th 
-                    className="table-header sortable"
-                    onClick={() => handleSort('role')}
-                  >
-                    Role <ChevronDown className="sort-icon" />
-                  </th>
-                  <th 
-                    className="table-header sortable"
-                    onClick={() => handleSort('status')}
-                  >
-                    Status <ChevronDown className="sort-icon" />
-                  </th>
-                </tr>
-              </thead> */}
               <tbody>
                 {currentEmployees.map((employee) => (
                   <tr key={employee.id} className="table-row">
