@@ -1,0 +1,15 @@
+/* Bedroom image styles */
+.bedroom-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.field-group .field-input {
+  text-align: left;
+}
+
+.field-group .field-label {
+  text-align: left;
+}

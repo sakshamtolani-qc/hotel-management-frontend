@@ -2,108 +2,188 @@
 
 /* Container & Layout */
 .signup-container {
-  @apply min-h-screen flex bg-background text-foreground;
+  min-height: 100vh;
+  display: flex;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 .signup-layout {
-  @apply flex w-full;
+  display: flex;
+  width: 100%;
 }
 
 /* Left image side */
 .image-section {
-  @apply relative w-1/2 hidden lg:block;
+  position: relative;
+  width: 50%;
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .image-section {
+    display: block;
+  }
 }
 
 .imgfit {
-  @apply w-full h-full object-cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .logo-section {
-  @apply absolute top-6 left-6;
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
 }
 
 .logo-section img {
-  @apply h-10;
+  height: 2.5rem;
 }
 
 .hero-text {
-  @apply absolute bottom-10 left-10 text-white max-w-md;
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2.5rem;
+  color: white;
+  max-width: 24rem;
 }
 
 .hero-text h1 {
-  @apply text-3xl font-bold leading-snug;
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: bold;
+  line-height: 1.25;
 }
 
 /* Right form side */
 .form-section {
-  @apply flex w-full lg:w-1/2 items-center justify-center p-8;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
 }
 
 .form-header {
-  @apply flex items-center gap-3 mb-6 justify-center;
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
 }
 
 .signup-label {
-  @apply text-2xl font-semibold;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 /* Card styling */
 .form-card {
-  @apply w-full max-w-md shadow-lg rounded-2xl;
+  width: 100%;
+  max-width: 28rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
 }
 
 .form-content {
-  @apply space-y-6;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* Form fields */
 .form-row {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .form-field {
-  @apply flex flex-col gap-1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .field-label {
-  @apply text-sm font-medium text-gray-700;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4B5563; /* Tailwind gray-700 */
 }
 
 .field-input {
-  @apply mt-1 block w-full rounded-md border border-gray-300 p-2 focus:ring focus:ring-primary;
+  margin-top: 0.25rem;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid #D1D5DB; /* Tailwind gray-300 */
+}
+
+.field-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.5);
 }
 
 /* Submit button */
 .submit-section {
-  @apply mt-4;
+  margin-top: 1rem;
 }
 
 .submit-button {
-  @apply w-full bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-primary/90;
+  width: 100%;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: hsl(var(--primary) / 0.9);
 }
 
 /* Separator */
 .separator-section {
-  @apply flex items-center gap-2 my-6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.5rem 0;
 }
 
 .separator-line {
-  @apply flex-1 border-t;
+  flex: 1;
+  border-top: 1px solid #D1D5DB;
 }
 
 .separator-text {
-  @apply text-sm text-muted-foreground;
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
 }
 
 /* Login link */
 .login-section {
-  @apply text-center text-sm;
+  text-align: center;
+  font-size: 0.875rem;
 }
 
 .login-text {
-  @apply text-gray-600;
+  color: #4B5563;
 }
 
 .login-link {
-  @apply text-primary font-medium hover:underline cursor-pointer;
+  color: hsl(var(--primary));
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
 }
