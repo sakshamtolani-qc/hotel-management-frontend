@@ -14,11 +14,11 @@ interface Employee {
 
 const UserList: React.FC = () => {
   const [employees] = useState<Employee[]>([
-    { id: 1, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 2, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 3, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 4, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 5, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Spet 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 1, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
+    { id: 2, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
+    { id: 3, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 4, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
+    { id: 5, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
   ]);
 
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees);
@@ -117,8 +117,8 @@ const UserList: React.FC = () => {
         <div className="hero-container">
           <div className="hero-content">
             <h1 className="hero-title">
-              HEY (first_name)!<br />
-              HERE'S WHAT'S HAPPENING<br />
+              HEY John!<br />
+              HERE'S WHAT'S HAPPENING
               TODAY.
             </h1>
             <button className="view-report-btn">VIEW REPORT</button>
