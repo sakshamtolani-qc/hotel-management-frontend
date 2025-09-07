@@ -6,7 +6,7 @@ import { SignUp } from "./pages/SignUp/SignUp";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./providers/providers";
 import { Dashboard } from "./components/Dashboard/Dashboard";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route,Navigate } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound/NotFound";
 import ReservationsPage from "@/pages/ReservationsPage/ReservationsPage";
