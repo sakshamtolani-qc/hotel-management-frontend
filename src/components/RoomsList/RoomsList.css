@@ -1,0 +1,320 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.rooms-list-container {
+  font-family: 'Poppins', sans-serif;
+  background-color: #FFFFFF;
+  min-height: 100vh;
+  color: #212121;
+}
+
+/* Main Content */
+.main-content {
+  max-width: 1200px;
+  margin: 60px auto 0;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Category Tabs */
+.category-tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  border-bottom: 1px solid #EFF0F2;
+}
+
+.tabs-container {
+  display: flex;
+  gap: 0;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 400;
+  color: #484848;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.tab-button.active {
+  color: #212121;
+  font-weight: 500;
+  border-bottom-color: #212121;
+}
+
+.tab-button:hover {
+  color: #212121;
+  background-color: rgba(239, 240, 242, 0.3);
+}
+
+/* Filters */
+.filters-container {
+  position: relative;
+}
+
+.filters-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #EFF0F2;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #212121;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.filters-button:hover {
+  background-color: #484848;
+  color: #FFFFFF;
+}
+
+.filters-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background-color: #FFFFFF;
+  border: 1px solid #EFF0F2;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  min-width: 200px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 14px;
+  color: #212121;
+}
+
+.filter-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.filter-label {
+  font-weight: 400;
+}
+
+/* Rooms Grid */
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+  margin-bottom: 64px;
+  justify-content: center;
+}
+
+.room-card {
+  max-width: 400px;
+  width: 100%;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.room-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.room-image {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+/* base image */
+.room-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease, filter 0.25s ease;
+  display: block;
+}
+
+/* subtle/light blur for Dirty/Occupied (keeps image visible) */
+.room-image img.blurred-img {
+  filter: blur(3px) saturate(0.9);
+  opacity: 0.98;
+}
+
+/* favorite button (top-right) - only rendered for Vacant rooms in JSX */
+.favorite-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  z-index: 4;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.05);
+  background-color: #ffffff;
+}
+
+.favorite-btn.active svg {
+  color: #ef4444;
+}
+
+/* STATUS BADGE — centered overlay with icon + text */
+.status-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+  /* slightly lift the badge from the blurred image */
+}
+
+/* badge colors */
+.status-badge.dirty {
+  background-color: #ef4444;
+}
+.status-badge.occupied {
+  background-color: #f97316;
+}
+
+/* icon inside badge */
+.status-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* price badge (bottom-left) */
+.price-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #FFFFFF;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 2;
+}
+
+/* room info */
+.room-info {
+  padding: 20px;
+}
+
+.room-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 4px;
+}
+
+.room-description {
+  font-size: 14px;
+  color: #484848;
+  margin-bottom: 14px;
+}
+
+.room-amenities {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.amenity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #484848;
+  font-size: 14px;
+}
+
+.amenity svg {
+  color: #484848;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 16px;
+  }
+
+  .category-tabs {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .rooms-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .room-info {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-button {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .room-image {
+    height: 200px;
+  }
+
+  .status-badge {
+    padding: 8px 14px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  .price-badge {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}

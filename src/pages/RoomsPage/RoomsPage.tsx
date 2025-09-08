@@ -1,16 +1,8 @@
+import React from 'react';
+import RoomsList from '@/components/RoomsList/RoomsList';
 
-import { FilterButtons } from '@/utils/FilterButtons';
-import { RoomGrid } from '@/utils/RoomGrid';
-
-const RoomsPage = () => {
-  return (
-    <div className="min-h-screen bg-background mt-20">
-      <div className="container mx-auto px-6 py-6">
-        <FilterButtons />
-        <RoomGrid />
-      </div>
-    </div>
-  );
+const RoomsPage: React.FC = () => {
+  return <RoomsList />;
 };
 
 export default RoomsPage;
