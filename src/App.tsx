@@ -12,6 +12,7 @@ import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound/NotFound";
 import ReservationsPage from "@/pages/CreateReservationsPage/CreateReservationsPage";
 import UserList from "./pages/UserListPage/UserListPage";
+import Landing from "./pages/Landing/Landing";
 import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
 import ReservationsList from '@/pages/ReservationsListPage/ReservationsListPage';
@@ -193,7 +194,7 @@ const App = () => (
                 path="/home"
                 element={
                   <Layout>
-                    <UserList />
+                    <Landing />
                   </Layout>
                 }
               />
@@ -205,6 +206,7 @@ const App = () => (
                   </Layout>
                 }
               />
+               
               <Route
                 path="*"
                 element={
