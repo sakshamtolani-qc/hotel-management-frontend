@@ -42,9 +42,8 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div className="col-span-1">
-            <div className="flex items-center space-x-2 mb-4">
-              <img src="/logo_big.svg" alt="Quorium Consulting" className="logo" />
-            
+            <div className="col-span-1 w-40 h-40 flex items-center justify-center">
+              <img src="/logo_big.svg" alt="Quorium Consulting" className="w-full h-full object-contain" />
             </div>
           </div>
 
