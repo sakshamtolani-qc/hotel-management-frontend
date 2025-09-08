@@ -1,11 +1,24 @@
-
+import { useState, useEffect } from "react";
 import HeroSection from "@/components/HeroSection/HeroSection";
 import RoomCard from "@/components/Rooms/RoomCard";
-import ReservationForm from "@/components/Reservations/ReservationForm";
+import ReservationForm from "@/components/reservations/ReservationForm";
+import { PageLoader } from "@/components/Loader/Loader"; 
 
 const Index = () => {
+    const [loading, setLoading] = useState(true);
+
+    // Simulate data fetching
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return <PageLoader text="Loading reservation page..." variant="hotel" />;
+    }
+
     return (
-        <div className="min-h-screen bg-background mt-16">
+        <div className="min-h-screen bg-background mt-20"> {/* Added space at the top */}
             <HeroSection />
 
             {/* Main Content */}
