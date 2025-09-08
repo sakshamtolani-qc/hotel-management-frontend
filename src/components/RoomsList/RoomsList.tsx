@@ -11,134 +11,21 @@ import {
 } from "lucide-react";
 
 import Loader, { PageLoader, InlineLoader } from "../Loader/Loader";
+import { mockRooms, Room as RoomType } from "../../data/mockRooms";
 import "./RoomsList.css";
-
-interface Room {
-  id: number;
-  title: string;
-  description: string;
-  priceRange: string;
-  image: string;
-  status?: "Dirty" | "Occupied" | "Vacant";
-  category: "Standard" | "Deluxe" | "Luxury";
-  amenities: {
-    beds: number;
-    guests: number;
-    bathrooms: number;
-    rating: number;
-  };
-  isFavorite: boolean;
-}
 
 const RoomsList: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>("Rooms");
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-  const [rooms, setRooms] = useState<Room[]>([
-    {
-      id: 1,
-      title: "Room No. 1",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/bedroom.jpg",
-      status: "Vacant",
-      category: "Standard",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 2,
-      title: "Room No. 2",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/deluxe-room-2.jpg",
-      status: "Vacant",
-      category: "Deluxe",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 3,
-      title: "Room No. 3",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/luxury-room-2.jpg",
-      status: "Vacant",
-      category: "Luxury",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 4,
-      title: "Room No. 5",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/standard-room-2.jpg",
-      status: "Vacant",
-      category: "Standard",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 5,
-      title: "Room No. 6",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/bedroom.jpg",
-      status: "Dirty",
-      category: "Deluxe",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 6,
-      title: "Room No. 7",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/bedroom.jpg",
-      status: "Occupied",
-      category: "Luxury",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 7,
-      title: "Room No. 8",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/bedroom.jpg",
-      status: "Vacant",
-      category: "Standard",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 8,
-      title: "Room No. 9",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/bedroom.jpg",
-      status: "Occupied",
-      category: "Deluxe",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-    {
-      id: 9,
-      title: "Room No. 10",
-      description: "Lorem ipsum",
-      priceRange: "₹ 1000 - 5000 INR",
-      image: "/standard-room-2.jpg",
-      status: "Vacant",
-      category: "Luxury",
-      amenities: { beds: 1, guests: 1, bathrooms: 1, rating: 0 },
-      isFavorite: false,
-    },
-  ]);
+  const [rooms, setRooms] = useState<RoomType[]>(mockRooms);
 
   // loader states
   const [loadingPage, setLoadingPage] = useState<boolean>(true); // initial + category loads
   const [loadingInline, setLoadingInline] = useState<boolean>(false); // small inline loader for filter apply
+
+  // image loading state per room id
+  const [imageLoading, setImageLoading] = useState<Record<number, boolean>>({});
 
   // timer refs to clear on unmount
   const pageTimerRef = useRef<number | null>(null);
@@ -151,6 +38,13 @@ const RoomsList: React.FC = () => {
       pageTimerRef.current = null;
     }, 900);
 
+    // initialize imageLoading for all rooms (true = still loading)
+    const init: Record<number, boolean> = {};
+    mockRooms.forEach((r) => {
+      init[r.id] = true;
+    });
+    setImageLoading(init);
+
     return () => {
       if (pageTimerRef.current) {
         clearTimeout(pageTimerRef.current);
@@ -159,14 +53,15 @@ const RoomsList: React.FC = () => {
         clearTimeout(inlineTimerRef.current);
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const categories = ["Rooms", "Standard", "Deluxe", "Luxury"];
   const filterOptions = ["Vacant Rooms", "Occupied Rooms", "Dirty Rooms"];
 
   const toggleFavorite = (roomId: number) => {
-    setRooms((rooms) =>
-      rooms.map((room) =>
+    setRooms((prev) =>
+      prev.map((room) =>
         room.id === roomId ? { ...room, isFavorite: !room.isFavorite } : room
       )
     );
@@ -186,7 +81,9 @@ const RoomsList: React.FC = () => {
   };
 
   const handleFilterToggle = (filter: string) => {
-    setSelectedFilters((prev) => (prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter]));
+    setSelectedFilters((prev) =>
+      prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter]
+    );
 
     // show inline loader while applying filters (short)
     setLoadingInline(true);
@@ -197,7 +94,7 @@ const RoomsList: React.FC = () => {
     }, 500);
   };
 
-  const getFilteredRooms = (): Room[] => {
+  const getFilteredRooms = (): RoomType[] => {
     let filtered = rooms;
 
     if (activeCategory !== "Rooms") {
@@ -281,10 +178,20 @@ const RoomsList: React.FC = () => {
           {getFilteredRooms().map((room) => (
             <div key={room.id} className="room-card" role="article" aria-roledescription="room card">
               <div className="room-image">
+                {/* image loader overlay while imageLoading[room.id] is true */}
+                {imageLoading[room.id] && (
+                  <div className="image-loader-overlay" aria-hidden="true">
+                    {/* default Loader used inside card */}
+                    <Loader size="small" text="" variant="default" />
+                  </div>
+                )}
+
                 <img
                   src={room.image}
                   alt={room.title}
                   className={room.status === "Dirty" || room.status === "Occupied" ? "blurred-img" : ""}
+                  onLoad={() => setImageLoading((prev) => ({ ...prev, [room.id]: false }))}
+                  onError={() => setImageLoading((prev) => ({ ...prev, [room.id]: false }))}
                 />
 
                 {/* Favorite button only for VACANT */}
