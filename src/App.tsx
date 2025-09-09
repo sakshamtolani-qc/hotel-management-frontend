@@ -16,6 +16,7 @@ import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
 import ReservationsList from '@/pages/ReservationsListPage/ReservationsListPage';
 import { mockReservations } from "@/data/mockReservations";
+import InvoiceDetailsPage from "./pages/InvoiceDetailsPage/InvoiceDetailsPage";
 
 // Loading Context
 interface LoadingContextType {
@@ -149,6 +150,13 @@ const App = () => (
               <Route path="/signup" element={<SignUp />} />
 
               {/* With header/footer (conditional based on loading) */}
+              <Route
+                path="/invoice"
+                element={
+                  <Layout>
+                  <InvoiceDetailsPage />
+                </Layout>
+                }/>
               <Route
                 path="/rooms"
                 element={
