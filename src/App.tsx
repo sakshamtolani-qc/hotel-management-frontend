@@ -15,10 +15,10 @@ import UserList from "./pages/UserListPage/UserListPage";
 import Landing from "./pages/Landing/Landing";
 import { Header } from "@/components/Header/Header";
 import { Footer } from "@/components/Footer/Footer";
+import ReservationsList from '@/pages/ReservationsListPage/ReservationsListPage';
+import { mockReservations } from "@/data/mockReservations";
 import RoomDetails from '@/pages/RoomDetails/RoomDetails';
-import InvoiceDetailsPage from '@/pages/InvoiceDetailsPage/InvoiceDetailsPage';
-import ReservationsListPage from '@/pages/ReservationsListPage/ReservationsListPage';
-
+import InvoiceDetailsPage from "@/pages/InvoiceDetailsPage/InvoiceDetailsPage";
 
 // Loading Context
 interface LoadingContextType {
@@ -169,7 +169,7 @@ const App = () => (
               />
 
               <Route
-                path="/rooms/:roomId"
+                path="/roomdetails"
                 element={
                   <Layout>
                     <RoomDetails />
