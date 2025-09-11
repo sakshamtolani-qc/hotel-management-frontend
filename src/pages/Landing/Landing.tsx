@@ -17,7 +17,7 @@ const Landing: React.FC = () => {
   const [searchLoading, setSearchLoading] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000); // Simulate page loading
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -91,65 +91,91 @@ const Landing: React.FC = () => {
             Empowering Hotels,<br />
             Elevating Guest Experiences.
           </h1>
-          
-          <form className="search-form" onSubmit={handleSearch}>
-            <div className="search-field">
-              <label>Location</label>
-              <input
-                type="text"
-                placeholder="Which city do you prefer?"
-                value={searchData.location}
-                onChange={(e) => setSearchData({ ...searchData, location: e.target.value })}
-              />
-            </div>
-            <div className="search-field">
-              <label>Check In</label>
-              <input
-                type="date"
-                placeholder="Add Dates"
-                value={searchData.checkIn}
-                onChange={(e) => setSearchData({ ...searchData, checkIn: e.target.value })}
-              />
-            </div>
-            <div className="search-field">
-              <label>Check Out</label>
-              <input
-                type="date"
-                placeholder="Add Dates"
-                value={searchData.checkOut}
-                onChange={(e) => setSearchData({ ...searchData, checkOut: e.target.value })}
-              />
-            </div>
-            <div className="search-field">
-              <label>Guests</label>
-              <input
-                type="number"
-                placeholder="Add Guests"
-                value={searchData.guests}
-                onChange={(e) => setSearchData({ ...searchData, guests: e.target.value })}
-              />
-            </div>
-            <button type="submit" className="search-button">
-              <img src='/fe_search.svg' alt="Search" />
-            </button>
-            {searchLoading && <SearchLoader />} {/* Loader for search */}
-          </form>
+{/* Search Bar */}
+<form className="search-form" onSubmit={handleSearch}>
+  {/* Location */}
+  <div className="search-field-loc">
+    <label htmlFor="location">Location</label>
+    <input
+      id="location"
+      type="text"
+      placeholder="Which city do you prefer?"
+      value={searchData.location}
+      onChange={(e) =>
+        setSearchData({ ...searchData, location: e.target.value })
+      }
+    />
+  </div>
+
+  <span className="divider-line"></span>
+
+  {/* Check In */}
+  <div className="search-field">
+    <label htmlFor="checkIn">Check In</label>
+    <input
+      id="checkIn"
+      type="date"
+      value={searchData.checkIn}
+      onChange={(e) =>
+        setSearchData({ ...searchData, checkIn: e.target.value })
+      }
+    />
+  </div>
+
+  <span className="divider-line"></span>
+
+  {/* Check Out */}
+  <div className="search-field">
+    <label htmlFor="checkOut">Check Out</label>
+    <input
+      id="checkOut"
+      type="date"
+      value={searchData.checkOut}
+      onChange={(e) =>
+        setSearchData({ ...searchData, checkOut: e.target.value })
+      }
+    />
+  </div>
+
+  <span className="divider-line"></span>
+
+  {/* Guests */}
+  <div className="search-field">
+    <label htmlFor="guests">Guests</label>
+    <input
+      id="guests"
+      type="number"
+      placeholder="Add Guests"
+      value={searchData.guests}
+      onChange={(e) =>
+        setSearchData({ ...searchData, guests: e.target.value })
+      }
+    />
+  </div>
+
+  {/* Search Button */}
+  <button type="submit" className="search-button">
+    <img src="/fe_search.svg" alt="Search" />
+  </button>
+
+  {searchLoading && <SearchLoader />}
+</form>
+
         </div>
       </section>
 
       {/* Featured Rooms */}
       <section className="featured-rooms">
         <div className="container">
-          <h2 className="section-title">
+          <h1 className="section-title">
             Featured Rooms on<br />
             our Listing
-          </h2>
+          </h1>
           <div className="divider"></div>
-          
           <div className="rooms-grid">
             {featuredRooms.map((room) => (
-              <div 
-                key={room.id} 
+              <div
+                key={room.id}
                 className="room-card"
                 onClick={handleRoomClick}
               >
@@ -194,7 +220,7 @@ const Landing: React.FC = () => {
             <div className="browse-text">
               <h2 className="browse-title">Browse For More Rooms</h2>
               <p className="browse-subtitle">Explore rooms by their categories/types...</p>
-              <button 
+              <button
                 className="find-room-btn"
                 onClick={() => handleNavigation('/api/rooms')}
               >
@@ -207,8 +233,6 @@ const Landing: React.FC = () => {
           </div>
         </div>
       </section>
-
-      
     </div>
   );
 };
