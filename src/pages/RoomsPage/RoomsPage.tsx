@@ -149,12 +149,12 @@ const RoomsPage: React.FC = () => {
               Filters
             </button>
 
-            {/* show a small inline loader near filters button when applying filters */}
-            {loadingInline && (
-              <div style={{ display: "inline-block", marginLeft: 10 }}>
+            {/* Inline loader container with consistent spacing */}
+            <div className="inline-loader-container">
+              {loadingInline && (
                 <InlineLoader size="small" text="Applying..." variant="dots" />
-              </div>
-            )}
+              )}
+            </div>
 
             {showFilters && (
               <div className="filters-dropdown" id="filters-dropdown" role="region" aria-label="Filters">
