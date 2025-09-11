@@ -86,23 +86,23 @@ const ReservationCard = ({
                 </div>
 
                 {reservation.status === "upcoming" && (
-                  <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+                  <div className="flex flex-col md:flex-row gap-2 md:gap-20 w-full md:w-auto">
                     {onCheckout && (
                       <Button
                         variant="default"
                         size="sm"
                         onClick={() => onCheckout(reservation.id)}
-                        className="bg-green-600 hover:bg-green-700 text-white w-full md:w-auto"
+                        className="bg-white text-black w-full md:w-auto border border-black rounded-[20px] hover:bg-gray-100 pr-6 pl-6"
                       >
                         Check Out
                       </Button>
                     )}
                     {onCancel && (
                       <Button
-                        variant="destructive"
+                        variant="default"
                         size="sm"
-                        className="bg-red-600 text-white hover:bg-red-700"
-                        onClick={() => onCancel(reservation.id)}
+                        onClick={() => onCheckout(reservation.id)}
+                        className="bg-white text-black w-full md:w-auto border border-black rounded-[20px] hover:bg-gray-100 pr-6 pl-6"
                       >
                         Cancel Reservation
                       </Button>
