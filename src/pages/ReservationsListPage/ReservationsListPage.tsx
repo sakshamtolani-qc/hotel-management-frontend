@@ -44,7 +44,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
 
       
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-6 py-8 pr-20 pl-20">
         <ReservationsList 
           reservations={reservations}
           onCancelReservation={handleCancelReservation}
