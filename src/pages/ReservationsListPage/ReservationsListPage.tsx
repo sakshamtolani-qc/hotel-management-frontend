@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
-import ReservationsList from '@/components/reservations/ReservationsList';
+import ReservationsList from '@/components/Reservations/ReservationsList';
 import { mockReservations } from '@/data/mockReservations';
 import { Reservation } from '@/types/reservation';
 import './ReservationListPage.css';
