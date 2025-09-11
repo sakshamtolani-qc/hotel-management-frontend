@@ -1,10 +1,13 @@
 /* Header Container - Full Width with Scroll Animation */
-.header-container {
+/* Increase specificity and guard against global collisions (e.g., page CSS) */
+header.header-container {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
+  width: 100vw; /* Force full viewport width */
+  max-width: 100vw !important; /* Prevent max-width constraints */
+  margin: 0 !important; /* Override any global centering */
   background-color: white;
   border-bottom: 1px solid #e5e7eb;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
@@ -12,16 +15,15 @@
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
   transform: translateY(0);
   opacity: 1;
-  margin: 0;
   padding: 0;
 }
 
-.header-visible {
+header.header-container.header-visible {
   transform: translateY(0);
   opacity: 1;
 }
 
-.header-hidden {
+header.header-container.header-hidden {
   transform: translateY(-100%);
   opacity: 0;
 }
@@ -56,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding-right: 1.5rem; /* Padding for content on right side */
+  padding-right: 20px; /* Ensure header reaches the right edge */
 }
 
 .logo-container {
@@ -515,6 +517,6 @@
   }
   
   .right-section {
-    padding-right: 0.5rem;
+    padding-right: 0;
   }
 }
