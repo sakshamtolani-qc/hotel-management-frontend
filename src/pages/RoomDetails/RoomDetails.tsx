@@ -58,7 +58,7 @@ const mockRoomData = {
       "/balcony.png", 
       "/room-view.png",
       "/room-details.png",
-      "/extra-room.png"
+      "/room-view.png"
     ]
   },
   amenities: [
@@ -187,21 +187,52 @@ const RoomDetails: React.FC = () => {
         </div>
 
         {/* Gallery Modal */}
+       {/* Gallery Modal */}
         {isGalleryOpen && (
           <div className="gallery-modal">
+            {/* Overlay */}
             <div className="gallery-overlay" onClick={handleCloseGallery}></div>
-            <div className="gallery-content">
-              <button className="close-btn" onClick={handleCloseGallery}>X</button>
+
+            {/* Modal Content */}
+            <div className="gallery-content" onClick={e => e.stopPropagation()}>
+              {/* Close Button */}
+              <button className="close-btn" onClick={handleCloseGallery}>×</button>
+
+              {/* Main Image with Arrows */}
               <div className="gallery-main">
-                <img src={currentImage || mockRoomData.images.main} alt="Selected" />
+                <button className="arrow left" onClick={() => {
+                  const images = [mockRoomData.images.main, ...mockRoomData.images.thumbnails];
+                  const currentIndex = images.indexOf(currentImage || mockRoomData.images.main);
+                  const prevIndex = (currentIndex - 1 + images.length) % images.length;
+                  setCurrentImage(images[prevIndex]);
+                }}>
+                  &#10094;
+                </button>
+
+                <img
+                  src={currentImage || mockRoomData.images.main}
+                  alt="Selected"
+                  className="main-img"
+                />
+
+                <button className="arrow right" onClick={() => {
+                  const images = [mockRoomData.images.main, ...mockRoomData.images.thumbnails];
+                  const currentIndex = images.indexOf(currentImage || mockRoomData.images.main);
+                  const nextIndex = (currentIndex + 1) % images.length;
+                  setCurrentImage(images[nextIndex]);
+                }}>
+                  &#10095;
+                </button>
               </div>
+
+              {/* Thumbnail Strip */}
               <div className="gallery-images">
                 {[mockRoomData.images.main, ...mockRoomData.images.thumbnails].map((img, i) => (
-                  <img 
-                    key={i} 
-                    src={img} 
-                    alt={`Gallery ${i}`} 
-                    className={currentImage === img ? "active" : ""} 
+                  <img
+                    key={i}
+                    src={img}
+                    alt={`Gallery ${i}`}
+                    className={currentImage === img ? "active" : ""}
                     onClick={() => setCurrentImage(img)}
                   />
                 ))}

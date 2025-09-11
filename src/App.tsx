@@ -18,6 +18,8 @@ import { Footer } from "@/components/Footer/Footer";
 import ReservationsList from '@/pages/ReservationsListPage/ReservationsListPage';
 import { mockReservations } from "@/data/mockReservations";
 import RoomDetails from '@/pages/RoomDetails/RoomDetails';
+import InvoiceDetailsPage from '@/pages/InvoiceDetailsPage/InvoiceDetailsPage';
+
 
 // Loading Context
 interface LoadingContextType {
