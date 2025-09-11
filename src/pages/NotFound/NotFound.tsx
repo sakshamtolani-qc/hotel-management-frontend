@@ -15,7 +15,7 @@ const NotFound = () => {
     
     // Clean up title on unmount
     return () => {
-      document.title = "Your App Name"; // Replace with your actual app name
+      document.title = "Quorium Consulting"; // Replace with your actual app name
     };
   }, [location.pathname]);
 

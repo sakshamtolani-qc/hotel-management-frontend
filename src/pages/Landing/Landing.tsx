@@ -167,7 +167,7 @@ const Landing: React.FC = () => {
       {/* Featured Rooms */}
       <section className="featured-rooms">
         <div className="container">
-          <h1 className="section-title">
+          <h1 className="section-title-landing">
             Featured Rooms on<br />
             our Listing
           </h1>
@@ -222,7 +222,7 @@ const Landing: React.FC = () => {
               <p className="browse-subtitle">Explore rooms by their categories/types...</p>
               <button
                 className="find-room-btn"
-                onClick={() => handleNavigation('/api/rooms')}
+                onClick={() => handleNavigation('/rooms')}
               >
                 Find A Room
               </button>
