@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   ChevronDown,
   Plus,
@@ -37,6 +38,7 @@ interface InvoiceData {
 }
 
 const InvoiceDetailsPage: React.FC = () => {
+  const location = useLocation();
   const [paymentMethod, setPaymentMethod] = useState<
     "credit" | "upi" | "netbanking"
   >("credit");
@@ -86,11 +88,37 @@ const InvoiceDetailsPage: React.FC = () => {
     grandTotal: 1220,
   });
 
-  // ✅ Simulate API/data loading
+  // ✅ Simulate API/data loading and handle navigation state
   useEffect(() => {
+    // Check if we have reservation data from navigation
+    if (location.state?.reservationData) {
+      const { reservationData, roomData } = location.state;
+      
+      // Update invoice data with reservation information
+      setInvoiceData(prev => ({
+        ...prev,
+        invoiceNumber: `INV-${reservationData.id}`,
+        billTo: {
+          name: reservationData.name,
+          phone: reservationData.phoneNumber,
+          address: reservationData.email,
+        },
+        items: [
+          {
+            id: 1,
+            itemNo: "ROOM-001",
+            description: roomData?.title || "Room Booking",
+            quantity: 1,
+            price: reservationData.price || 1000,
+            total: reservationData.price || 1000,
+          }
+        ]
+      }));
+    }
+    
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.state]);
 
   const addNewItem = () => {
     const newItem: InvoiceItem = {

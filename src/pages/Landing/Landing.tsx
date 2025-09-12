@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, Users, Bed, Bath, Heart } from 'lucide-react';
 import './Landing.css';
 import { PageLoader, SearchLoader } from '../../components/Loader/Loader';
+import { mockRooms } from '../../data/mockRooms';
 
 const Landing: React.FC = () => {
   const navigate = useNavigate();
@@ -35,45 +36,22 @@ const Landing: React.FC = () => {
     }, 800);
   };
 
-  const handleRoomClick = () => {
-    navigate('/api/rooms');
+  const handleRoomClick = (roomId: number) => {
+    navigate(`/rooms/${roomId}`);
   };
 
-  const featuredRooms = [
-    {
-      id: 1,
-      title: 'Single room set',
-      location: 'Satara',
-      price: '₹ 1000 - 5000 INR',
-      beds: 1,
-      baths: 1,
-      capacity: 1,
-      rating: 0,
-      image: '/Property_1.png'
-    },
-    {
-      id: 2,
-      title: 'Double Sharing Room',
-      location: 'Satara',
-      price: '₹ 1000 - 5000 INR',
-      beds: 2,
-      baths: 1,
-      capacity: 1,
-      rating: 0,
-      image: '/Property_2.png'
-    },
-    {
-      id: 3,
-      title: 'Triple Sharing Room',
-      location: 'Satara',
-      price: '₹ 1000 - 5000 INR',
-      beds: 3,
-      baths: 1,
-      capacity: 2,
-      rating: 0,
-      image: '/Property_3.png'
-    }
-  ];
+  // Use first 3 rooms from mock data as featured rooms
+  const featuredRooms = mockRooms.slice(0, 3).map(room => ({
+    id: room.id,
+    title: room.title,
+    location: 'Ghaziabad, India',
+    price: room.priceRange,
+    beds: room.amenities.beds,
+    baths: room.amenities.bathrooms,
+    capacity: room.amenities.guests,
+    rating: room.amenities.rating,
+    image: room.image
+  }));
 
   if (loading) {
     return <PageLoader text="Loading Landing Page..." />;
@@ -177,7 +155,7 @@ const Landing: React.FC = () => {
               <div
                 key={room.id}
                 className="room-card"
-                onClick={handleRoomClick}
+                onClick={() => handleRoomClick(room.id)}
               >
                 <div className="room-image">
                   <img src={room.image} alt={room.title} />

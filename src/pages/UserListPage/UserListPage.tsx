@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Filter, Plus } from 'lucide-react';
 import { PageLoader, SearchLoader } from '../../components/Loader/Loader';
 import './UserListPage.css';
+import { Link } from 'react-router-dom';
 
 interface Employee {
   id: number;
@@ -154,10 +155,10 @@ const UserList: React.FC = () => {
                 )}
               </div>
 
-              <button className="add-staff-btn">
+              <Link to="/signup" className="add-staff-btn">
                 <Plus className="plus-icon" />
                 Add Staff
-              </button>
+              </Link>
             </div>
 
             {/* Search bar with loader */}
@@ -170,7 +171,7 @@ const UserList: React.FC = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              {searchLoading && <SearchLoader/>} {/* Search loader */}
+              {searchLoading && <SearchLoader />} {/* Search loader */}
             </div>
           </div>
 
@@ -185,9 +186,9 @@ const UserList: React.FC = () => {
                     <td className="table-cell">{employee.date}</td>
                     <td className="table-cell">{employee.role}</td>
                     <td className="table-cell">
-                      <span className={`status-badge ${employee.status.toLowerCase().replace(' ', '-')}`}>
+                      {/* <span className={`status-badge ${employee.status.toLowerCase().replace(' ', '-')}`}>
                         {employee.status}
-                      </span>
+                      </span> */}
                     </td>
                   </tr>
                 ))}

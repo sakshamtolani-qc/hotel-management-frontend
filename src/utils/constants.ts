@@ -1,14 +1,10 @@
 export const ROUTES = {
   DASHBOARD: '/dashboard',
-  RESERVATIONS: '/api/reservations',
+  RESERVATIONS: '/reservations',
+  ROOMS: '/rooms',
   LOGIN: '/login',
-  SIGNUP: '/signup'
-} as const;
-
-export const API_ENDPOINTS = {
-  METRICS: '/api/metrics',
-  HOTEL_ANALYTICS: '/api/hotel-analytics',
-  ROOM_ACTIVITY: '/api/room-activity'
+  SIGNUP: '/signup',
+  EMPLOYEES: '/employees'
 } as const;
 
 export const COLORS = {

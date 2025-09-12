@@ -5,7 +5,11 @@ import { Label } from "@/utils/label";
 import { Card } from "@/utils/card";
 import { useToast } from "@/hooks/use-toast";
 
-const ReservationForm = () => {
+interface ReservationFormProps {
+  onSuccess?: (data: any) => void;
+}
+
+const ReservationForm = ({ onSuccess }: ReservationFormProps) => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
@@ -22,10 +26,26 @@ const ReservationForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Generate a mock reservation ID
+    const reservationId = `RES-${Date.now()}`;
+    const reservationData = {
+      ...formData,
+      id: reservationId,
+      checkOut: formData.checkIn, // Mock check-out same as check-in for demo
+      price: 1000, // Mock price
+      status: 'upcoming'
+    };
+    
     toast({
       title: "Reservation Submitted",
       description: "Your reservation request has been submitted successfully.",
     });
+    
+    // Call the success callback if provided
+    if (onSuccess) {
+      onSuccess(reservationData);
+    }
   };
 
   return (

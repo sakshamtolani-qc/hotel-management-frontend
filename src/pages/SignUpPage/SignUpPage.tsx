@@ -1,16 +1,21 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../utils/button";
 import { Card, CardContent } from "../../utils/card";
 import { Input } from "../../utils/input";
 import { Label } from "../../utils/label";
 import { Separator } from "../../utils/separator";
+import { useAuth } from "../../providers/providers";
 import "./SignUpPage.css";
 
 // ✅ Import loaders
-import { ButtonLoader, PageLoader } from "../../components/Loader/Loader"; // adjust path
+import { ButtonLoader, PageLoader } from "../../components/Loader/Loader";
 import { Link } from "react-router-dom";
 
 export const SignUp = () => {
+  const { signup } = useAuth();
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -37,22 +42,19 @@ export const SignUp = () => {
         throw new Error("Passwords do not match");
       }
 
-      // 🔗 Call signup API (adjust path as per backend)
-      const res = await fetch("/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+      // Use auth provider for signup
+      await signup({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        phoneNo: formData.phoneNo
       });
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.message || "Signup failed");
-      }
-
-      // const data = await res.json();
-      // ✅ Handle successful signup (e.g., redirect to login)
+      // Redirect to dashboard after successful signup
+      navigate("/dashboard");
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Signup failed");
     } finally {
       setLoading(false);
     }

@@ -1,15 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../utils/button";
 import { Input } from "../../utils/input";
 import { Label } from "../../utils/label";
-import { apiFetch } from "../../lib/utils";
 import { useAuth } from "../../providers/providers";
 import "./LoginPage.css";
-import { ButtonLoader, PageLoader } from "../../components/Loader/Loader"; // adjust path if needed
+import { ButtonLoader, PageLoader } from "../../components/Loader/Loader";
 import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [identifier, setIdentifier] = useState(""); // email/phone
   const [password, setPassword] = useState("");
@@ -22,25 +23,30 @@ export const LoginPage = () => {
     setLoading(true);
 
     try {
-      const res = await apiFetch("/auth/login", {
-        method: "POST",
-        body: JSON.stringify({
-          identifier, // backend should accept email OR phone
-          password,
-        }),
-      });
+      // For demo purposes, allow any credentials or use default
+      const demoCredentials = {
+        email: identifier || "demo@hotel.com",
+        password: password || "demo123"
+      };
 
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.message || "Login failed");
-      }
-
-      const data = await res.json();
-      login(data.token, data.user); // expects { token, user }
-
-      // navigate("/dashboard"); // optional redirect
+      await login(demoCredentials.email, demoCredentials.password);
+      navigate("/dashboard");
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setError("");
+    setLoading(true);
+
+    try {
+      await login("demo@hotel.com", "demo123");
+      navigate("/dashboard");
+    } catch (err: any) {
+      setError(err.message || "Demo login failed");
     } finally {
       setLoading(false);
     }
@@ -108,7 +114,6 @@ export const LoginPage = () => {
                 className="login-button w-full"
                 disabled={loading}
               >
-                {/* ✅ Show loader inside button */}
                 {loading ? <ButtonLoader text="Logging in..." /> : "LogIn"}
               </Button>
             </form>
@@ -118,6 +123,15 @@ export const LoginPage = () => {
               <div className="divider-text">Or</div>
               <div className="divider-line"></div>
             </div>
+
+            <Button
+              onClick={handleDemoLogin}
+              className="demo-login-button w-full"
+              disabled={loading}
+              variant="outline"
+            >
+              {loading ? <ButtonLoader text="Logging in..." /> : "Demo Login"}
+            </Button>
 
             <div className="signup-link">
               <span className="signup-text">
