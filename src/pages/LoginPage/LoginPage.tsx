@@ -1,150 +1,113 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../utils/button";
-import { Input } from "../../utils/input";
-import { Label } from "../../utils/label";
-import { useAuth } from "../../providers/providers";
 import "./LoginPage.css";
-import { ButtonLoader, PageLoader } from "../../components/Loader/Loader";
 import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
-  const { login } = useAuth();
   const navigate = useNavigate();
-
-  const [identifier, setIdentifier] = useState(""); // email/phone
+  const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      // For demo purposes, allow any credentials or use default
-      const demoCredentials = {
-        email: identifier || "demo@hotel.com",
-        password: password || "demo123"
-      };
-
-      await login(demoCredentials.email, demoCredentials.password);
-      navigate("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Login failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDemoLogin = async () => {
-    setError("");
-    setLoading(true);
-
-    try {
-      await login("demo@hotel.com", "demo123");
-      navigate("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Demo login failed");
-    } finally {
-      setLoading(false);
-    }
+    // Navigate to home on login for now
+    navigate("/home");
   };
 
   return (
-    <div className="app-container">
-      <div className="main-content">
-        {/* Left side image/logo/hero text */}
-        <div className="image-section">
-          <img className="bedroom-image" src="/bedroom.jpg" alt="Bedroom interior"/>
-
-          <div className="logo-section">
-            <img src="/logo.svg" alt="Logo" />
-          </div>
-
-          <div className="hero-text">
-            <h1>
-              Empowering Hotels, <br />
-              Elevating Guest Experiences.
-            </h1>
-          </div>
+    <div className="login-page-wrapper">
+      {/* Left Section - Image */}
+      <div className="login-left-section">
+        <img 
+          className="login-bg-image" 
+          src="/bedroom.jpg" 
+          alt="Hotel room interior"
+        />
+        
+        {/* Logo Overlay */}
+        <div className="login-logo-overlay">
+          <img src="/logo.svg" alt="Quorium Logo" className="login-logo" />
         </div>
-
-        {/* Right side login form */}
-        <div className="form-section">
-          <div className="form-container">
-            <div className="auth-header">
-              <div className="auth-icon">
-                <img src="/auth btn.svg" alt="Auth btn" />
-              </div>
-              <div className="auth-title">Login</div>
-            </div>
-
-            <form onSubmit={handleSubmit} className="form-fields space-y-4">
-              <div className="field-group">
-                <Label className="field-label">Email/Phone no.</Label>
-                <Input
-                  className="field-input"
-                  placeholder="Email/Phone no"
-                  value={identifier}
-                  onChange={(e) => setIdentifier(e.target.value)}
-                  required
-                />
-              </div>
-
-              <div className="field-group">
-                <Label className="field-label">Password</Label>
-                <Input
-                  type="password"
-                  className="field-input"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-
-              {error && (
-                <p className="text-red-500 text-sm text-center">{error}</p>
-              )}
-
-              <Button
-                type="submit"
-                className="login-button w-full"
-                disabled={loading}
-              >
-                {loading ? <ButtonLoader text="Logging in..." /> : "LogIn"}
-              </Button>
-            </form>
-
-            <div className="divider">
-              <div className="divider-line"></div>
-              <div className="divider-text">Or</div>
-              <div className="divider-line"></div>
-            </div>
-
-            <Button
-              onClick={handleDemoLogin}
-              className="demo-login-button w-full"
-              disabled={loading}
-              variant="outline"
-            >
-              {loading ? <ButtonLoader text="Logging in..." /> : "Demo Login"}
-            </Button>
-
-            <div className="signup-link">
-              <span className="signup-text">
-                Don&apos;t have an account?{" "}
-              </span>
-              <Link className="signup-link-text" to="/signup">SignUp</Link>
-            </div>
-          </div>
+        
+        {/* Hero Text Overlay */}
+        <div className="login-hero-overlay">
+          <h1 className="login-hero-text">
+            Empowering Hotels,<br />
+            Elevating Guest Experiences.
+          </h1>
         </div>
       </div>
 
-      {/* ✅ Full screen loader (optional, if you want to block UI during login) */}
-      {loading && <PageLoader text="Logging you in..." variant="hotel" />}
+      {/* Right Section - Form */}
+      <div className="login-right-section">
+        <div className="login-form-wrapper">
+          {/* Auth Icon and Title */}
+          <div className="login-form-header">
+            <div className="login-auth-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12Z" fill="white"/>
+                <path d="M12 14C7.59 14 4 17.59 4 22H20C20 17.59 16.41 14 12 14Z" fill="white"/>
+              </svg>
+            </div>
+            <h2 className="login-form-title">Login</h2>
+          </div>
+
+          {/* Login Form */}
+          <form onSubmit={handleSubmit} className="login-form">
+            {/* Email/Phone Field */}
+            <div className="login-field-group">
+              <label className="login-field-label">
+                Email/Phone no.
+              </label>
+              <input
+                type="text"
+                className="login-field-input"
+                placeholder="Email/Phone no"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="login-field-group">
+              <label className="login-field-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="login-field-input"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Login Button */}
+            <button type="submit" className="login-submit-btn">
+              LogIn
+            </button>
+          </form>
+
+          {/* Divider */}
+          <div className="login-divider">
+            <span className="login-divider-line"></span>
+            <span className="login-divider-text">Or</span>
+            <span className="login-divider-line"></span>
+          </div>
+
+          {/* Sign Up Link */}
+          <div className="login-signup-link">
+            <span className="login-signup-text">
+              Don't have an account?
+            </span>
+            <Link to="/signup" className="login-signup-anchor">
+              SignUp
+            </Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
