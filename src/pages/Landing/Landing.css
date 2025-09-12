@@ -79,12 +79,13 @@
 /* Hero Section */
 .hero {
   position: relative;
-  height: 800px;
+  height: 700px; /* Reduced from 800px */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   padding-left: 100px;
+  margin-bottom: -50px; /* Pull up the next section */
 }
 
 .hero-background {
@@ -221,7 +222,7 @@ margin-right: 50px;
   max-width: 1200px; 
   margin: 0 auto; 
   padding: 40px; /* Reduced from 90px */
-}
+} 
 
 h1.section-title-landing { 
   font-size: 36px; 
@@ -250,7 +251,8 @@ h1.section-title-landing {
   overflow: hidden; 
   box-shadow: var(--shadow); 
   transition: all 0.3s ease; 
-  cursor: pointer; 
+  cursor: pointer;
+  height: fit-content; /* Maintain natural height */
 } 
 
 .room-card:hover { 
@@ -315,7 +317,9 @@ h1.section-title-landing {
 
 .room-info { 
   padding: 24px; 
-} 
+  min-height: auto; /* Let content determine height */
+  max-height: 120px;
+}
 
 .room-title { 
   font-size: 20px; 

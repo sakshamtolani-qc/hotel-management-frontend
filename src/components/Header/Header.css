@@ -34,8 +34,9 @@ header.header-container.header-hidden {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0; /* Only vertical padding */
-  margin: 0;
+  padding: 1rem 1.5rem; /* Only vertical padding */
+  margin: 0 auto;
+    max-width: 1280px; 
 }
 
 /* Add horizontal padding only to inner wrapper elements */
