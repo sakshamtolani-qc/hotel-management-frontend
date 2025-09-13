@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Heart,
   Bed,
@@ -19,6 +20,7 @@ const RoomsPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [rooms, setRooms] = useState<RoomType[]>(mockRooms);
+  const navigate = useNavigate();
 
   // loader states
   const [loadingPage, setLoadingPage] = useState<boolean>(true); // initial + category loads
@@ -65,6 +67,10 @@ const RoomsPage: React.FC = () => {
         room.id === roomId ? { ...room, isFavorite: !room.isFavorite } : room
       )
     );
+  };
+
+  const handleRoomClick = (roomId: number) => {
+    navigate(`/rooms/${roomId}`);
   };
 
   const handleCategoryClick = (category: string) => {
@@ -176,7 +182,7 @@ const RoomsPage: React.FC = () => {
         {/* Rooms Grid */}
         <div className="rooms-grid" aria-live="polite">
           {getFilteredRooms().map((room) => (
-            <div key={room.id} className="room-card" role="article" aria-roledescription="room card">
+            <div key={room.id} className="room-card" role="article" aria-roledescription="room card" onClick={() => handleRoomClick(room.id)} style={{ cursor: 'pointer' }}>
               <div className="room-image">
                 {/* image loader overlay while imageLoading[room.id] is true */}
                 {imageLoading[room.id] && (

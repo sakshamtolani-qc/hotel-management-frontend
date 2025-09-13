@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { 
   Heart, 
   Share2, 
@@ -28,6 +28,7 @@ import {
   Lock,
 } from 'lucide-react';
 import { PageLoader } from '../../components/Loader/Loader';
+import { mockRooms } from '@/data/mockRooms';
 import './RoomDetails.css';
 
 // Mock data - will be replaced with API calls
@@ -97,26 +98,48 @@ const RoomDetails: React.FC = () => {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [roomData, setRoomData] = useState(mockRoomData);
 
   const navigate = useNavigate();
+  const { roomId } = useParams<{ roomId: string }>();
 
   useEffect(() => {
+    // Load room data based on roomId from URL
+    if (roomId) {
+      const room = mockRooms.find(r => r.id === parseInt(roomId));
+      if (room) {
+        // Map mock room data to the detailed room data structure
+        const detailedRoomData = {
+          ...mockRoomData,
+          id: room.id,
+          title: room.title,
+          price: {
+            range: room.priceRange,
+            shortPeriod: "₹ 1000",
+            mediumPeriod: "₹ 2000", 
+            longPeriod: "₹ 5000"
+          }
+        };
+        setRoomData(detailedRoomData);
+      }
+    }
+    
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [roomId]);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
   };
 
   const handleReserve = () => {
-    navigate('/BookingForm');
+    navigate(`/reservations/create?roomId=${roomId}`);
   };
 
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: mockRoomData.title,
+        title: roomData.title,
         text: 'Check out this amazing room!',
         url: window.location.href,
       });
@@ -131,7 +154,7 @@ const RoomDetails: React.FC = () => {
   };
 
   const handleOpenGallery = (image?: string) => {
-    setCurrentImage(image || mockRoomData.images.main);
+    setCurrentImage(image || roomData.images.main);
     setIsGalleryOpen(true);
   };
 
@@ -141,8 +164,8 @@ const RoomDetails: React.FC = () => {
   };
 
   const displayedAmenities = showAllAmenities 
-    ? mockRoomData.amenities 
-    : mockRoomData.amenities.slice(0, 6);
+    ? roomData.amenities 
+    : roomData.amenities.slice(0, 6);
 
   if (loading) {
     return <PageLoader text="Loading Room Details..." />;
@@ -156,15 +179,15 @@ const RoomDetails: React.FC = () => {
         <div className="room-gallery">
           <div className="main-image">
             <img 
-              src={mockRoomData.images.main} 
-              alt={`${mockRoomData.title} - Main View`} 
-              onClick={() => handleOpenGallery(mockRoomData.images.main)}
+              src={roomData.images.main} 
+              alt={`${roomData.title} - Main View`} 
+              onClick={() => handleOpenGallery(roomData.images.main)}
             />
           </div>
 
           <div className="gallery-right">
-            {mockRoomData.images.thumbnails.slice(0, 4).map((image, index) => {
-              const extraImages = mockRoomData.images.thumbnails.length - 4;
+            {roomData.images.thumbnails.slice(0, 4).map((image, index) => {
+              const extraImages = roomData.images.thumbnails.length - 4;
               return (
                 <div key={index} className="thumbnail">
                   <img 
@@ -201,8 +224,8 @@ const RoomDetails: React.FC = () => {
               {/* Main Image with Arrows */}
               <div className="gallery-main">
                 <button className="arrow left" onClick={() => {
-                  const images = [mockRoomData.images.main, ...mockRoomData.images.thumbnails];
-                  const currentIndex = images.indexOf(currentImage || mockRoomData.images.main);
+                  const images = [roomData.images.main, ...roomData.images.thumbnails];
+                  const currentIndex = images.indexOf(currentImage || roomData.images.main);
                   const prevIndex = (currentIndex - 1 + images.length) % images.length;
                   setCurrentImage(images[prevIndex]);
                 }}>
@@ -210,14 +233,14 @@ const RoomDetails: React.FC = () => {
                 </button>
 
                 <img
-                  src={currentImage || mockRoomData.images.main}
+                  src={currentImage || roomData.images.main}
                   alt="Selected"
                   className="main-img"
                 />
 
                 <button className="arrow right" onClick={() => {
-                  const images = [mockRoomData.images.main, ...mockRoomData.images.thumbnails];
-                  const currentIndex = images.indexOf(currentImage || mockRoomData.images.main);
+                  const images = [roomData.images.main, ...roomData.images.thumbnails];
+                  const currentIndex = images.indexOf(currentImage || roomData.images.main);
                   const nextIndex = (currentIndex + 1) % images.length;
                   setCurrentImage(images[nextIndex]);
                 }}>
@@ -227,7 +250,7 @@ const RoomDetails: React.FC = () => {
 
               {/* Thumbnail Strip */}
               <div className="gallery-images">
-                {[mockRoomData.images.main, ...mockRoomData.images.thumbnails].map((img, i) => (
+                {[roomData.images.main, ...roomData.images.thumbnails].map((img, i) => (
                   <img
                     key={i}
                     src={img}
@@ -247,8 +270,8 @@ const RoomDetails: React.FC = () => {
             {/* Room Header */}
             <div className="room-header">
               <div className="room-title">
-                <h1>{mockRoomData.title}</h1>
-                <p className="room-subtitle">{mockRoomData.location}</p>
+                <h1>{roomData.title}</h1>
+                <p className="room-subtitle">{roomData.location}</p>
               </div>
               <div className="room-actions">
                 <button 
@@ -272,26 +295,26 @@ const RoomDetails: React.FC = () => {
             <div className="room-features">
               <div className="feature-card">
                 <div className="feature-icon"><Bed size={24} /></div>
-                <div className="feature-text">{mockRoomData.features.bedrooms} Bedrooms</div>
+                <div className="feature-text">{roomData.features.bedrooms} Bedrooms</div>
               </div>
               <div className="feature-card">
                 <div className="feature-icon"><Bath size={24} /></div>
-                <div className="feature-text">{mockRoomData.features.bathrooms} Bathrooms</div>
+                <div className="feature-text">{roomData.features.bathrooms} Bathrooms</div>
               </div>
               <div className="feature-card">
                 <div className="feature-icon"><Car size={24} /></div>
-                <div className="feature-text">{mockRoomData.features.cars} Car</div>
+                <div className="feature-text">{roomData.features.cars} Car</div>
               </div>
               <div className="feature-card">
                 <div className="feature-icon"><PawPrint size={24} /></div>
-                <div className="feature-text">{mockRoomData.features.petsAllowed} Pets Allowed</div>
+                <div className="feature-text">{roomData.features.petsAllowed} Pets Allowed</div>
               </div>
             </div>
 
             {/* Room Description */}
             <div className="room-description">
               <h2>Room Description</h2>
-              {mockRoomData.description.map((paragraph, index) => (
+              {roomData.description.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
@@ -309,7 +332,7 @@ const RoomDetails: React.FC = () => {
               </div>
               <button className="show-all-btn" onClick={toggleAmenities}>
                 <span>
-                  {showAllAmenities ? 'Show Less' : `Show All ${mockRoomData.amenities.length} Amenities`}
+                  {showAllAmenities ? 'Show Less' : `Show All ${roomData.amenities.length} Amenities`}
                 </span>
                 {showAllAmenities ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
               </button>
@@ -319,7 +342,7 @@ const RoomDetails: React.FC = () => {
             <div className="safety-section">
               <h2>Safety and Hygiene</h2>
               <div className="safety-grid">
-                {mockRoomData.safetyFeatures.map((feature, index) => (
+                {roomData.safetyFeatures.map((feature, index) => (
                   <div key={index} className="safety-item">
                     <div className="safety-icon"><feature.icon size={20} /></div>
                     <span className="amenity-text">{feature.name}</span>
@@ -334,7 +357,7 @@ const RoomDetails: React.FC = () => {
                 Reviews
                 <div className="rating-badge">
                   <Star size={20} fill="currentColor" />
-                  {mockRoomData.reviews.overall}
+                  {roomData.reviews.overall}
                 </div>
               </h2>
               <div className="rating-bars">
@@ -342,39 +365,39 @@ const RoomDetails: React.FC = () => {
                   <div className="rating-item">
                     <span className="rating-label">Amenities</span>
                     <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(mockRoomData.reviews.ratings.amenities / 5) * 100}%` }}></div>
+                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.amenities / 5) * 100}%` }}></div>
                     </div>
-                    <span className="rating-score">{mockRoomData.reviews.ratings.amenities}</span>
+                    <span className="rating-score">{roomData.reviews.ratings.amenities}</span>
                   </div>
                   <div className="rating-item">
                     <span className="rating-label">Communication</span>
                     <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(mockRoomData.reviews.ratings.communication / 5) * 100}%` }}></div>
+                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.communication / 5) * 100}%` }}></div>
                     </div>
-                    <span className="rating-score">{mockRoomData.reviews.ratings.communication}</span>
+                    <span className="rating-score">{roomData.reviews.ratings.communication}</span>
                   </div>
                   <div className="rating-item">
                     <span className="rating-label">Value for Money</span>
                     <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(mockRoomData.reviews.ratings.valueForMoney / 5) * 100}%` }}></div>
+                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.valueForMoney / 5) * 100}%` }}></div>
                     </div>
-                    <span className="rating-score">{mockRoomData.reviews.ratings.valueForMoney}</span>
+                    <span className="rating-score">{roomData.reviews.ratings.valueForMoney}</span>
                   </div>
                 </div>
                 <div>
                   <div className="rating-item">
                     <span className="rating-label">Hygiene</span>
                     <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(mockRoomData.reviews.ratings.hygiene / 5) * 100}%` }}></div>
+                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.hygiene / 5) * 100}%` }}></div>
                     </div>
-                    <span className="rating-score">{mockRoomData.reviews.ratings.hygiene}</span>
+                    <span className="rating-score">{roomData.reviews.ratings.hygiene}</span>
                   </div>
                   <div className="rating-item">
                     <span className="rating-label">Location of Property</span>
                     <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(mockRoomData.reviews.ratings.locationOfProperty / 5) * 100}%` }}></div>
+                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.locationOfProperty / 5) * 100}%` }}></div>
                     </div>
-                    <span className="rating-score">{mockRoomData.reviews.ratings.locationOfProperty}</span>
+                    <span className="rating-score">{roomData.reviews.ratings.locationOfProperty}</span>
                   </div>
                 </div>
               </div>
@@ -384,19 +407,19 @@ const RoomDetails: React.FC = () => {
           {/* Room Sidebar */}
           <div className="room-sidebar">
             <div className="price-section">
-              <div className="price-main">{mockRoomData.price.range}</div>
+              <div className="price-main">{roomData.price.range}</div>
               <div className="price-periods">
                 <div className="price-period">
                   <span>Short Period:</span>
-                  <span>{mockRoomData.price.shortPeriod}</span>
+                  <span>{roomData.price.shortPeriod}</span>
                 </div>
                 <div className="price-period">
                   <span>Medium Period:</span>
-                  <span>{mockRoomData.price.mediumPeriod}</span>
+                  <span>{roomData.price.mediumPeriod}</span>
                 </div>
                 <div className="price-period">
                   <span>Long Period:</span>
-                  <span>{mockRoomData.price.longPeriod}</span>
+                  <span>{roomData.price.longPeriod}</span>
                 </div>
               </div>
             </div>

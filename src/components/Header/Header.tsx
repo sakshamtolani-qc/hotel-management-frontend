@@ -26,66 +26,31 @@ interface ProfileMenuItem {
 const navigationItems: NavItem[] = [
   {
     label: 'Dashboard',
+    path: '/dashboard'
+  },
+  {
+    label: 'Rooms',
+    path: '/rooms'
+  },
+  {
+    label: 'Reservations',
     dropdown: [
-      { label: 'Overview', path: '/dashboard', description: 'Main dashboard view' },
-      { label: 'Analytics', path: '/dashboard/analytics', description: 'Detailed analytics and reports' },
-      { label: 'Real-time Data', path: '/dashboard/realtime', description: 'Live hotel metrics' }
+      { label: 'View Reservations', path: '/reservations', description: 'Manage bookings and reservations' },
+      { label: 'Create Reservation', path: '/reservations/create', description: 'Create a new reservation' }
     ]
   },
   {
-    label: 'Hotel Management',
-    dropdown: [
-      { label: 'Reservations', path: '/reservations', description: 'Manage bookings and reservations' },
-      { label: 'Create Reservation', path: '/reservations/create', description: 'Create a reservation' },
-      { label: 'Rooms', path: '/rooms', description: 'Room availability and management' },
-      { label: 'Guests', path: '/guests', description: 'Guest information and history' },
-      { label: 'Check-in/Out', path: '/checkin', description: 'Guest check-in and check-out' }
-    ]
-  },
-  {
-    label: 'Staff & Operations',
-    dropdown: [
-      { label: 'Employee List', path: '/employees', description: 'Staff directory and management' },
-      { label: 'Schedules', path: '/schedules', description: 'Staff scheduling and shifts' },
-      { label: 'Housekeeping', path: '/housekeeping', description: 'Room cleaning and maintenance' },
-      { label: 'Maintenance', path: '/maintenance', description: 'Property maintenance requests' }
-    ]
-  },
-  {
-    label: 'Reports',
-    dropdown: [
-      { label: 'Financial Reports', path: '/reports/financial', description: 'Revenue and financial analytics' },
-      { label: 'Occupancy Reports', path: '/reports/occupancy', description: 'Room occupancy statistics' },
-      { label: 'Guest Satisfaction', path: '/reports/satisfaction', description: 'Guest feedback and ratings' },
-      { label: 'Performance Metrics', path: '/reports/performance', description: 'Key performance indicators' }
-    ]
+    label: 'Employees',
+    path: '/employees'
   }
 ];
 
 const profileMenuItems: ProfileMenuItem[] = [
   {
-    label: 'Hotel Settings',
-    path: '/settings/hotel',
+    label: 'Settings',
+    path: '/settings',
     icon: <Settings className="w-4 h-4" />,
-    description: 'Basic hotel configuration'
-  },
-  {
-    label: 'User Management',
-    path: '/settings/users',
-    icon: <User className="w-4 h-4" />,
-    description: 'Manage user accounts and permissions'
-  },
-  {
-    label: 'Integrations',
-    path: '/settings/integrations',
-    icon: <Settings className="w-4 h-4" />,
-    description: 'Third-party service integrations'
-  },
-  {
-    label: 'Preferences',
-    path: '/settings/preferences',
-    icon: <Bell className="w-4 h-4" />,
-    description: 'Personal preferences and notifications'
+    description: 'Hotel settings and preferences'
   },
   {
     label: 'Sign Out',

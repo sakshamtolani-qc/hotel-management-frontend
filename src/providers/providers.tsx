@@ -61,18 +61,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     clearError();
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      // For demo purposes, simulate login without API call
+      const demoUser = {
+        id: 1,
+        firstName: "Demo",
+        lastName: "User",
+        email: email,
+        role: "admin"
+      };
 
-      if (!response.ok) throw new Error("Login failed");
+      const demoToken = "demo-token-" + Date.now();
 
-      const data = await response.json();
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      setToken(data.token);
-      setUser(data.user);
+      setToken(demoToken);
+      setUser(demoUser);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
       throw err;
@@ -87,18 +91,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     clearError();
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
-      });
+      // For demo purposes, simulate signup without API call
+      const demoUser = {
+        id: Date.now(),
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        role: "user"
+      };
 
-      if (!response.ok) throw new Error("Signup failed");
+      const demoToken = "demo-token-" + Date.now();
 
-      const data = await response.json();
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      setToken(data.token);
-      setUser(data.user);
+      setToken(demoToken);
+      setUser(demoUser);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Signup failed");
       throw err;

@@ -6,7 +6,7 @@ import { Reservation } from '@/types/reservation';
 import './ReservationListPage.css';
 
 
-const Index = () => {
+const ReservationsListPage = () => {
   const [reservations, setReservations] = useState<Reservation[]>(mockReservations);
   const { toast } = useToast();
 
@@ -56,4 +56,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default ReservationsListPage;
