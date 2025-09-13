@@ -41,9 +41,9 @@ const Index = () => {
 
             {/* Main Content */}
             <main className="container mx-auto px-4 py-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 max-w-6xl mx-auto"> 
                     {/* Room Card */}
-                    <div className="flex justify-center">
+                    <div className="flex justify-space-bewteen">
                         {selectedRoom ? (
                             <RoomCard
                                 title={selectedRoom.title}
