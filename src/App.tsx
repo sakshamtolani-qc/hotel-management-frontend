@@ -18,6 +18,7 @@ import { Footer } from "@/components/Footer/Footer";
 import RoomDetails from '@/pages/RoomDetails/RoomDetails';
 import InvoiceDetailsPage from '@/pages/InvoiceDetailsPage/InvoiceDetailsPage';
 import ReservationsListPage from '@/pages/ReservationsListPage/ReservationsListPage';
+import AddRoomPg from '@/pages/AddRoomPg/AddRoomPg';
 
 
 // Loading Context
@@ -222,6 +223,15 @@ const App = () => (
                 element={
                   <Layout>
                     <UserList />
+                  </Layout>
+                }
+              />
+
+              <Route
+                path="/addroom"
+                element={
+                  <Layout>
+                    <AddRoomPg />
                   </Layout>
                 }
               />
