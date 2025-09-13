@@ -329,7 +329,7 @@ const RoomDetails: React.FC = () => {
             </div>
 
             {/* Reviews Section */}
-            <div className="reviews-section">
+            {/* <div className="reviews-section">
               <h2>
                 Reviews
                 <div className="rating-badge">
@@ -378,7 +378,7 @@ const RoomDetails: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Room Sidebar */}
