@@ -1,0 +1,1061 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.add-room-container {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+  color: #212121;
+}
+
+.add-room-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.add-room-main {
+  padding: 100px 0 40px 0;
+}
+
+/* Ensure all section titles have consistent styling regardless of h1 or h2 */
+.section-title,
+h1.section-title,
+h2.section-title {
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  color: #212121 !important;
+  margin-bottom: 50px !important;
+  margin-top: 0 !important;
+  line-height: 1.3 !important;
+  letter-spacing: -0.5px !important;
+  text-decoration: none !important;
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  position: relative !important;
+  display: block !important;
+}
+
+.section-title::before,
+.section-title::after {
+  display: none;
+  content: none;
+}
+
+/* Description Section */
+.description-section {
+  margin-bottom: 80px;
+}
+
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 800px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.room-input {
+  padding: 16px 20px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: #212121;
+  background-color: #EFF0F2;
+  transition: all 0.2s ease;
+  height: 56px;
+  box-shadow: none;
+}
+
+.room-input:focus {
+  outline: none;
+  border-color: #212121;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #212121;
+  margin-bottom: 0;
+}
+
+/* Facilities Section */
+.facilities-section {
+  margin-bottom: 60px;
+}
+
+.facilities-grid {
+  display: flex;
+  flex-direction: row;
+  gap: 150px;
+  max-width: 1200px;
+  align-items: center;
+}
+
+.facility-counter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0;
+  background-color: transparent;
+  border-radius: 0;
+  justify-content: center;
+}
+
+.counter-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #B0B0B0;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #484848;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.counter-btn:hover {
+  background-color: #484848;
+  color: #FFFFFF;
+}
+
+.counter-display {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-width: 80px;
+}
+
+.counter-number {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212121;
+  text-align: center;
+}
+
+.counter-label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #484848;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Amenities Section */
+.amenities-section {
+  margin-bottom: 60px;
+}
+
+.amenities-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 35px;
+  max-width: 1200px;
+}
+
+.amenity-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #EFF0F2;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #484848;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: left;
+  min-height: 72px;
+}
+
+.amenity-card:hover {
+  background-color: #484848;
+  color: #FFFFFF;
+}
+
+.amenity-card.selected {
+  background-color: #484848;
+  color: #FFFFFF;
+}
+
+.amenity-card svg {
+  color: inherit;
+}
+
+/* Safety Section */
+.safety-section {
+  margin-bottom: 60px;
+}
+
+.safety-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 35px;
+  max-width: 1200px;
+}
+
+.safety-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 16px;
+  width: 263.75px;
+  background-color: #EFF0F2;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #484848;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: left;
+}
+
+/* Header Clearance Fix - Ensure content doesn't go under fixed header */
+.add-room-container .description-section:first-child .section-title:first-child {
+  margin-top: 20px;
+}
+
+@media (max-width: 1024px) {
+  .add-room-container .description-section:first-child .section-title:first-child {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .add-room-container .description-section:first-child .section-title:first-child {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .add-room-container .add-room-main {
+    padding-top: 100px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-room-container .add-room-main {
+    padding-top: 95px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .add-room-container .add-room-main {
+    padding-top: 90px !important;
+  }
+}
+
+/* Responsive Grid Override - Higher Specificity */
+@media (max-width: 1024px) {
+  .add-room-container .amenities-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 100% !important;
+  }
+  
+  .add-room-container .safety-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 100% !important;
+  }
+  
+  .add-room-container .safety-card {
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .add-room-container .amenities-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 100% !important;
+  }
+  
+  .add-room-container .safety-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 100% !important;
+  }
+  
+  .add-room-container .safety-card {
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-room-container .amenities-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 100% !important;
+  }
+  
+  .add-room-container .safety-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 100% !important;
+  }
+  
+  .add-room-container .safety-card {
+    width: auto !important;
+    max-width: none !important;
+  }
+}
+
+.safety-card:hover {
+  background-color: #484848;
+  color: #FFFFFF;
+}
+
+.safety-card.selected {
+  background-color: #484848;
+  color: #FFFFFF;
+}
+
+.safety-card svg {
+  color: inherit;
+}
+
+/* Room Description Section */
+.room-description-section {
+  margin-bottom: 20px;
+  gap:30px
+}
+
+.description-row {
+  display: grid;
+  grid-template-columns: 1fr 500px;
+  gap: 30px;
+  align-items: center;
+}
+
+.description-input {
+  flex: 1;
+  max-width: 557px;
+}
+
+.description-textarea {
+  width: 100%;
+  min-height: 205px;
+  padding: 20px;
+  border: 2px solid #EFF0F2;
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  color: #212121;
+  background-color: #FFFFFF;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+  max-width: 557px;
+}
+
+.description-textarea:focus {
+  outline: none;
+  border-color: #484848;
+}
+
+.description-textarea::placeholder {
+  color: #484848;
+  font-weight: 400;
+}
+
+.upload-section {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  height: 250px;
+  background-color: #EFF0F2;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 16px;
+}
+
+.upload-area:hover {
+  background-color: #484848;
+  color: #FFFFFF;
+}
+
+.upload-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+}
+
+.upload-number {
+  font-size: 32px;
+  font-weight: 600;
+  color: inherit;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: 500;
+  color: inherit;
+}
+
+/* Image Preview Section */
+.image-preview-section {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.preview-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #212121;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  max-width: 100%;
+}
+
+.preview-item {
+  position: relative;
+  background: #EFF0F2;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.preview-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.preview-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.preview-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 8px;
+}
+
+.preview-item:hover .preview-overlay {
+  opacity: 1;
+}
+
+.remove-image-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #484848;
+  transition: all 0.2s ease;
+}
+
+.remove-image-btn:hover {
+  background: #ff4757;
+  color: #FFFFFF;
+  transform: scale(1.1);
+}
+
+.image-name {
+  padding: 8px;
+  font-size: 11px;
+  font-weight: 400;
+  color: #484848;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Upload Progress Section */
+.upload-progress-section {
+  margin: 30px 0;
+  padding: 20px;
+  background: #EFF0F2;
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Action Section */
+.action-section {
+  display: flex;
+  gap: 50px;
+  justify-content: flex-start;
+  margin-top: 0px;
+}
+
+.btn-primary {
+  padding: 16px 32px;
+  background-color: #ffffff;
+  color: #000000;
+  border: 2px solid #212121;
+  border-radius: 80px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 200px;
+}
+
+.btn-primary:hover {
+  background-color: #484848;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-secondary {
+  padding: 16px 32px;
+  background-color: transparent;
+  color: #212121;
+  border: 2px solid #212121;
+  border-radius: 80px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 200px;
+}
+
+.btn-secondary:hover {
+  background-color: #212121;
+  color: #FFFFFF;
+}
+
+.btn-secondary:disabled:hover {
+  background-color: transparent;
+  color: #212121;
+}
+
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+  .add-room-content {
+    padding: 0 24px;
+  }
+  
+  .add-room-main {
+    padding: 120px 0 40px 0;
+  }
+
+  .section-title,
+  h1.section-title,
+  h2.section-title {
+    font-size: 28px !important;
+    margin-bottom: 40px !important;
+    letter-spacing: -0.4px !important;
+  }
+
+  .input-row {
+    gap: 40px;
+  }
+
+  .facilities-grid {
+    gap: 80px;
+    justify-content: center;
+  }
+
+  .amenities-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px;
+    max-width: 100% !important;
+  }
+
+  .safety-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px;
+    max-width: 100% !important;
+  }
+
+  .amenity-card {
+    padding: 18px;
+    gap: 15px;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .safety-card {
+    padding: 18px;
+    width: auto !important;
+    max-width: none !important;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .description-row {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .upload-area {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .action-section {
+    gap: 20px;
+    justify-content: center;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .add-room-content {
+    padding: 0 16px;
+  }
+  
+  .add-room-main {
+    padding: 100px 0 30px 0;
+  }
+
+  .section-title,
+  h1.section-title,
+  h2.section-title {
+    font-size: 26px !important;
+    margin-bottom: 30px !important;
+    letter-spacing: -0.3px !important;
+  }
+
+  .description-section {
+    margin-bottom: 50px;
+  }
+
+  .input-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 100%;
+  }
+
+  .room-input {
+    height: 50px;
+    padding: 14px 16px;
+    font-size: 15px;
+  }
+
+  .input-label {
+    font-size: 15px;
+  }
+
+  .facilities-section {
+    margin-bottom: 50px;
+  }
+
+  .facilities-grid {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .facility-counter {
+    padding: 20px;
+    gap: 20px;
+    justify-content: space-between;
+    background-color: transparent;
+    border-radius: 0;
+  }
+
+  .counter-display {
+    flex-direction: column;
+    gap: 4px;
+    min-width: 60px;
+  }
+
+  .counter-number {
+    font-size: 20px;
+  }
+
+  .counter-label {
+    font-size: 13px;
+  }
+
+  .amenities-section,
+  .safety-section {
+    margin-bottom: 50px;
+  }
+
+  .amenities-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px;
+    max-width: 100% !important;
+  }
+
+  .safety-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px;
+    max-width: 100% !important;
+  }
+
+  .amenity-card {
+    flex-direction: column;
+    padding: 16px 12px;
+    font-size: 12px;
+    text-align: center;
+    gap: 8px;
+    min-height: 80px;
+    justify-content: center;
+  }
+
+  .amenity-card svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .safety-card {
+    flex-direction: column !important;
+    padding: 16px 12px;
+    font-size: 12px;
+    text-align: center;
+    gap: 8px;
+    width: auto !important;
+    max-width: none !important;
+    min-height: 80px;
+    justify-content: center;
+  }
+
+  .safety-card svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .room-description-section {
+    margin-bottom: 40px;
+  }
+
+  .description-row {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .description-textarea {
+    min-height: 150px;
+    font-size: 15px;
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .upload-section {
+    justify-content: center;
+  }
+
+  .upload-area {
+    width: 100%;
+    max-width: 200px;
+    height: 140px;
+  }
+
+  .upload-number {
+    font-size: 28px;
+  }
+
+  .upload-label {
+    font-size: 14px;
+  }
+
+  .image-preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 12px;
+  }
+
+  .preview-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+
+  .preview-image {
+    height: 100px;
+  }
+
+  .action-section {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    max-width: 300px;
+    padding: 16px 24px;
+    font-size: 15px;
+  }
+}
+
+/* Small Mobile Responsive */
+@media (max-width: 480px) {
+  .add-room-content {
+    padding: 0 12px;
+  }
+  
+  .add-room-main {
+    padding: 90px 0 20px 0;
+  }
+
+  .section-title,
+  h1.section-title,
+  h2.section-title {
+    font-size: 22px !important;
+    margin-bottom: 20px !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  .description-section,
+  .facilities-section,
+  .amenities-section,
+  .safety-section,
+  .room-description-section {
+    margin-bottom: 40px;
+  }
+
+  .room-input {
+    height: 48px;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .input-label {
+    font-size: 14px;
+  }
+
+  .facility-counter {
+    padding: 16px;
+    gap: 16px;
+    background-color: transparent;
+    border-radius: 0;
+  }
+
+  .counter-display {
+    gap: 2px;
+    min-width: 50px;
+  }
+
+  .counter-number {
+    font-size: 18px;
+  }
+
+  .counter-label {
+    font-size: 12px;
+  }
+
+  .counter-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  /* Keep amenities and safety cards in 2 columns even on small screens */
+  .amenities-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+    max-width: 100% !important;
+  }
+
+  .safety-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+    max-width: 100% !important;
+  }
+
+  .amenity-card {
+    padding: 12px 8px;
+    font-size: 11px;
+    gap: 6px;
+    min-height: 70px;
+  }
+
+  .amenity-card svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .safety-card {
+    padding: 12px 8px;
+    font-size: 11px;
+    gap: 6px;
+    min-height: 70px;
+    width: auto !important;
+    max-width: none !important;
+    flex-direction: column !important;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .safety-card svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .description-textarea {
+    min-height: 120px;
+    font-size: 14px;
+    padding: 14px;
+  }
+
+  .upload-area {
+    width: 100%;
+    max-width: 160px;
+    height: 120px;
+    gap: 12px;
+  }
+
+  .upload-number {
+    font-size: 24px;
+  }
+
+  .upload-label {
+    font-size: 13px;
+  }
+
+  .image-preview-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+
+  .preview-title {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  .preview-image {
+    height: 80px;
+  }
+
+  .image-name {
+    font-size: 10px;
+    padding: 6px;
+  }
+
+  .remove-image-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Extra Small Mobile - only for very small screens */
+@media (max-width: 360px) {
+  .add-room-content {
+    padding: 0 8px;
+  }
+  
+  .add-room-main {
+    padding: 80px 0 20px 0;
+  }
+
+  .section-title,
+  h1.section-title,
+  h2.section-title {
+    font-size: 20px !important;
+    margin-bottom: 16px !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  .amenity-card,
+  .safety-card {
+    padding: 10px 6px;
+    font-size: 10px;
+    gap: 4px;
+    min-height: 65px;
+  }
+
+  .safety-card {
+    width: auto !important;
+    max-width: none !important;
+  }
+
+  .amenity-card svg,
+  .safety-card svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .room-input {
+    height: 44px;
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .input-label {
+    font-size: 13px;
+  }
+
+  .upload-area {
+    max-width: 140px;
+    height: 100px;
+  }
+
+  .image-preview-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+
+  .preview-image {
+    height: 70px;
+  }
+
+  .image-name {
+    font-size: 9px;
+    padding: 4px;
+  }
+}
