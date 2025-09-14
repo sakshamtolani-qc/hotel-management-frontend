@@ -923,43 +923,161 @@
   .room-sidebar { position: static; margin-top: 20px; }
   
   /* Ensure amenities stay in 2-column layout on tablets */
+  /* Fixed: Removed grid-auto-flow: column for proper row-by-row distribution */
   .amenities-grid {
     grid-template-columns: 1fr 1fr;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(3, auto);
-    column-gap: 200px;
+    column-gap: 40px; /* Reduced gap for tablet screens */
   }
   
   .safety-grid {
     grid-template-columns: 1fr 1fr;
-    grid-auto-flow: column;
-    grid-template-rows: repeat(2, auto);
     column-gap: 40px;
   }
 }
 
 @media (max-width: 768px) {
-  .room-details-container { padding: 16px; }
-  .room-gallery { flex-direction: column; height: auto; }
-  .main-image { height: 250px; }
-  .gallery-right { grid-template-columns: 1fr 1fr; height: auto; }
-  .room-title h1 { font-size: 24px; }
-  .room-features { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .rating-bars { grid-template-columns: 1fr; }
-  .contact-actions { flex-direction: column; gap: 12px; }
+  .room-details-container { 
+    padding: 16px !important; 
+    max-width: 100% !important;
+  }
+  
+  .room-gallery { 
+    flex-direction: column !important; 
+    height: auto !important; 
+  }
+  
+  .main-image { height: 250px !important; }
+  .gallery-right { 
+    grid-template-columns: 1fr 1fr !important; 
+    height: auto !important; 
+  }
+  
+  /* Room header mobile responsiveness */
+  .room-details .room-main .room-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .room-details .room-main .room-actions {
+    width: 100% !important;
+    justify-content: flex-end !important;
+  }
+  
+  .room-title h1 { 
+    font-size: 24px !important; 
+    line-height: 1.2 !important;
+  }
+  
+  .room-features { 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 12px !important; 
+  }
+  
+  /* FORCE amenities and safety to stay in 2 columns on mobile */
+  .room-details .amenities-section .amenities-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: none !important;
+    grid-auto-flow: row !important;
+    column-gap: 20px !important;
+    row-gap: 12px !important;
+    width: 100% !important;
+  }
+  
+  .room-details .safety-section .safety-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: none !important;
+    grid-auto-flow: row !important;
+    column-gap: 20px !important;
+    row-gap: 12px !important;
+    width: 100% !important;
+  }
+  
+  /* Adjust amenity and safety item spacing for mobile */
+  .room-details .amenity-item,
+  .room-details .safety-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 6px 0 !important;
+    width: 100% !important;
+    font-size: 14px !important;
+  }
+  
+  .room-details .amenity-icon,
+  .room-details .safety-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .room-details .amenity-text {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+  
+  .rating-bars { grid-template-columns: 1fr !important; }
+  .contact-actions { 
+    flex-direction: column !important; 
+    gap: 12px !important; 
+  }
 }
 
 @media (max-width: 480px) {
-  .room-title h1 { font-size: 20px; }
-  .room-features { grid-template-columns: 1fr; }
-  .main-image { height: 200px; }
-  .gallery-right { grid-template-columns: 1fr; }
-  .gallery-images img { width: 50px; height: 50px; }
-}
-@media (max-width: 480px) {
-  .amenities-grid,
-  .safety-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .room-title h1 { 
+    font-size: 20px !important; 
+    margin-bottom: 8px !important;
+  }
+  
+  .room-features { 
+    grid-template-columns: 1fr !important; 
+    gap: 10px !important;
+  }
+  
+  .main-image { height: 200px !important; }
+  .gallery-right { grid-template-columns: 1fr !important; }
+  .gallery-images img { width: 50px !important; height: 50px !important; }
+  
+  /* FORCE amenities and safety to stay in 2 columns even on very small screens */
+  .room-details .amenities-section .amenities-grid,
+  .room-details .safety-section .safety-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    grid-auto-flow: row !important;
+    column-gap: 12px !important;
+    row-gap: 8px !important;
+    width: 100% !important;
+  }
+  
+  .room-details .amenity-item,
+  .room-details .safety-item {
+    gap: 8px !important;
+    padding: 4px 0 !important;
+    font-size: 13px !important;
+  }
+  
+  .room-details .amenity-icon,
+  .room-details .safety-icon {
+    font-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+  }
+  
+  .room-details .amenity-text {
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+  }
+  
+  /* Make show-all button full width on very small screens */
+  .room-details .show-all-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    font-size: 13px !important;
+    padding: 12px 16px !important;
   }
 }
+/* Removed conflicting mobile styles - amenities and safety stay in 2 columns */
