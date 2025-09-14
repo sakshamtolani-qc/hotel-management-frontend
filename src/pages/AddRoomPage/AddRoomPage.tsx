@@ -3,7 +3,7 @@ import { Plus, Minus, Tv, Wifi, WashingMachine, Home, Snowflake, ChefHat, FileTe
 // import Header from '../../components/layout/Header';
 // import Footer from '../../components/layout/Footer';
 import { PageLoader, ButtonLoader, ProgressLoader, InlineLoader } from '../../components/Loader/Loader';
-import './AddRoomPg.css';
+import './AddRoomPage.css';
 
 interface FacilityCount {
   beds: number;
@@ -32,7 +32,7 @@ interface SelectedSafety {
   option5: boolean;
 }
 
-const AddRoomPg: React.FC = () => {
+const AddRoomPage: React.FC = () => {
   const [roomNo, setRoomNo] = useState<string>('');
   const [priceRange, setPriceRange] = useState<string>('');
   const [facilities, setFacilities] = useState<FacilityCount>({
@@ -544,4 +544,4 @@ const AddRoomPg: React.FC = () => {
   );
 };
 
-export default AddRoomPg;
+export default AddRoomPage;

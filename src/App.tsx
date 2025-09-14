@@ -18,7 +18,7 @@ import { Footer } from "@/components/Footer/Footer";
 import RoomDetails from '@/pages/RoomDetails/RoomDetails';
 import InvoiceDetailsPage from '@/pages/InvoiceDetailsPage/InvoiceDetailsPage';
 import ReservationsListPage from '@/pages/ReservationsListPage/ReservationsListPage';
-import AddRoomPg from '@/pages/AddRoomPg/AddRoomPg';
+import AddRoomPg from '@/pages/AddRoomPage/AddRoomPage';
 
 
 // Loading Context
