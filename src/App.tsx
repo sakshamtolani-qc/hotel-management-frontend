@@ -19,7 +19,7 @@ import RoomDetails from '@/pages/RoomDetails/RoomDetails';
 import InvoiceDetailsPage from '@/pages/InvoiceDetailsPage/InvoiceDetailsPage';
 import ReservationsListPage from '@/pages/ReservationsListPage/ReservationsListPage';
 
-
+import Settings from './pages/SettingsPage/Settings';
 // Loading Context
 interface LoadingContextType {
   isLoading: boolean;
@@ -152,6 +152,7 @@ const App = () => (
               <Route path="/signup" element={<SignUp />} />
 
               {/* With header/footer (conditional based on loading) */}
+              <Route path="/settings" element={<Settings />} />
               <Route
                 path="/invoice"
                 element={
