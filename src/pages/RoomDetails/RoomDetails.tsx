@@ -94,7 +94,7 @@ const mockRoomData = {
 
 const RoomDetails: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
-  const [showAllAmenities, setShowAllAmenities] = useState(false);
+  const [showAllAmenities, setShowAllAmenities] = useState(true); // Changed to true - show all amenities by default
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
