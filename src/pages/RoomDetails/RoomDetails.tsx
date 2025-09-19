@@ -94,7 +94,7 @@ const mockRoomData = {
 
 const RoomDetails: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
-  const [showAllAmenities, setShowAllAmenities] = useState(false);
+  const [showAllAmenities, setShowAllAmenities] = useState(true); // Changed to true - show all amenities by default
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -352,56 +352,7 @@ const RoomDetails: React.FC = () => {
             </div>
 
             {/* Reviews Section */}
-            <div className="reviews-section">
-              <h2>
-                Reviews
-                <div className="rating-badge">
-                  <Star size={20} fill="currentColor" />
-                  {roomData.reviews.overall}
-                </div>
-              </h2>
-              <div className="rating-bars">
-                <div>
-                  <div className="rating-item">
-                    <span className="rating-label">Amenities</span>
-                    <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.amenities / 5) * 100}%` }}></div>
-                    </div>
-                    <span className="rating-score">{roomData.reviews.ratings.amenities}</span>
-                  </div>
-                  <div className="rating-item">
-                    <span className="rating-label">Communication</span>
-                    <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.communication / 5) * 100}%` }}></div>
-                    </div>
-                    <span className="rating-score">{roomData.reviews.ratings.communication}</span>
-                  </div>
-                  <div className="rating-item">
-                    <span className="rating-label">Value for Money</span>
-                    <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.valueForMoney / 5) * 100}%` }}></div>
-                    </div>
-                    <span className="rating-score">{roomData.reviews.ratings.valueForMoney}</span>
-                  </div>
-                </div>
-                <div>
-                  <div className="rating-item">
-                    <span className="rating-label">Hygiene</span>
-                    <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.hygiene / 5) * 100}%` }}></div>
-                    </div>
-                    <span className="rating-score">{roomData.reviews.ratings.hygiene}</span>
-                  </div>
-                  <div className="rating-item">
-                    <span className="rating-label">Location of Property</span>
-                    <div className="rating-bar">
-                      <div className="rating-fill" style={{ width: `${(roomData.reviews.ratings.locationOfProperty / 5) * 100}%` }}></div>
-                    </div>
-                    <span className="rating-score">{roomData.reviews.ratings.locationOfProperty}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
 
           {/* Room Sidebar */}
