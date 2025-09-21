@@ -7,11 +7,27 @@ export const LoginPage = () => {
   const navigate = useNavigate();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  // Demo credentials
+  const demoUser = {
+    email: "demo@hotel.com",
+    password: "demo123",
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Navigate to home on login for now
-    navigate("/home");
+
+    if (
+      (identifier === demoUser.email || identifier === "1234567890") && // email or phone
+      password === demoUser.password
+    ) {
+      // Save user to localStorage (simple demo auth)
+      localStorage.setItem("user", JSON.stringify({ email: demoUser.email }));
+      navigate("/home");
+    } else {
+      setError("Invalid email/phone or password");
+    }
   };
 
   return (
@@ -84,6 +100,9 @@ export const LoginPage = () => {
               />
             </div>
 
+            {/* Error Message */}
+            {error && <p style={{ color: "red", marginBottom: "10px" }}>{error}</p>}
+
             {/* Login Button */}
             <button type="submit" className="login-submit-btn">
               LogIn
@@ -105,6 +124,13 @@ export const LoginPage = () => {
             <Link to="/signup" className="login-signup-anchor">
               SignUp
             </Link>
+          </div>
+
+          {/* Demo credentials info */}
+          <div style={{ marginTop: "20px", fontSize: "14px", color: "#666" }}>
+            <p><b>Demo Login:</b></p>
+            <p>Email: demo@hotel.com</p>
+            <p>Password: demo123</p>
           </div>
         </div>
       </div>

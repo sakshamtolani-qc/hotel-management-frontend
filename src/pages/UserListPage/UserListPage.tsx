@@ -15,16 +15,16 @@ interface Employee {
 
 const UserList: React.FC = () => {
   const [employees] = useState<Employee[]>([
-    { id: 1, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 2, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 3, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 4, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'Active' },
-    { id: 5, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 6, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 7, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 8, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 9, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
-    { id: 10, name: 'Lorem Ipsum', phoneNo: '09203XXXXX', date: '6 Sept 2025', role: 'Lorem Ipsum', status: 'InActive' },
+    { id: 1, name: 'John Smith', phoneNo: '9876543210', date: '6 Sept 2025', role: 'Front Desk', status: 'Active' },
+    { id: 2, name: 'Sarah Johnson', phoneNo: '9123456780', date: '6 Sept 2025', role: 'Housekeeping', status: 'Active' },
+    { id: 3, name: 'Michael Brown', phoneNo: '9988776655', date: '6 Sept 2025', role: 'Manager', status: 'InActive' },
+    { id: 4, name: 'Emily Davis', phoneNo: '9876501234', date: '6 Sept 2025', role: 'Concierge', status: 'Active' },
+    { id: 5, name: 'David Wilson', phoneNo: '9012345678', date: '6 Sept 2025', role: 'Housekeeping', status: 'InActive' },
+    { id: 6, name: 'Lisa Anderson', phoneNo: '9876123456', date: '6 Sept 2025', role: 'Reception', status: 'InActive' },
+    { id: 7, name: 'Robert Taylor', phoneNo: '9988112233', date: '6 Sept 2025', role: 'Chef', status: 'InActive' },
+    { id: 8, name: 'Maria Garcia', phoneNo: '9876998877', date: '6 Sept 2025', role: 'Bartender', status: 'InActive' },
+    { id: 9, name: 'James Martinez', phoneNo: '9123459876', date: '6 Sept 2025', role: 'Security', status: 'InActive' },
+    { id: 10, name: 'Sophia Lee', phoneNo: '9876541230', date: '6 Sept 2025', role: 'Housekeeping', status: 'InActive' },
   ]);
 
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees);

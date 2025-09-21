@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '../../hooks/useNavigation';
-import { User, Menu, X, ChevronDown, Settings, LogOut, Bell } from 'lucide-react';
+import { User, Menu, X, ChevronDown, Settings, LogOut, FileText, Bed, PlusSquare } from 'lucide-react';
 import './Header.css';
 import { Link } from 'react-router-dom';
 
@@ -24,25 +24,29 @@ interface ProfileMenuItem {
 }
 
 const navigationItems: NavItem[] = [
-  {
-    label: 'Dashboard',
-    path: '/dashboard'
-  },
+  { label: 'Home', path: '/home' },
   {
     label: 'Rooms',
-    path: '/rooms'
+    dropdown: [
+      { label: 'All Rooms', path: '/rooms', description: 'Browse all rooms' },
+      { label: 'Add Room', path: '/addroom', description: 'Add a new room' },
+    ],
   },
   {
     label: 'Reservations',
     dropdown: [
       { label: 'View Reservations', path: '/reservations', description: 'Manage bookings and reservations' },
-      { label: 'Create Reservation', path: '/reservations/create', description: 'Create a new reservation' }
-    ]
+      { label: 'Create Reservation', path: '/reservations/create', description: 'Create a new reservation' },
+    ],
   },
+  { label: 'Invoices', path: '/invoice' },
   {
-    label: 'Employees',
-    path: '/employees'
-  }
+    label: 'Management',
+    dropdown: [
+      { label: 'Dashboard', path: '/dashboard', description: 'Hotel analytics & reports' },
+      { label: 'Employees', path: '/employees', description: 'Manage employees & staff' },
+    ],
+  },
 ];
 
 const profileMenuItems: ProfileMenuItem[] = [
@@ -50,14 +54,14 @@ const profileMenuItems: ProfileMenuItem[] = [
     label: 'Settings',
     path: '/settings',
     icon: <Settings className="w-4 h-4" />,
-    description: 'Hotel settings and preferences'
+    description: 'Hotel settings and preferences',
   },
   {
     label: 'Sign Out',
     path: '/logout',
     icon: <LogOut className="w-4 h-4" />,
-    description: 'Sign out of your account'
-  }
+    description: 'Sign out of your account',
+  },
 ];
 
 export const Header: React.FC = () => {
@@ -72,47 +76,33 @@ export const Header: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Only hide/show after scrolling at least 50px to avoid flickering
       if (Math.abs(currentScrollY - lastScrollY) < 50) return;
-
       if (currentScrollY < lastScrollY || currentScrollY < 100) {
-        // Scrolling up or near top - show header
         setIsHeaderVisible(true);
       } else {
-        // Scrolling down - hide header
         setIsHeaderVisible(false);
-        // Close any open menus when hiding
         setIsMobileMenuOpen(false);
         setIsProfileMenuOpen(false);
         setActiveDropdown(null);
       }
-
       setLastScrollY(currentScrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
-  // Close dropdowns when clicking outside
+  // Close profile dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (!event.target) return;
-
       const target = event.target as Element;
       if (!target.closest('.profile-dropdown-container')) {
         setIsProfileMenuOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleNavigation = (path: string) => {
@@ -134,7 +124,7 @@ export const Header: React.FC = () => {
     <header className={`header-container ${isHeaderVisible ? 'header-visible' : 'header-hidden'}`}>
       <div className="header-content-full">
         <div className="header-mobile-wrapper">
-          <Link className="logo-container" to="/dashboard">
+          <Link className="logo-container" to="/home">
             <img src="/logo2.svg" alt="Quorium Consulting" className="logo" />
           </Link>
 
@@ -192,17 +182,12 @@ export const Header: React.FC = () => {
             </nav>
           </div>
 
-
-          {/* User Avatar - Desktop with Profile Dropdown */}
+          {/* User Avatar with Profile Dropdown */}
           <div className="user-avatar-desktop">
             <div className="profile-dropdown-container">
-              <button
-                className="avatar-container"
-                onClick={toggleProfileMenu}
-              >
+              <button className="avatar-container" onClick={toggleProfileMenu}>
                 <User className="w-5 h-5 text-white" />
               </button>
-
               {isProfileMenuOpen && (
                 <div className="profile-dropdown-menu">
                   <div className="profile-dropdown-content">
@@ -216,9 +201,7 @@ export const Header: React.FC = () => {
                         <div className="profile-item-content">
                           <div className="profile-item-label">{item.label}</div>
                           {item.description && (
-                            <div className="profile-item-description">
-                              {item.description}
-                            </div>
+                            <div className="profile-item-description">{item.description}</div>
                           )}
                         </div>
                       </button>
@@ -237,18 +220,20 @@ export const Header: React.FC = () => {
               {navigationItems.map((item) => (
                 <div key={item.label} className="mobile-nav-item">
                   <button
-                    onClick={() => item.dropdown ? handleMobileDropdownToggle(item.label) : item.path && handleNavigation(item.path)}
+                    onClick={() =>
+                      item.dropdown ? handleMobileDropdownToggle(item.label) : item.path && handleNavigation(item.path)
+                    }
                     className="mobile-nav-button"
                   >
                     <span>{item.label}</span>
                     {item.dropdown && (
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform ${activeDropdown === item.label ? 'rotate-180' : ''
-                          }`}
+                        className={`w-4 h-4 transition-transform ${
+                          activeDropdown === item.label ? 'rotate-180' : ''
+                        }`}
                       />
                     )}
                   </button>
-
                   {item.dropdown && activeDropdown === item.label && (
                     <div className="mobile-dropdown">
                       {item.dropdown.map((dropdownItem) => (
@@ -260,9 +245,7 @@ export const Header: React.FC = () => {
                           <div>
                             <div className="mobile-dropdown-label">{dropdownItem.label}</div>
                             {dropdownItem.description && (
-                              <div className="mobile-dropdown-description">
-                                {dropdownItem.description}
-                              </div>
+                              <div className="mobile-dropdown-description">{dropdownItem.description}</div>
                             )}
                           </div>
                         </button>
@@ -271,8 +254,7 @@ export const Header: React.FC = () => {
                   )}
                 </div>
               ))}
-
-              {/* Mobile Profile Section with Settings */}
+              {/* Mobile Profile Section */}
               <div className="mobile-user-section">
                 <div className="mobile-settings-title">
                   <User className="w-4 h-4" />
@@ -289,9 +271,7 @@ export const Header: React.FC = () => {
                       <div className="mobile-profile-content">
                         <div className="mobile-profile-label">{item.label}</div>
                         {item.description && (
-                          <div className="mobile-profile-description">
-                            {item.description}
-                          </div>
+                          <div className="mobile-profile-description">{item.description}</div>
                         )}
                       </div>
                     </button>

@@ -7,7 +7,7 @@ import { SignUp } from "./pages/SignUpPage/SignUpPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./providers/providers";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import NotFound from "./pages/NotFound/NotFound";
 import ReservationsPage from "@/pages/CreateReservationsPage/CreateReservationsPage";
@@ -19,9 +19,10 @@ import RoomDetails from '@/pages/RoomDetails/RoomDetails';
 import InvoiceDetailsPage from '@/pages/InvoiceDetailsPage/InvoiceDetailsPage';
 import ReservationsListPage from '@/pages/ReservationsListPage/ReservationsListPage';
 import AddRoomPg from '@/pages/AddRoomPage/AddRoomPage';
-
 import Settings from './pages/SettingsPage/Settings';
-// Loading Context
+import ProtectedRoute from "@/components/ProtectedRoute/ProtectedRoute"; // new wrapper
+
+// -------------------- Loading Context --------------------
 interface LoadingContextType {
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
@@ -70,16 +71,13 @@ const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
   );
 };
 
-// Enhanced Layout component that hides header/footer during loading
+// -------------------- Layout --------------------
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isLoading } = useLoading();
-
-  // Check for any loader elements in the DOM
   const [hasLoaderInDOM, setHasLoaderInDOM] = useState(false);
 
   useEffect(() => {
     const checkForLoaders = () => {
-      // Check for various loader classes and elements
       const loaderSelectors = [
         '.page-loader',
         '[data-loading="true"]',
@@ -100,12 +98,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       setHasLoaderInDOM(hasAnyLoader);
     };
 
-    // Initial check
     checkForLoaders();
 
-    // Set up mutation observer to watch for loader changes
     const observer = new MutationObserver(() => {
-      setTimeout(checkForLoaders, 50); // Small delay to ensure DOM is updated
+      setTimeout(checkForLoaders, 50);
     });
 
     observer.observe(document.body, {
@@ -115,7 +111,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       attributeFilter: ['class', 'data-loading', 'role']
     });
 
-    // Also check periodically
     const interval = setInterval(checkForLoaders, 500);
 
     return () => {
@@ -137,6 +132,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// -------------------- App --------------------
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -148,101 +144,138 @@ const App = () => (
         <LoadingProvider>
           <BrowserRouter>
             <Routes>
-              {/* No header/footer */}
+              {/* Public routes */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/signup" element={<SignUp />} />
 
-              {/* With header/footer (conditional based on loading) */}
-              <Route path="/settings" element={<Settings />} />
+              {/* Protected routes */}
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <Settings />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/invoice"
                 element={
-                  <Layout>
-                  <InvoiceDetailsPage />
-                </Layout>
-                }/>
+                  <ProtectedRoute>
+                    <Layout>
+                      <InvoiceDetailsPage />
+                    </Layout>
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/rooms"
                 element={
-                  <Layout>
-                    <RoomsPage />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <RoomsPage />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
 
               <Route
                 path="/rooms/:roomId"
                 element={
-                  <Layout>
-                    <RoomDetails />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <RoomDetails />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
 
               <Route
                 path="/reservations/create"
                 element={
-                  <Layout>
-                    <ReservationsPage />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <ReservationsPage />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/reservations"
                 element={
-                  <Layout>
-                    <ReservationsListPage />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <ReservationsListPage />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/dashboard"
                 element={
-                  <Layout>
-                    <Dashboard />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <Dashboard />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/home"
                 element={
-                  <Layout>
-                    <Landing />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <Landing />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/"
                 element={
-                  <Layout>
-                    <Dashboard />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <Dashboard />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/employees"
                 element={
-                  <Layout>
-                    <UserList />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <UserList />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
 
               <Route
                 path="/addroom"
                 element={
-                  <Layout>
-                    <AddRoomPg />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <AddRoomPg />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
-               
+
               <Route
                 path="*"
                 element={
-                  <Layout>
-                    <NotFound />
-                  </Layout>
+                  <ProtectedRoute>
+                    <Layout>
+                      <NotFound />
+                    </Layout>
+                  </ProtectedRoute>
                 }
               />
             </Routes>

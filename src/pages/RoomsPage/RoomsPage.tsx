@@ -13,6 +13,7 @@ import {
 
 import Loader, { PageLoader, InlineLoader } from "@/components/Loader/Loader";
 import { mockRooms, Room as RoomType } from "@/data/mockRooms";
+import { useLocation } from "react-router-dom";
 import "./RoomsPage.css";
 
 const RoomsPage: React.FC = () => {
@@ -21,6 +22,14 @@ const RoomsPage: React.FC = () => {
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [rooms, setRooms] = useState<RoomType[]>(mockRooms);
   const navigate = useNavigate();
+
+  const locationHook = useLocation();
+  const searchParams = new URLSearchParams(locationHook.search);
+
+  const searchFilters = {
+    location: searchParams.get("location") || "",
+    guests: searchParams.get("guests") ? parseInt(searchParams.get("guests")!, 10) : 0,
+  };
 
   // loader states
   const [loadingPage, setLoadingPage] = useState<boolean>(true); // initial + category loads
@@ -103,10 +112,12 @@ const RoomsPage: React.FC = () => {
   const getFilteredRooms = (): RoomType[] => {
     let filtered = rooms;
 
+    // Category filter
     if (activeCategory !== "Rooms") {
       filtered = filtered.filter((room) => room.category === activeCategory);
     }
 
+    // Status filters
     if (selectedFilters.length > 0) {
       filtered = filtered.filter((room) => {
         if (selectedFilters.includes("Vacant Rooms") && room.status === "Vacant") return true;
@@ -116,8 +127,22 @@ const RoomsPage: React.FC = () => {
       });
     }
 
+    // Search filters
+    if (searchFilters.guests > 0) {
+      filtered = filtered.filter((room) => room.amenities.guests >= searchFilters.guests);
+    }
+
+    if (searchFilters.location) {
+      filtered = filtered.filter(
+        (room) =>
+          room.title.toLowerCase().includes(searchFilters.location.toLowerCase()) ||
+          room.description.toLowerCase().includes(searchFilters.location.toLowerCase())
+      );
+    }
+
     return filtered;
   };
+
 
   // If page-level loading -> show full page loader
   if (loadingPage) {
