@@ -73,13 +73,13 @@ export class RoomsService {
    */
   static async createRoom(formData: AddRoomFormData): Promise<Room> {
     try {
-      // Transform form data to match backend expectations
+      // Transform form data to match backend RoomCreateSerializer expectations
       const roomData = {
-        room_number: formData.roomNo,
+        roomNo: formData.roomNo,
         title: `Room ${formData.roomNo}`, // Generate title from room number
-        description: formData.roomDescription,
+        roomDescription: formData.roomDescription,
         category: "Standard", // Default category, can be enhanced later
-        price_range_display: formData.priceRange,
+        priceRange: formData.priceRange,
         price_per_night: RoomsService.extractPriceFromRange(formData.priceRange),
         beds: formData.facilities.beds,
         bathrooms: formData.facilities.bathrooms,
