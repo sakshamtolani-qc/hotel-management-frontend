@@ -80,7 +80,7 @@ export class RoomsService {
         description: formData.roomDescription,
         category: "Standard", // Default category, can be enhanced later
         price_range_display: formData.priceRange,
-        price_per_night: this.extractPriceFromRange(formData.priceRange),
+        price_per_night: RoomsService.extractPriceFromRange(formData.priceRange),
         beds: formData.facilities.beds,
         bathrooms: formData.facilities.bathrooms,
         parking: formData.facilities.parking,
@@ -106,7 +106,7 @@ export class RoomsService {
       
       // Handle validation errors from Django
       if (error.response?.status === 400) {
-        const errorMessage = this.extractErrorMessage(error.response.data);
+        const errorMessage = RoomsService.extractErrorMessage(error.response.data);
         throw new Error(errorMessage);
       }
       
@@ -125,7 +125,7 @@ export class RoomsService {
       console.error(`Error updating room ${roomId}:`, error);
       
       if (error.response?.status === 400) {
-        const errorMessage = this.extractErrorMessage(error.response.data);
+        const errorMessage = RoomsService.extractErrorMessage(error.response.data);
         throw new Error(errorMessage);
       }
       
