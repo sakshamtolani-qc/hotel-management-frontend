@@ -80,7 +80,7 @@ export class RoomsService {
         roomDescription: formData.roomDescription,
         category: "Standard", // Default category, can be enhanced later
         priceRange: formData.priceRange,
-        price_per_night: RoomsService.extractPriceFromRange(formData.priceRange),
+        price_per_night: parseFloat(RoomsService.extractPriceFromRange(formData.priceRange)),
         beds: formData.facilities.beds,
         bathrooms: formData.facilities.bathrooms,
         parking: formData.facilities.parking,
@@ -94,11 +94,12 @@ export class RoomsService {
         sanitizers: formData.safety.sanitizers,
         fire_extinguisher: formData.safety.fireThrowers,
         daily_cleaning: formData.safety.dailyCleaner,
-        rating: "4.0", // Default rating
+        rating: 4.0, // Default rating
         image: "/bedroom.jpg", // Default image for now
         additional_images: []
       };
 
+      console.log('Sending room data to backend:', JSON.stringify(roomData, null, 2));
       const response = await apiClient.post(ROOMS_ENDPOINTS.create, roomData);
       return response.data;
     } catch (error) {
@@ -106,6 +107,7 @@ export class RoomsService {
       
       // Handle validation errors from Django
       if (error.response?.status === 400) {
+        console.log('Backend error response:', error.response.data);
         const errorMessage = RoomsService.extractErrorMessage(error.response.data);
         throw new Error(errorMessage);
       }
@@ -190,8 +192,17 @@ export class RoomsService {
       return errorData;
     }
     
+    // Handle backend's custom error format
+    if (errorData.error) {
+      return errorData.details || errorData.error;
+    }
+    
     if (errorData.detail) {
       return errorData.detail;
+    }
+    
+    if (errorData.details) {
+      return errorData.details;
     }
     
     if (errorData.non_field_errors) {
