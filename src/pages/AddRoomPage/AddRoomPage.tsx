@@ -173,11 +173,11 @@ const AddRoomPage: React.FC = () => {
     }, 200);
     
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Import the rooms service
+      const { createRoom } = await import('../../services/api/rooms');
       
-      // Here you would normally submit the form data to your API
-      console.log('Form submitted:', {
+      // Prepare form data for API submission
+      const formData = {
         roomNo,
         priceRange,
         facilities,
@@ -185,12 +185,44 @@ const AddRoomPage: React.FC = () => {
         safety,
         roomDescription,
         images: selectedImages
-      });
+      };
       
+      // Submit to Django API
+      const createdRoom = await createRoom(formData);
+      
+      console.log('Room created successfully:', createdRoom);
       alert('Room posted successfully!');
+      
+      // Reset form after successful submission
+      setRoomNo('');
+      setPriceRange('');
+      setFacilities({ beds: 0, bathrooms: 0, parking: 0 });
+      setAmenities({
+        television: false,
+        wifi: false,
+        washer: false,
+        balcony: false,
+        airCondition: false,
+        kitchen: false,
+        other: false
+      });
+      setSafety({
+        sanitizers: false,
+        fireThrowers: false,
+        dailyCleaner: false,
+        option1: false,
+        option2: false,
+        option3: false,
+        option4: false,
+        option5: false
+      });
+      setRoomDescription('');
+      setSelectedImages([]);
+      
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Error posting room. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Error posting room. Please try again.';
+      alert(errorMessage);
     } finally {
       setSubmitting(false);
       setUploadProgress(0);
