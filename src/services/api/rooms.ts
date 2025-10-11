@@ -65,20 +65,30 @@ export class RoomsService {
    * Get list of all rooms
    */
   static async getRooms(): Promise<Room[]> {
-    try {
-      console.log('RoomsService.getRooms: Making API call to:', ROOMS_ENDPOINTS.list);
-      const response = await apiClient.get(ROOMS_ENDPOINTS.list);
-      console.log('RoomsService.getRooms: Raw API response:', response);
-      // Backend returns {results: Room[]} format, extract the results array
-      const roomsData = response.data.results || response.data;
-      console.log('RoomsService.getRooms: Extracted rooms data:', roomsData);
-      console.log('RoomsService.getRooms: Returning rooms array of length:', roomsData?.length);
-      return roomsData;
-    } catch (error) {
-      console.error('Error fetching rooms:', error);
-      throw new Error('Failed to fetch rooms. Please try again.');
-    }
+  try {
+    console.log('RoomsService.getRooms: Making API call to:', ROOMS_ENDPOINTS.list);
+    const response = await apiClient.get(ROOMS_ENDPOINTS.list);
+    console.log('RoomsService.getRooms: Raw API response:', response);
+
+    // Backend returns {results: Room[]} format, extract the results array
+    let roomsData = response.data.results || response.data;
+
+    // ✅ Normalize additional_images so it's always an array
+    roomsData = roomsData.map((room: Room) => ({
+      ...room,
+      additional_images: room.additional_images || [],
+    }));
+
+    console.log('RoomsService.getRooms: Extracted rooms data:', roomsData);
+    console.log('RoomsService.getRooms: Returning rooms array of length:', roomsData?.length);
+
+    return roomsData;
+  } catch (error) {
+    console.error('Error fetching rooms:', error);
+    throw new Error('Failed to fetch rooms. Please try again.');
   }
+}
+
 
   /**
    * Get a specific room by ID
