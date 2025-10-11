@@ -1,22 +1,20 @@
+// types/reservation.ts
+
+export type ReservationStatus = "pending" | "confirmed" | "cancelled" | "past";
+
 export interface Reservation {
   id: string;
   guestName: string;
   roomType: string;
-  roomImage: string;
   checkIn: string;
   checkOut: string;
-  duration: string;
   guests: number;
+  status: ReservationStatus;
   price: number;
-  status: 'upcoming' | 'past' | 'cancelled';
-  createdAt: string;
+  roomImage?: string; // <-- Add this optional field
 }
 
 export interface ReservationFilters {
-  status: 'all' | 'upcoming' | 'past';
+  status: ReservationStatus | "all";
   search: string;
-  dateRange?: {
-    from: Date;
-    to: Date;
-  };
 }

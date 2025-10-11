@@ -1,30 +1,20 @@
-import { Input } from '@/utils/input';
-import { Search } from 'lucide-react';
-import { ReservationFilters } from '@/types/reservation';
+import { Input } from "@/utils/input";
+import { Search } from "lucide-react";
+import { ReservationFilters , ReservationStatus  } from "@/types/reservation";
 
 interface SearchFilterProps {
   filters: ReservationFilters;
   onFiltersChange: (filters: ReservationFilters) => void;
 }
 
-const SearchFilter = ({ filters, onFiltersChange }: SearchFilterProps) => {
-  const handleSearchChange = (value: string) => {
-    onFiltersChange({
-      ...filters,
-      search: value
-    });
-  };
-
-  const handleStatusChange = (value: string) => {
-    onFiltersChange({
-      ...filters,
-      status: value as 'all' | 'upcoming' | 'past'
-    });
-  };
+const SearchFilter: React.FC<SearchFilterProps> = ({ filters, onFiltersChange }) => {
+  const handleSearchChange = (value: string) => onFiltersChange({ ...filters, search: value });
+ const handleStatusChange = (value: ReservationStatus | "all") => {
+  onFiltersChange({ ...filters, status: value });
+};
 
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-6">
-      {/* Search Input */}
       <div className="relative flex-1">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
@@ -34,20 +24,17 @@ const SearchFilter = ({ filters, onFiltersChange }: SearchFilterProps) => {
           className="pl-10"
         />
       </div>
+      <select
+        value={filters.status}
+        onChange={(e) => handleStatusChange(e.target.value as ReservationStatus | "all")}
+        className="w-full md:w-48 border rounded px-3 py-2"
+      >
+        <option value="all">All Reservations</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="past">Past</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
 
-      {/* Status Filter 
-      <Select value={filters.status} onValueChange={handleStatusChange}>
-        <SelectTrigger className="w-full md:w-48">
-          <Filter className="h-4 w-4 mr-2" />
-          <SelectValue placeholder="Filter by status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Reservations</SelectItem>
-          <SelectItem value="upcoming">Upcoming</SelectItem>
-          <SelectItem value="past">Past</SelectItem>
-        </SelectContent>
-      </Select>
-      */}
     </div>
   );
 };

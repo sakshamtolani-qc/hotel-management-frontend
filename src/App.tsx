@@ -3,8 +3,8 @@ import { Toaster } from "@/utils/toaster";
 import { Toaster as Sonner } from "@/utils/sonner";
 import { TooltipProvider } from "@/utils/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SignUp } from "./pages/SignUpPage/SignUpPage";
-import { LoginPage } from "./pages/LoginPage/LoginPage";
+import {SignUp} from "./pages/SignUpPage/SignUpPage";
+import {LoginPage}  from "./pages/LoginPage/LoginPage";
 import { AuthProvider } from "./providers/providers";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -81,11 +81,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       const loaderSelectors = [
         '.page-loader',
         '[data-loading="true"]',
-        '.loader',
-        '.loading',
-        '[role="status"]',
-        '.animate-spin',
-        '.animate-pulse'
+        // Exclude image loader overlays from hiding header
+        '.loader:not(.image-loader-overlay .loader)',
+        '.loading:not(.image-loader-overlay)',
+        '[role="status"]'
       ];
 
       const hasAnyLoader = loaderSelectors.some(selector => {

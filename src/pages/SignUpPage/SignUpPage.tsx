@@ -7,6 +7,7 @@ import { Label } from "../../utils/label";
 import { Separator } from "../../utils/separator";
 import { useAuth } from "../../providers/providers";
 import "./SignUpPage.css";
+import axios from "axios";
 
 // ✅ Import loaders
 import { ButtonLoader, PageLoader } from "../../components/Loader/Loader";
@@ -31,34 +32,46 @@ export const SignUp = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      if (formData.password !== formData.confirmPassword) {
-        throw new Error("Passwords do not match");
-      }
-
-      // Use auth provider for signup
-      await signup({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        phoneNo: formData.phoneNo
-      });
-
-      // Redirect to dashboard after successful signup
-      navigate("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Signup failed");
-    } finally {
-      setLoading(false);
+  try {
+    if (formData.password !== formData.confirmPassword) {
+      throw new Error("Passwords do not match");
     }
-  };
+
+    // Call backend signup endpoint
+    const response = await axios.post("http://localhost:8000/api/users/register/", {
+      first_name: formData.firstName,
+      last_name: formData.lastName,
+      username: formData.email, // or any username logic
+      email: formData.email,
+      phone_number: formData.phoneNo,
+      password: formData.password,
+      password2: formData.confirmPassword,
+      user_type: "CUSTOMER",
+    });
+
+
+    // Backend should return user info + token
+    const { user, token } = response.data;
+
+    // Save user info and token to localStorage
+    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+
+    // Redirect to dashboard/home
+    navigate("/dashboard");
+  } catch (err: any) {
+    console.error("Signup error:", err);
+    setError(err.response?.data?.message || err.message || "Signup failed");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="signup-container">

@@ -1,5 +1,25 @@
-import { apiClient } from './config';
-import { Room } from '../../data/mockRooms'; // Use existing Room interface
+// import { apiClient } from './config';
+// import { Room } from '../../data/mockRooms'; // Use existing Room interface
+import axios from "axios";
+import { Room } from '../../types/Room';
+
+// src/services/api/config.ts
+
+export const apiClient = axios.create({
+  baseURL: "http://localhost:8000/api", // Django base URL
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// Optional: add interceptors for debugging
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error("API Error:", error.response || error.message);
+    return Promise.reject(error);
+  }
+);
 
 // API endpoints based on your Django URLs
 const ROOMS_ENDPOINTS = {
@@ -46,9 +66,14 @@ export class RoomsService {
    */
   static async getRooms(): Promise<Room[]> {
     try {
+      console.log('RoomsService.getRooms: Making API call to:', ROOMS_ENDPOINTS.list);
       const response = await apiClient.get(ROOMS_ENDPOINTS.list);
+      console.log('RoomsService.getRooms: Raw API response:', response);
       // Backend returns {results: Room[]} format, extract the results array
-      return response.data.results || response.data;
+      const roomsData = response.data.results || response.data;
+      console.log('RoomsService.getRooms: Extracted rooms data:', roomsData);
+      console.log('RoomsService.getRooms: Returning rooms array of length:', roomsData?.length);
+      return roomsData;
     } catch (error) {
       console.error('Error fetching rooms:', error);
       throw new Error('Failed to fetch rooms. Please try again.');
