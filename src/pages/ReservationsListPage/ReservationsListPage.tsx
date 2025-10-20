@@ -1,54 +1,63 @@
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import ReservationsList from "@/components/reservations/ReservationsList";
-import { Reservation } from "@/types/reservation";
 import { ReservationsService } from "@/services/api/reservations";
+import { Reservation } from "@/types/reservation";
+import { PageLoader } from "@/components/Loader/Loader";
 
 const ReservationsListPage = () => {
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        setLoading(true);
-        const data = await ReservationsService.getReservations();
-        setReservations(data);
-      } catch (error) {
-        toast({ title: "Error", description: "Failed to fetch reservations.", variant: "destructive" });
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchReservations();
-  }, [toast]);
+  // Fetch reservations from backend
+  const fetchReservations = async () => {
+  setLoading(true);
+  try {
+    const data = await ReservationsService.getReservations();
+    console.log("Fetched reservations:", data); // this will show an array
+    setReservations(data); // <-- just use data directly
+  } catch (err) {
+    toast({ title: "Error", description: "Failed to load reservations." });
+  } finally {
+    setLoading(false);
+  }
+};
 
+
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
+  // Cancel reservation
   const handleCancelReservation = async (id: string) => {
     try {
       await ReservationsService.cancelReservation(id);
-      setReservations(prev => prev.map(r => r.id === id ? { ...r, status: "cancelled" } : r));
-      toast({ title: "Reservation Cancelled", description: "Reservation cancelled successfully." });
-    } catch (error) {
-      toast({ title: "Error", description: "Failed to cancel reservation.", variant: "destructive" });
+      toast({ title: "Reservation Cancelled", description: "Reservation successfully cancelled." });
+      fetchReservations(); // Refresh list
+    } catch {
+      toast({ title: "Error", description: "Failed to cancel reservation." });
     }
   };
 
+  // Checkout reservation
   const handleCheckoutReservation = async (id: string) => {
     try {
       await ReservationsService.checkoutReservation(id);
-      setReservations(prev => prev.map(r => r.id === id ? { ...r, status: "past" } : r));
       toast({ title: "Checkout Complete", description: "Guest checked out successfully." });
-    } catch (error) {
-      toast({ title: "Error", description: "Failed to checkout reservation.", variant: "destructive" });
+      fetchReservations(); // Refresh list
+    } catch {
+      toast({ title: "Error", description: "Failed to checkout reservation." });
     }
   };
 
-  if (loading) return <div className="text-center py-20">Loading reservations...</div>;
+  if (loading) {
+    return <PageLoader text="Loading reservations..." variant="hotel" />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-6 py-8 pr-20 pl-20">
         <ReservationsList
           reservations={reservations}
           onCancelReservation={handleCancelReservation}

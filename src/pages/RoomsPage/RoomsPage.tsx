@@ -1,54 +1,226 @@
-// src/pages/RoomsPage/RoomsPage.tsx
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useRooms } from "@/hooks/useRooms";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import RoomCard from "@/components/Rooms/RoomCard"; // Use RoomCard component
+import axios from "axios";
+import { Filter } from "lucide-react";
+import Loader, { PageLoader, InlineLoader } from "@/components/Loader/Loader";
 import { Room } from "@/types/Room";
+import "./RoomsPage.css";
+
+const API_BASE = "http://127.0.0.1:8000/api";
+const BASE_URL = "http://127.0.0.1:8000";
 
 const RoomsPage: React.FC = () => {
+  // -------------------- State --------------------
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [favorites, setFavorites] = useState<number[]>([]);
+  const [activeCategory, setActiveCategory] = useState<string>("Rooms");
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [loadingPage, setLoadingPage] = useState<boolean>(true);
+  const [loadingInline, setLoadingInline] = useState<boolean>(false);
+
   const navigate = useNavigate();
-  const { rooms, loading, error, toggleFavorite } = useRooms();
+  const locationHook = useLocation();
+  const searchParams = new URLSearchParams(locationHook.search);
 
-  const handleRoomClick = (room: Room) => {
-    navigate(`/rooms/${room.room_id}`, { state: { room } });
+  const searchFilters = {
+    location: searchParams.get("location") || "",
+    guests: searchParams.get("guests") ? parseInt(searchParams.get("guests")!, 10) : 0,
   };
 
-  const handleToggleFavorite = (room: Room, e: React.MouseEvent) => {
-    e.stopPropagation();
-    toggleFavorite(room.room_id);
+  const pageTimerRef = useRef<number | null>(null);
+  const inlineTimerRef = useRef<number | null>(null);
+
+  const categories = ["Rooms", "Standard", "Deluxe", "Luxury"];
+  const filterOptions = ["Vacant Rooms", "Occupied Rooms", "Dirty Rooms"];
+
+  // -------------------- Helper functions --------------------
+  const parseAdditionalImages = (value: any): string[] => {
+    if (!value) return [];
+    if (typeof value === "string") {
+      try { return JSON.parse(value); } catch { return []; }
+    }
+    if (Array.isArray(value)) return value;
+    return [];
   };
 
-  if (loading) return <div className="text-center mt-10">Loading rooms...</div>;
-  if (error) return <div className="text-center mt-10 text-red-500">{error}</div>;
-  if (!rooms || rooms.length === 0)
-    return <div className="text-center mt-10">No rooms available.</div>;
+  const formatImageUrl = (url?: string) => {
+    if (!url) return "/placeholder.jpg";
+    if (url.startsWith("http")) return url;
+    if (url.startsWith("/media")) return `${BASE_URL}${url}`;
+    return `${BASE_URL}/media/${url}`;
+  };
 
+  // -------------------- Fetch rooms from backend --------------------
+  useEffect(() => {
+    setLoadingPage(true);
+    axios
+      .get(`${API_BASE}/rooms/list/`)
+      .then((res) => {
+        const fetchedRooms: Room[] = res.data.results.map((room: any) => ({
+          ...room,
+          room_id: room.id,
+          image: formatImageUrl(room.image),
+          additional_images: parseAdditionalImages(room.additional_images).map(formatImageUrl),
+          isFavorite: favorites.includes(room.id),
+        }));
+        setRooms(fetchedRooms);
+
+        // Small delay to show loader
+        pageTimerRef.current = window.setTimeout(() => setLoadingPage(false), 600);
+      })
+      .catch((err) => {
+        console.error("Error fetching rooms:", err);
+        setLoadingPage(false);
+      });
+
+    return () => {
+      if (pageTimerRef.current) clearTimeout(pageTimerRef.current);
+      if (inlineTimerRef.current) clearTimeout(inlineTimerRef.current);
+    };
+  }, [favorites]);
+
+  // -------------------- Handlers --------------------
+  // Toggle favorite
+  const toggleFavorite = (roomId: number) => {
+    setFavorites((prev) =>
+      prev.includes(roomId) ? prev.filter((f) => f !== roomId) : [...prev, roomId]
+    );
+
+    // Update room state
+    setRooms((prev) =>
+      prev.map((room) =>
+        room.room_id === roomId ? { ...room, isFavorite: !room.isFavorite } : room
+      )
+    );
+  };
+
+  // Navigate to room details
+  const handleRoomClick = (roomId: number) => {
+    navigate(`/rooms/${roomId}`);
+  };
+
+  // Category tab click
+  const handleCategoryClick = (category: string) => {
+    if (category === activeCategory) return;
+    setActiveCategory(category);
+    setLoadingPage(true);
+    if (pageTimerRef.current) clearTimeout(pageTimerRef.current);
+    pageTimerRef.current = window.setTimeout(() => setLoadingPage(false), 600);
+  };
+
+  // Filter toggle
+  const handleFilterToggle = (filter: string) => {
+    setSelectedFilters((prev) =>
+      prev.includes(filter) ? prev.filter((f) => f !== filter) : [...prev, filter]
+    );
+    setLoadingInline(true);
+    if (inlineTimerRef.current) clearTimeout(inlineTimerRef.current);
+    inlineTimerRef.current = window.setTimeout(() => setLoadingInline(false), 500);
+  };
+
+  // Apply filters and categories
+  const getFilteredRooms = (): Room[] => {
+    let filtered = rooms;
+
+    if (activeCategory !== "Rooms") filtered = filtered.filter((r) => r.category === activeCategory);
+
+    if (selectedFilters.length > 0) {
+      filtered = filtered.filter((r) => {
+        if (selectedFilters.includes("Vacant Rooms") && r.status === "Vacant") return true;
+        if (selectedFilters.includes("Occupied Rooms") && r.status === "Occupied") return true;
+        if (selectedFilters.includes("Dirty Rooms") && r.status === "Dirty") return true;
+        return false;
+      });
+    }
+
+    if (searchFilters.guests > 0) filtered = filtered.filter((r) => r.amenities.guests >= searchFilters.guests);
+
+    if (searchFilters.location) {
+      filtered = filtered.filter(
+        (r) =>
+          r.title.toLowerCase().includes(searchFilters.location.toLowerCase()) ||
+          r.description.toLowerCase().includes(searchFilters.location.toLowerCase())
+      );
+    }
+
+    return filtered;
+  };
+
+  // -------------------- Loader --------------------
+  if (loadingPage) return <PageLoader text="Fetching rooms..." variant="hotel" />;
+
+  // -------------------- Render --------------------
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-      {rooms.map((room) => (
-  <div
-    key={room.room_id?.toString() || Math.random()} // fallback just in case
-    className="border rounded-lg overflow-hidden shadow hover:shadow-lg cursor-pointer transition relative"
-    onClick={() => handleRoomClick(room)}
-  >
-    <img
-      src={room.image || "/bedroom.jpg"}
-      alt={room.title || `Room ${room.room_number}`}
-      className="w-full h-48 object-cover"
-    />
-    <div className="p-4">
-      <h3 className="text-lg font-semibold">{room.title || `Room ${room.room_number}`}</h3>
-      <p className="text-gray-600">{room.description || "No description available."}</p>
-      <p className="mt-2 font-bold">₹{room.price_per_night} / night</p>
-    </div>
-    <button
-      onClick={(e) => handleToggleFavorite(room, e)}
-      className="absolute top-2 right-2 p-2 rounded-full bg-white shadow hover:bg-gray-100 transition"
-    >
-      {room.isFavorite ? "★" : "☆"}
-    </button>
-  </div>
-))}
+    <div className="rooms-list-container">
+      <main className="main-content">
+        {/* Categories */}
+        <div className="category-tabs">
+          <div className="tabs-container" role="tablist" aria-label="Room categories">
+            {categories.map((category) => (
+              <button
+                key={category}
+                role="tab"
+                aria-selected={activeCategory === category}
+                className={`tab-button ${activeCategory === category ? "active" : ""}`}
+                onClick={() => handleCategoryClick(category)}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
 
+          {/* Filters */}
+          <div className="filters-container">
+            <button
+              className="filters-button"
+              onClick={() => setShowFilters((s) => !s)}
+              aria-expanded={showFilters}
+              aria-controls="filters-dropdown"
+            >
+              <Filter size={16} /> Filters
+            </button>
+
+            <div className="inline-loader-container">
+              {loadingInline && <InlineLoader size="small" text="Applying..." variant="dots" />}
+            </div>
+
+            {showFilters && (
+              <div className="filters-dropdown" id="filters-dropdown" role="region">
+                {filterOptions.map((option) => (
+                  <label key={option} className="filter-option">
+                    <input
+                      type="checkbox"
+                      checked={selectedFilters.includes(option)}
+                      onChange={() => handleFilterToggle(option)}
+                    />
+                    <span className="filter-label">{option}</span>
+                  </label>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Rooms Grid using RoomCard */}
+        <div className="rooms-grid" aria-live="polite">
+          {getFilteredRooms().map((room) => (
+            <RoomCard
+              key={room.room_id}
+              room={room}
+              onClick={handleRoomClick}
+              onToggleFavorite={() => toggleFavorite(room.room_id)}
+            />
+          ))}
+
+          {getFilteredRooms().length === 0 && (
+            <div style={{ gridColumn: "1/-1", textAlign: "center", padding: 40, color: "#484848" }}>
+              No rooms match the selected filters.
+            </div>
+          )}
+        </div>
+      </main>
     </div>
   );
 };

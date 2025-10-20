@@ -3,6 +3,7 @@ export interface Room {
   room_id: number;
   room_number: string;
   title: string;
+  room_type: "Standard" | "Deluxe" | "Luxury"; // ✅ add this
   description: string;
   category: "Standard" | "Deluxe" | "Luxury";
 
@@ -12,19 +13,20 @@ export interface Room {
   price_range_display: string;
 
   status: "Vacant" | "Occupied" | "Dirty" | "Maintenance";
+  amenities: {
+    beds: number;
+    bathrooms: number;
+    parking: number;
+    guests: number;
 
-  beds: number;
-  bathrooms: number;
-  parking: number;
-  guests: number;
-
-  // Amenities
-  television: boolean;
-  wifi: boolean;
-  washer: boolean;
-  balcony: boolean;
-  air_condition: boolean;
-  kitchen: boolean;
+    // Room amenities
+    television: boolean;
+    wifi: boolean;
+    washer: boolean;
+    balcony: boolean;
+    airCondition: boolean;
+    kitchen: boolean;
+  };
 
   // Safety
   sanitizers: boolean;

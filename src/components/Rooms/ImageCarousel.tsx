@@ -1,68 +1,60 @@
 import React, { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const BASE_URL = "http://127.0.0.1:8000";
 
 interface ImageCarouselProps {
   images: string[];
-  initialIndex?: number;
-  showArrows?: boolean;
-  showDots?: boolean;
-  onImageClick?: (img: string) => void;
-  className?: string;
   blurred?: boolean;
+  className?: string;
 }
 
-const ImageCarousel: React.FC<ImageCarouselProps> = ({
-  images,
-  initialIndex = 0,
-  showArrows = true,
-  showDots = true,
-  onImageClick,
-  className,
-  blurred = false,
-}) => {
-  const [currentIndex, setCurrentIndex] = useState(initialIndex);
-  const total = images.length;
 
-  const next = () => setCurrentIndex((currentIndex + 1) % total);
-  const prev = () => setCurrentIndex((currentIndex - 1 + total) % total);
+const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  if (!images || images.length === 0)
+    return (
+      <img
+        src="/placeholder.jpg"
+        alt="No images"
+        className="w-full h-48 object-cover rounded-2xl"
+      />
+    );
+
+  const formatImageUrl = (url: string) =>
+    url.startsWith("http") ? url : `${BASE_URL}${url}`;
+
+  const nextImage = () =>
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+
+  const prevImage = () =>
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
   return (
-    <div className={`relative ${className}`}>
+    <div className="relative w-full h-48 overflow-hidden rounded-2xl">
       <img
-        src={images[currentIndex] || "/placeholder.jpg"}
-        alt={`Image ${currentIndex + 1}`}
-        className={`w-full object-cover ${blurred ? "blur-sm" : ""}`}
-        onClick={() => onImageClick?.(images[currentIndex])}
+        src={formatImageUrl(images[currentIndex])}
+        alt={`Room ${currentIndex + 1}`}
+        className="w-full h-full object-cover transition-all duration-300"
       />
 
-      {showArrows && total > 1 && (
+      {images.length > 1 && (
         <>
           <button
-            onClick={prev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full"
+            onClick={prevImage}
+            className="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full"
           >
-            ‹
+            <ChevronLeft />
           </button>
+
           <button
-            onClick={next}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-1 rounded-full"
+            onClick={nextImage}
+            className="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full"
           >
-            ›
+            <ChevronRight />
           </button>
         </>
-      )}
-
-      {showDots && total > 1 && (
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-1">
-          {images.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentIndex(i)}
-              className={`w-2 h-2 rounded-full ${
-                i === currentIndex ? "bg-white" : "bg-white/50"
-              }`}
-            />
-          ))}
-        </div>
       )}
     </div>
   );

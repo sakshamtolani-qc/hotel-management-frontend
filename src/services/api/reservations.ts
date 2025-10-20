@@ -1,35 +1,39 @@
-// services/api/reservations.ts
+// src/services/api/reservations.ts
 import { Reservation } from "@/types/reservation";
 
-const API_BASE = "/api/reservations"; // adjust based on your backend
+const API_BASE = "http://127.0.0.1:8000/api/reservations";
+
+interface PaginatedResponse<T> {
+  count: number;
+  results: T[];
+}
 
 export const ReservationsService = {
-  // Fetch all reservations
-  getReservations: async (): Promise<Reservation[]> => {
-    const res = await fetch(`${API_BASE}/`);
-    if (!res.ok) throw new Error("Failed to fetch reservations");
-    return res.json();
-  },
-
-  // Fetch single reservation
-  getReservation: async (id: number): Promise<Reservation> => {
-    const res = await fetch(`${API_BASE}/${id}/`);
-    if (!res.ok) throw new Error("Failed to fetch reservation");
-    return res.json();
-  },
-
-  // Create reservation
-  createReservation: async (data: Partial<Reservation>) => {
-    const res = await fetch(`${API_BASE}/`, {
+  createReservation: async (data: any) => {
+    const res = await fetch(`${API_BASE}/create/`, {  // <-- add /create/
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error("Failed to create reservation");
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => null);
+      throw new Error(errorData?.message || "Failed to create reservation");
+    }
     return res.json();
   },
 
-  // Cancel reservation
+  // getReservations: async (): Promise<Reservation[]> => {
+  //   const res = await fetch(`${API_BASE}/`);
+  //   if (!res.ok) throw new Error("Failed to fetch reservations");
+  //   return res.json();
+  // },
+ getReservations: async (): Promise<Reservation[]> => {
+  const res = await fetch(`${API_BASE}/list/`);
+  if (!res.ok) throw new Error("Failed to fetch reservations");
+  const data: PaginatedResponse<Reservation> = await res.json();
+  return data.results;  // return the array directly;
+},
+
   cancelReservation: async (id: string | number) => {
     const res = await fetch(`${API_BASE}/${id}/cancel/`, {
       method: "PATCH",
@@ -39,7 +43,6 @@ export const ReservationsService = {
     return res.json();
   },
 
-  // Checkout reservation
   checkoutReservation: async (id: string | number) => {
     const res = await fetch(`${API_BASE}/${id}/checkout/`, {
       method: "PATCH",
