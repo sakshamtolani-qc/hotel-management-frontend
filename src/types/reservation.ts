@@ -7,6 +7,7 @@ export type ReservationStatus =
   | "booked"
   | "checked_in"
   | "confirmed"
+  | "pending"
   | "checked_out";
 
 
@@ -16,7 +17,7 @@ export interface Reservation {
   email: string;
   phoneNumber: string;
   aadharNo: string;
-  roomType: string;
+  roomType?: string; // optional
   checkIn: string;
   checkOut?: string;
   guests: number;
@@ -24,6 +25,7 @@ export interface Reservation {
   price: number;
   roomImage?: string;
 }
+
 
 export interface ReservationFilters {
   status: ReservationStatus | "all";

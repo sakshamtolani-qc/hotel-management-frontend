@@ -13,18 +13,37 @@ interface ReservationCardProps {
 const ReservationCard = ({ reservation, onCancel, onCheckout }: ReservationCardProps) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "upcoming": return "bg-green-100 text-green-700";
-      case "past": return "bg-gray-100 text-gray-600";
-      case "cancelled": return "bg-red-100 text-red-700";
-      default: return "bg-gray-100 text-gray-600";
+      case "upcoming":
+      case "booked":
+      case "confirmed":
+      case "checked_in":
+        return "bg-green-100 text-green-700";
+      case "past":
+      case "checked_out":
+        return "bg-gray-100 text-gray-600";
+      case "cancelled":
+        return "bg-red-100 text-red-700";
+      default:
+        return "bg-gray-100 text-gray-600";
     }
   };
+
+  // Only show action buttons for reservations that are not past or cancelled
+  const canAct =
+    reservation.status === "upcoming" ||
+    reservation.status === "booked" ||
+    reservation.status === "confirmed" ||
+    reservation.status === "checked_in";
 
   return (
     <Card className="w-full hover:shadow-md transition-shadow">
       <CardContent className="p-6 flex flex-col md:flex-row gap-6">
         <div className="w-32 h-24 bg-muted rounded-lg overflow-hidden flex-shrink-0">
-          <img src={reservation.roomImage || "/rooms/default.jpg"} alt={reservation.roomType} className="w-full h-full object-cover" />
+          <img
+            src={reservation.roomImage || "/rooms/default.jpg"}
+            alt={reservation.roomType}
+            className="w-full h-full object-cover"
+          />
         </div>
         <div className="flex-1 flex flex-col md:flex-row md:justify-between">
           <div>
@@ -39,7 +58,7 @@ const ReservationCard = ({ reservation, onCancel, onCheckout }: ReservationCardP
           </div>
           <div className="flex flex-col gap-3 items-end">
             <p className="text-2xl font-bold">₹ {reservation.price}</p>
-            {reservation.status === "upcoming" && (
+            {canAct && (
               <div className="flex gap-2">
                 {onCheckout && <Button onClick={() => onCheckout(reservation.id)}>Check Out</Button>}
                 {onCancel && <Button onClick={() => onCancel(reservation.id)}>Cancel</Button>}

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/utils/tabs";
 import { Button } from "@/utils/button";
 import { Reservation, ReservationFilters } from "@/types/reservation";
@@ -8,17 +8,19 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Loader from "@/components/Loader/Loader";
 
 interface ReservationsListProps {
-  reservations?: Reservation[]; // now optional
+  reservations?: Reservation[]; // optional
   onCancelReservation?: (id: string) => void;
   onCheckoutReservation?: (id: string) => void;
 }
 
 const ITEMS_PER_PAGE = 5;
+
 const ReservationsList = ({
-  reservations = [], // default to empty array
+  reservations = [],
   onCancelReservation,
   onCheckoutReservation,
 }: ReservationsListProps) => {
+  const [localReservations, setLocalReservations] = useState<Reservation[]>(reservations);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<ReservationFilters>({
     status: "all",
@@ -26,17 +28,17 @@ const ReservationsList = ({
   });
   const [loading, setLoading] = useState(false);
 
-  console.log("Reservations props:", reservations);
+  // Keep localReservations in sync with prop
+  useEffect(() => {
+    setLocalReservations(reservations);
+  }, [reservations]);
 
-  // ---- LOG PROPS ----
-  console.log("Reservations props:", reservations);
-  console.log("Current filters:", filters);
+  const resetPagination = () => setCurrentPage(1);
 
-  // Safe filtering
+  // Filter reservations based on search and status
   const filteredReservations = useMemo(() => {
-    if (!Array.isArray(reservations)) return [];
-
-    const filtered = reservations.filter((reservation) => {
+    if (!Array.isArray(localReservations)) return [];
+    return localReservations.filter((reservation) => {
       const matchesSearch =
         reservation.guestName?.toLowerCase().includes(filters.search.toLowerCase()) ||
         reservation.roomType?.toLowerCase().includes(filters.search.toLowerCase());
@@ -44,13 +46,9 @@ const ReservationsList = ({
         filters.status === "all" || reservation.status === filters.status;
       return matchesSearch && matchesStatus;
     });
+  }, [localReservations, filters]);
 
-    // ---- LOG FILTERED ----
-    console.log("Filtered reservations:", filtered);
-
-    return filtered;
-  }, [reservations, filters]);
-
+  // Upcoming and past lists
   const upcomingReservations = filteredReservations.filter(
     (r) =>
       r.status === "upcoming" ||
@@ -60,55 +58,8 @@ const ReservationsList = ({
   );
 
   const pastReservations = filteredReservations.filter(
-    (r) =>
-      r.status === "past" ||
-      r.status === "checked_out"
+    (r) => r.status === "past" || r.status === "checked_out" || r.status === "cancelled"
   );
-
-  // ---- LOG UPCOMING/PAST ----
-  console.log("Upcoming reservations:", upcomingReservations);
-  console.log("Past reservations:", pastReservations);
-// const ReservationsList = ({
-//   reservations = [], // default to empty array
-//   onCancelReservation,
-//   onCheckoutReservation,
-// }: ReservationsListProps) => {
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const [filters, setFilters] = useState<ReservationFilters>({
-//     status: "all",
-//     search: "",
-//   });
-//   const [loading, setLoading] = useState(false);
-
-//   // Safe filtering
-//   const filteredReservations = useMemo(() => {
-//     if (!Array.isArray(reservations)) return [];
-
-//     return reservations.filter((reservation) => {
-//       const matchesSearch =
-//         reservation.guestName?.toLowerCase().includes(filters.search.toLowerCase()) ||
-//         reservation.roomType?.toLowerCase().includes(filters.search.toLowerCase());
-//       const matchesStatus =
-//         filters.status === "all" || reservation.status === filters.status;
-//       return matchesSearch && matchesStatus;
-//     });
-//   }, [reservations, filters]);
-
-//  // Show multiple backend statuses under upcoming
-// const upcomingReservations = filteredReservations.filter(
-//   (r) =>
-//     r.status === "upcoming" ||
-//     r.status === "booked" ||
-//     r.status === "confirmed" || // optional
-//     r.status === "checked_in"
-// );
-
-// const pastReservations = filteredReservations.filter(
-//   (r) =>
-//     r.status === "past" ||
-//     r.status === "checked_out"
-// );
-
 
   const getCurrentPageReservations = (list: Reservation[]) => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -117,13 +68,51 @@ const ReservationsList = ({
 
   const getTotalPages = (list: Reservation[]) => Math.ceil(list.length / ITEMS_PER_PAGE);
 
-  const resetPagination = () => setCurrentPage(1);
+  const handleCancelReservation = async (id: string) => {
+    setLoading(true);
+    try {
+      await fetch(`/api/reservations/${id}/update/`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "cancelled" }),
+      });
+
+      // Update local state instantly
+      setLocalReservations((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, status: "cancelled" } : r))
+      );
+      onCancelReservation?.(id);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCheckoutReservation = async (id: string) => {
+    setLoading(true);
+    try {
+      await fetch(`/api/reservations/${id}/update/`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: "checked_out" }),
+      });
+
+      // Update local state instantly
+      setLocalReservations((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, status: "checked_out" } : r))
+      );
+      onCheckoutReservation?.(id);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return <Loader variant="hotel" text="Loading reservations..." />;
   }
-
-  
 
   return (
     <div className="space-y-6">
@@ -169,8 +158,8 @@ const ReservationsList = ({
                   <ReservationCard
                     key={reservation.id}
                     reservation={reservation}
-                    onCancel={onCancelReservation}
-                    onCheckout={onCheckoutReservation}
+                    onCancel={handleCancelReservation}
+                    onCheckout={handleCheckoutReservation}
                   />
                 ))}
               </div>

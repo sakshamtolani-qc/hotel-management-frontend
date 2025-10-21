@@ -9,19 +9,39 @@ interface PaginatedResponse<T> {
 }
 
 export const ReservationsService = {
-  createReservation: async (data: any) => {
-    const res = await fetch(`${API_BASE}/create/`, {  // <-- add /create/
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => null);
-      throw new Error(errorData?.message || "Failed to create reservation");
-    }
-    return res.json();
-  },
+  // createReservation: async (data: any) => {
+  //   const res = await fetch(`${API_BASE}/create/`, {  // <-- add /create/
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify(data),
+  //   });
+  //   if (!res.ok) {
+  //     const errorData = await res.json().catch(() => null);
+  //     throw new Error(errorData?.message || "Failed to create reservation");
+  //   }
+  //   return res.json();
+  // },
+ createReservation: async (data: any) => {
+  const res = await fetch(`${API_BASE}/create/`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
 
+  if (!res.ok) {
+    let errorText = "";
+    try {
+      const errorData = await res.json();
+      console.error("Backend error response:", errorData);
+      errorText = JSON.stringify(errorData);
+    } catch {
+      errorText = await res.text();
+    }
+    throw new Error(errorText || "Failed to create reservation");
+  }
+
+  return res.json();
+},
   // getReservations: async (): Promise<Reservation[]> => {
   //   const res = await fetch(`${API_BASE}/`);
   //   if (!res.ok) throw new Error("Failed to fetch reservations");
