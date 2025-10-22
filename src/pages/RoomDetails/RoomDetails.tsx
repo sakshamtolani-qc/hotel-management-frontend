@@ -46,17 +46,43 @@ const RoomDetails: React.FC = () => {
   const [currentImage, setCurrentImage] = useState<string | null>(null);
 
   // Fetch room data from backend
-  useEffect(() => {
-    if (!roomId) return;
-    setLoading(true);
-    getRoom(Number(roomId))
-      .then((data) => {
-        setRoom(data);
-        setIsLiked(data.isFavorite ?? false);
-      })
-      .catch((err) => console.error("Failed to fetch room:", err))
-      .finally(() => setLoading(false));
-  }, [roomId]);
+  // useEffect(() => {
+  //   if (!roomId) return;
+  //   setLoading(true);
+  //   getRoom(Number(roomId))
+  //     .then((data) => {
+  //       setRoom(data);
+  //       setIsLiked(data.isFavorite ?? false);
+  //     })
+  //     .catch((err) => console.error("Failed to fetch room:", err))
+  //     .finally(() => setLoading(false));
+  // }, [roomId]);
+
+ useEffect(() => {
+  if (!roomId) return;
+  setLoading(true);
+
+  getRoom(Number(roomId))
+    .then((data) => {
+      // Ensure we always have an 'images' array
+      const allImages: string[] = data.images || [];
+      const roomData: Room = {
+        ...data,
+        images: allImages,
+        additional_images: allImages.length > 1 ? allImages.slice(1) : [],
+      };
+      
+      setRoom(roomData);
+      setIsLiked(roomData.isFavorite ?? false);
+
+      console.log("Mapped Room:", roomData);
+      console.log("All images:", roomData.images);
+      console.log("Additional images:", roomData.additional_images);
+    })
+    .catch((err) => console.error("Failed to fetch room:", err))
+    .finally(() => setLoading(false));
+}, [roomId]);
+
 
   if (loading || !room) return <PageLoader text="Loading Room Details..." />;
 
@@ -127,7 +153,10 @@ const RoomDetails: React.FC = () => {
   ].filter((a) => a.available);
 
   // Images
-  const images = [room.image, ...(room.additional_images || [])];
+  const images = room.images || [];
+console.log("All images:", images);
+console.log("Additional images:", room.additional_images);
+
 
   const handleOpenGallery = (img?: string) => {
     setCurrentImage(img || images[0]);

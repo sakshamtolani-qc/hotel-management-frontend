@@ -20,14 +20,14 @@ import {
   ProgressLoader,
   InlineLoader,
 } from "../../components/Loader/Loader";
+import { AddRoomFormData, createRoom } from "../../services/api/rooms";
 import "./AddRoomPage.css";
-import { AddRoomFormData } from "../../services/api/rooms";
 
 interface FacilityCount {
   beds: number;
   bathrooms: number;
   parking: number;
-  guests: number
+  guests: number;
 }
 
 interface SelectedAmenities {
@@ -52,13 +52,16 @@ interface SelectedSafety {
 }
 
 const AddRoomPage: React.FC = () => {
+  // -----------------------
+  // Form state variables
+  // -----------------------
   const [roomNo, setRoomNo] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const [facilities, setFacilities] = useState<FacilityCount>({
     beds: 0,
     bathrooms: 0,
     parking: 0,
-    guests:1,
+    guests: 1,
   });
   const [amenities, setAmenities] = useState<SelectedAmenities>({
     television: false,
@@ -80,20 +83,23 @@ const AddRoomPage: React.FC = () => {
     option5: false,
   });
   const [roomDescription, setRoomDescription] = useState("");
+
+  // Image upload state
   const [selectedImages, setSelectedImages] = useState<
     Array<{ file: File; preview: string; id: string }>
   >([]);
-
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [fileUploading, setFileUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
+  // Form submission state
+  const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // -------------------------------
-  // Facility Counter Update
-  // -------------------------------
+  // -----------------------
+  // Facility counters
+  // -----------------------
   const updateFacilityCount = (type: keyof FacilityCount, increment: boolean) => {
     setFacilities((prev) => ({
       ...prev,
@@ -101,38 +107,37 @@ const AddRoomPage: React.FC = () => {
     }));
   };
 
-  // -------------------------------
-  // Toggle Amenities and Safety
-  // -------------------------------
+  // -----------------------
+  // Toggle amenities/safety
+  // -----------------------
   const toggleAmenity = (amenity: keyof SelectedAmenities) =>
     setAmenities((prev) => ({ ...prev, [amenity]: !prev[amenity] }));
 
   const toggleSafety = (safetyItem: keyof SelectedSafety) =>
     setSafety((prev) => ({ ...prev, [safetyItem]: !prev[safetyItem] }));
 
-  // -------------------------------
-  // Image Upload Handling
-  // -------------------------------
+  // -----------------------
+  // File upload handlers
+  // -----------------------
   const handleFileUpload = () => fileInputRef.current?.click();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (files && files.length > 0) {
-      setFileUploading(true);
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 400));
-        const newImages = Array.from(files).map((file) => ({
-          file,
-          preview: URL.createObjectURL(file),
-          id: Math.random().toString(36).substr(2, 9),
-        }));
-        setSelectedImages((prev) => [...prev, ...newImages]);
-        if (fileInputRef.current) fileInputRef.current.value = "";
-      } catch {
-        alert("Error processing selected files.");
-      } finally {
-        setFileUploading(false);
-      }
+    if (!files || files.length === 0) return;
+
+    setFileUploading(true);
+    try {
+      const newImages = Array.from(files).map((file) => ({
+        file,
+        preview: URL.createObjectURL(file),
+        id: Math.random().toString(36).substr(2, 9),
+      }));
+      setSelectedImages((prev) => [...prev, ...newImages]);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    } catch (err) {
+      alert("Error processing selected files.");
+    } finally {
+      setFileUploading(false);
     }
   };
 
@@ -144,6 +149,9 @@ const AddRoomPage: React.FC = () => {
     });
   };
 
+  // -----------------------
+  // Page loader effect
+  // -----------------------
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
@@ -154,104 +162,66 @@ const AddRoomPage: React.FC = () => {
     [selectedImages]
   );
 
-  // -------------------------------
-  // Handle Submit
-  // -------------------------------
+  // -----------------------
+  // Form submission
+  // -----------------------
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setSubmitting(true);
-  setUploadProgress(0);
-
-  const progressInterval = setInterval(() => {
-    setUploadProgress((prev) => {
-      if (prev >= 100) {
-        clearInterval(progressInterval);
-        return 100;
-      }
-      return prev + 10;
-    });
-  }, 200);
-
-  try {
-     const { createRoom } = await import("../../services/api/rooms");
-
-     // ✅ Correct: Pass object, not FormData
-    const roomData: AddRoomFormData = {
-      roomNo,
-      title: `Room ${roomNo}`,
-      roomDescription,
-      category: "Standard" as "Standard",  // ✅ cast to literal type
-      price_per_night: parseInt(priceRange) || 0,
-      facilities,
-      amenities,
-      safety,
-      images: selectedImages.map((img) => ({ file: img.file, preview: img.preview, id: img.id })),
-    };
-
-
-    const createdRoom = await createRoom(roomData);
-
-    // // Create FormData
-    // const formData = new FormData();
-    // formData.append("roomNo", roomNo);
-    // formData.append("price_per_night", priceRange);
-    // formData.append("roomDescription", roomDescription);
-
-    // // Append facilities
-    // formData.append("facilities", JSON.stringify(facilities));
-
-    // // Append amenities
-    // formData.append("amenities", JSON.stringify(amenities));
-
-    // // Append safety
-    // formData.append("safety", JSON.stringify(safety));
-
-    // // Append images
-    // selectedImages.forEach((img) => {
-    //   formData.append("images", img.file);
-    // });
-
-    // // Call API
-    
-    // const createdRoom = await createRoom(formData);
-
-
-    console.log("✅ Room created:", createdRoom);
-    alert("Room posted successfully!");
-
-    // Reset form
-    setRoomNo("");
-    setPriceRange("");
-    setFacilities({ beds: 0, bathrooms: 0, parking: 0 , guests: 0});
-    setAmenities({
-      television: false,
-      wifi: false,
-      washer: false,
-      balcony: false,
-      airCondition: false,
-      kitchen: false,
-      other: false,
-    });
-    setSafety({
-      sanitizers: false,
-      fireThrowers: false,
-      dailyCleaner: false,
-      option1: false,
-      option2: false,
-      option3: false,
-      option4: false,
-      option5: false,
-    });
-    setRoomDescription("");
-    setSelectedImages([]);
-  } catch (error: any) {
-    alert(error?.message || "Error posting room!");
-  } finally {
-    setSubmitting(false);
+    e.preventDefault();
+    setSubmitting(true);
     setUploadProgress(0);
-  }
-};
 
+    try {
+      const roomData: AddRoomFormData = {
+        roomNo,
+        title: `Room ${roomNo}`,
+        roomDescription,
+        category: "Standard",
+        price_per_night: parseInt(priceRange) || 0,
+        facilities,
+        amenities,
+        safety,
+        images: selectedImages,
+      };
+
+      // Call RoomsService.createRoom with real-time progress
+      const createdRoom = await createRoom(roomData, (progress: number) => {
+        setUploadProgress(progress);
+      });
+
+      alert("✅ Room posted successfully!");
+
+      // Reset form
+      setRoomNo("");
+      setPriceRange("");
+      setFacilities({ beds: 0, bathrooms: 0, parking: 0, guests: 1 });
+      setAmenities({
+        television: false,
+        wifi: false,
+        washer: false,
+        balcony: false,
+        airCondition: false,
+        kitchen: false,
+        other: false,
+      });
+      setSafety({
+        sanitizers: false,
+        fireThrowers: false,
+        dailyCleaner: false,
+        option1: false,
+        option2: false,
+        option3: false,
+        option4: false,
+        option5: false,
+      });
+      setRoomDescription("");
+      setSelectedImages([]);
+    } catch (err: any) {
+      alert(err?.message || "Error posting room!");
+    } finally {
+      setSubmitting(false);
+      setUploadProgress(0);
+    }
+  };
 
   const handlePreview = () => {
     console.log({
@@ -301,28 +271,30 @@ const AddRoomPage: React.FC = () => {
           <section className="facilities-section">
             <h2 className="section-title">Add facilities available at your place.</h2>
             <div className="facilities-grid">
-              {(["beds", "bathrooms", "parking"] as Array<keyof FacilityCount>).map((type) => (
-                <div key={type} className="facility-counter">
-                  <button
-                    className="counter-btn"
-                    onClick={() => updateFacilityCount(type, false)}
-                  >
-                    <Minus size={20} />
-                  </button>
-                  <div className="counter-display">
-                    <span className="counter-number">{facilities[type]}</span>
-                    <span className="counter-label">
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </span>
+              {(["beds", "bathrooms", "parking"] as Array<keyof FacilityCount>).map(
+                (type) => (
+                  <div key={type} className="facility-counter">
+                    <button
+                      className="counter-btn"
+                      onClick={() => updateFacilityCount(type, false)}
+                    >
+                      <Minus size={20} />
+                    </button>
+                    <div className="counter-display">
+                      <span className="counter-number">{facilities[type]}</span>
+                      <span className="counter-label">
+                        {type.charAt(0).toUpperCase() + type.slice(1)}
+                      </span>
+                    </div>
+                    <button
+                      className="counter-btn"
+                      onClick={() => updateFacilityCount(type, true)}
+                    >
+                      <Plus size={20} />
+                    </button>
                   </div>
-                  <button
-                    className="counter-btn"
-                    onClick={() => updateFacilityCount(type, true)}
-                  >
-                    <Plus size={20} />
-                  </button>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </section>
 
@@ -373,7 +345,7 @@ const AddRoomPage: React.FC = () => {
             </div>
           </section>
 
-          {/* Description & Images */}
+          {/* Room Description & Images */}
           <section className="room-description-section">
             <h2 className="section-title">Room Description & Images</h2>
             <div className="description-row">
@@ -446,7 +418,7 @@ const AddRoomPage: React.FC = () => {
             )}
           </section>
 
-          {/* Progress Bar */}
+          {/* Upload Progress */}
           {submitting && uploadProgress > 0 && (
             <div className="upload-progress-section">
               <ProgressLoader progress={uploadProgress} text="Uploading room data..." />

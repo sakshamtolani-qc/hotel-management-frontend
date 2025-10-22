@@ -37,8 +37,11 @@ export interface Room {
   isFavorite: boolean;
 
   // Images
-  image: string;
-  additional_images: string[];
+  image: string; // main image URL
+  // additional_images: string[];
+  // image?: string; // Cloudinary public_id
+  images?: string[];
+  additional_images?: string[]; // Cloudinary public_ids
 
   // Timestamps
   created_at: string;

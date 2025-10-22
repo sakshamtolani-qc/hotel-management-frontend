@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import RoomCard from "@/components/Rooms/RoomCard"; // Use RoomCard component
+import RoomCard from "@/components/Rooms/RoomCard"; // RoomCard component
 import axios from "axios";
 import { Filter } from "lucide-react";
 import Loader, { PageLoader, InlineLoader } from "@/components/Loader/Loader";
@@ -36,6 +36,7 @@ const RoomsPage: React.FC = () => {
   const filterOptions = ["Vacant Rooms", "Occupied Rooms", "Dirty Rooms"];
 
   // -------------------- Helper functions --------------------
+  // Parse additional_images safely
   const parseAdditionalImages = (value: any): string[] => {
     if (!value) return [];
     if (typeof value === "string") {
@@ -45,6 +46,7 @@ const RoomsPage: React.FC = () => {
     return [];
   };
 
+  // Format image URLs for display
   const formatImageUrl = (url?: string) => {
     if (!url) return "/placeholder.jpg";
     if (url.startsWith("http")) return url;
@@ -55,6 +57,7 @@ const RoomsPage: React.FC = () => {
   // -------------------- Fetch rooms from backend --------------------
   useEffect(() => {
     setLoadingPage(true);
+
     axios
       .get(`${API_BASE}/rooms/list/`)
       .then((res) => {
@@ -65,9 +68,10 @@ const RoomsPage: React.FC = () => {
           additional_images: parseAdditionalImages(room.additional_images).map(formatImageUrl),
           isFavorite: favorites.includes(room.id),
         }));
+
         setRooms(fetchedRooms);
 
-        // Small delay to show loader
+        // Delay to show loader smoothly
         pageTimerRef.current = window.setTimeout(() => setLoadingPage(false), 600);
       })
       .catch((err) => {
@@ -75,6 +79,7 @@ const RoomsPage: React.FC = () => {
         setLoadingPage(false);
       });
 
+    // Cleanup timers on unmount
     return () => {
       if (pageTimerRef.current) clearTimeout(pageTimerRef.current);
       if (inlineTimerRef.current) clearTimeout(inlineTimerRef.current);
@@ -82,13 +87,12 @@ const RoomsPage: React.FC = () => {
   }, [favorites]);
 
   // -------------------- Handlers --------------------
-  // Toggle favorite
+  // Toggle favorite rooms
   const toggleFavorite = (roomId: number) => {
     setFavorites((prev) =>
       prev.includes(roomId) ? prev.filter((f) => f !== roomId) : [...prev, roomId]
     );
 
-    // Update room state
     setRooms((prev) =>
       prev.map((room) =>
         room.room_id === roomId ? { ...room, isFavorite: !room.isFavorite } : room
@@ -96,9 +100,11 @@ const RoomsPage: React.FC = () => {
     );
   };
 
-  // Navigate to room details
-  const handleRoomClick = (roomId: number) => {
-    navigate(`/rooms/${roomId}`);
+  // Navigate to room details (only if Vacant)
+  const handleRoomClick = (room: Room) => {
+    if (room.status === "Vacant") {
+      navigate(`/rooms/${room.room_id}`, { state: { room } });
+    }
   };
 
   // Category tab click
@@ -120,7 +126,7 @@ const RoomsPage: React.FC = () => {
     inlineTimerRef.current = window.setTimeout(() => setLoadingInline(false), 500);
   };
 
-  // Apply filters and categories
+  // Apply filters and category selection
   const getFilteredRooms = (): Room[] => {
     let filtered = rooms;
 
@@ -209,7 +215,7 @@ const RoomsPage: React.FC = () => {
             <RoomCard
               key={room.room_id}
               room={room}
-              onClick={handleRoomClick}
+              onClick={() => handleRoomClick(room)}
               onToggleFavorite={() => toggleFavorite(room.room_id)}
             />
           ))}

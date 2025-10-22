@@ -413,3 +413,10 @@
   outline: 2px solid #212121;
   outline-offset: 2px;
 }
+.disabled-room {
+  pointer-events: none;
+}
+
+.disabled-room img {
+  filter: blur(4px) brightness(0.6);
+}
