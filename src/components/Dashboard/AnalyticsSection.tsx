@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -6,22 +6,32 @@ import {
   CardDescription,
   CardContent,
 } from "../../utils/card";
-import { HotelAnalytics, RoomActivity } from '../../hooks/useDashboardData';
+import { useDashboardData } from "../../hooks/useDashboardData";
 
-interface AnalyticsSectionProps {
-  hotelAnalytics: HotelAnalytics;
-  roomActivity: RoomActivity;
-}
+export const AnalyticsSection: React.FC = () => {
+  const { hotelAnalytics, roomActivity } = useDashboardData();
 
-export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({ 
-  hotelAnalytics, 
-  roomActivity 
-}) => {
-   return (
+  // Safe defaults (in case data is not loaded yet)
+  const ha = hotelAnalytics || {
+    arrivalsToday: 0,
+    departureToday: 0,
+    pendingPayments: 0,
+    upcomingReservation: 0,
+  };
+
+  const ra = roomActivity || {
+    totalRooms: 0,
+    roomOccupancy: 0,
+    dirtyRooms: 0,
+    vacantRooms: 0,
+  };
+  
+
+  return (
     <section className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
+
           {/* Hotel Analytics */}
           <Card className="border border-gray-200 shadow-none rounded-xl">
             <CardHeader className="flex flex-row items-center justify-between pb-4">
@@ -34,53 +44,21 @@ export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {/* Row */}
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">A</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Arrivals Today</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {hotelAnalytics.arrivalsToday}
-                  </span>
+                  <span>Arrivals Today</span>
+                  <span>{ha.arrivalsToday}</span>
                 </div>
-
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">D</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Departure Today</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {hotelAnalytics.departureToday}
-                  </span>
+                  <span>Departure Today</span>
+                  <span>{ha.departureToday}</span>
                 </div>
-
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">P</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Pending Payments</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {hotelAnalytics.pendingPayments}
-                  </span>
+                  <span>Pending Payments</span>
+                  <span>{ha.pendingPayments}</span>
                 </div>
-
                 <div className="flex justify-between items-center py-2">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">U</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Upcoming Reservation</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {hotelAnalytics.upcomingReservation}
-                  </span>
+                  <span>Upcoming Reservation</span>
+                  <span>{ha.upcomingReservation}</span>
                 </div>
               </div>
             </CardContent>
@@ -99,55 +77,25 @@ export const AnalyticsSection: React.FC<AnalyticsSectionProps> = ({
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">T</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Total Rooms</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {roomActivity.totalRooms}
-                  </span>
+                  <span>Total Rooms</span>
+                  <span>{ra.totalRooms}</span>
                 </div>
-
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">R</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Room Occupancy</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {roomActivity.roomOccupancy}
-                  </span>
+                  <span>Room Occupancy</span>
+                  <span>{ra.roomOccupancy}</span>
                 </div>
-
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">D</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Dirty Rooms</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {roomActivity.dirtyRooms}
-                  </span>
+                  <span>Dirty Rooms</span>
+                  <span>{ra.dirtyRooms}</span>
                 </div>
-
                 <div className="flex justify-between items-center py-2">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 border border-gray-300 rounded-md flex items-center justify-center">
-                      <span className="text-sm font-semibold text-gray-600">V</span>
-                    </div>
-                    <span className="text-sm text-gray-700">Vacant Rooms</span>
-                  </div>
-                  <span className="text-sm font-semibold text-gray-900 pr-7">
-                    {roomActivity.vacantRooms}
-                  </span>
+                  <span>Vacant Rooms</span>
+                  <span>{ra.vacantRooms}</span>
                 </div>
               </div>
             </CardContent>
           </Card>
+
         </div>
       </div>
     </section>
