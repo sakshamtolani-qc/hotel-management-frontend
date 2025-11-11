@@ -56,6 +56,7 @@ const AddRoomPage: React.FC = () => {
   // Form state variables
   // -----------------------
   const [roomNo, setRoomNo] = useState("");
+  const [roomType, setType] = useState<"Standard" | "Deluxe" | "Luxury">("Standard");
   const [priceRange, setPriceRange] = useState("");
   const [facilities, setFacilities] = useState<FacilityCount>({
     beds: 0,
@@ -175,7 +176,7 @@ const AddRoomPage: React.FC = () => {
         roomNo,
         title: `Room ${roomNo}`,
         roomDescription,
-        category: "Standard",
+        category: `${roomType}`,
         price_per_night: parseInt(priceRange) || 0,
         facilities,
         amenities,
@@ -254,6 +255,18 @@ const AddRoomPage: React.FC = () => {
                   onChange={(e) => setRoomNo(e.target.value)}
                   className="room-input"
                 />
+              </div>
+              <div className="input-group">
+                <label className="input-label">Room Type</label>
+                <select
+                  value={roomType}
+                  onChange={(e) => setType(e.target.value as "Standard" | "Deluxe" | "Luxury")}
+                  className="room-input"
+                >
+                  <option value="Standard">Standard</option>
+                  <option value="Deluxe">Deluxe</option>
+                  <option value="Luxury">Luxury</option>
+                </select>
               </div>
               <div className="input-group">
                 <label className="input-label">Price Range</label>
