@@ -119,7 +119,7 @@ export const LoginPage: React.FC = () => {
               {loading ? "Logging in..." : "Log In"}
             </button>
           </form>
-
+{/* 
           <div className="login-divider">
             <span className="login-divider-line"></span>
             <span className="login-divider-text">Or</span>
@@ -134,11 +134,11 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Demo credentials info */}
-          <div style={{ marginTop: "20px", fontSize: "14px", color: "#666" }}>
+          {/* <div style={{ marginTop: "20px", fontSize: "14px", color: "#666" }}>
             <p><b>Demo Login:</b></p>
             <p>Email: demo@hotel.com</p>
             <p>Password: demo123</p>
-          </div>
+          // </div> */} 
         </div>
       </div>
     </div>
