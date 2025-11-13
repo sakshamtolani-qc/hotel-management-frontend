@@ -1,4 +1,3 @@
-// src/services/api/reservations.ts
 import { Reservation } from "@/types/reservation";
 
 const API_BASE = "http://127.0.0.1:8000/api/reservations";
@@ -9,51 +8,49 @@ interface PaginatedResponse<T> {
 }
 
 export const ReservationsService = {
-  // createReservation: async (data: any) => {
-  //   const res = await fetch(`${API_BASE}/create/`, {  // <-- add /create/
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(data),
-  //   });
-  //   if (!res.ok) {
-  //     const errorData = await res.json().catch(() => null);
-  //     throw new Error(errorData?.message || "Failed to create reservation");
-  //   }
-  //   return res.json();
-  // },
- createReservation: async (data: any) => {
-  const res = await fetch(`${API_BASE}/create/`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
+  /**
+   * ✅ Create reservation (sends roomId as query param)
+   */
+  createReservation: async (data: any, roomId?: number) => {
+    // If a roomId is provided, attach it as query parameter
+    const url = roomId
+      ? `${API_BASE}/create/?roomId=${roomId}`
+      : `${API_BASE}/create/`;
 
-  if (!res.ok) {
-    let errorText = "";
-    try {
-      const errorData = await res.json();
-      console.error("Backend error response:", errorData);
-      errorText = JSON.stringify(errorData);
-    } catch {
-      errorText = await res.text();
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      let errorText = "";
+      try {
+        const errorData = await res.json();
+        console.error("Backend error response:", errorData);
+        errorText = JSON.stringify(errorData);
+      } catch {
+        errorText = await res.text();
+      }
+      throw new Error(errorText || "Failed to create reservation");
     }
-    throw new Error(errorText || "Failed to create reservation");
-  }
 
-  return res.json();
-},
-  // getReservations: async (): Promise<Reservation[]> => {
-  //   const res = await fetch(`${API_BASE}/`);
-  //   if (!res.ok) throw new Error("Failed to fetch reservations");
-  //   return res.json();
-  // },
- getReservations: async (): Promise<Reservation[]> => {
-  const res = await fetch(`${API_BASE}/list/`);
-  if (!res.ok) throw new Error("Failed to fetch reservations");
-  const data: PaginatedResponse<Reservation> = await res.json();
-  return data.results;  // return the array directly;
-},
+    return res.json();
+  },
 
+  /**
+   * Fetch all reservations (list view)
+   */
+  getReservations: async (): Promise<Reservation[]> => {
+    const res = await fetch(`${API_BASE}/list/`);
+    if (!res.ok) throw new Error("Failed to fetch reservations");
+    const data: PaginatedResponse<Reservation> = await res.json();
+    return data.results;
+  },
+
+  /**
+   * Cancel reservation
+   */
   cancelReservation: async (id: string | number) => {
     const res = await fetch(`${API_BASE}/${id}/cancel/`, {
       method: "PATCH",
@@ -63,6 +60,9 @@ export const ReservationsService = {
     return res.json();
   },
 
+  /**
+   * Checkout reservation
+   */
   checkoutReservation: async (id: string | number) => {
     const res = await fetch(`${API_BASE}/${id}/checkout/`, {
       method: "PATCH",
@@ -71,4 +71,31 @@ export const ReservationsService = {
     if (!res.ok) throw new Error("Failed to checkout reservation");
     return res.json();
   },
+
+    /**
+   * ✅ Assign one or more rooms to a reservation
+   */
+  assignRoom: async (data: { reservation_id: number; room_ids: number[] }) => {
+    const res = await fetch(`${API_BASE}/room/assign/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      let errorText = "";
+      try {
+        const errorData = await res.json();
+        console.error("Backend error response:", errorData);
+        errorText = JSON.stringify(errorData);
+      } catch {
+        errorText = await res.text();
+      }
+      throw new Error(errorText || "Failed to assign room");
+    }
+
+    return res.json();
+  },
+
+  
 };

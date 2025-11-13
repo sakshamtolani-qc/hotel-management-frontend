@@ -513,6 +513,26 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.checkout-btn {
+  width: 100%;
+  background: var(--secondary-gray);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+}
+
+.checkout-btn:hover {
+  background: var(--text-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .contact-actions {
   display: flex;
   gap: 16px;

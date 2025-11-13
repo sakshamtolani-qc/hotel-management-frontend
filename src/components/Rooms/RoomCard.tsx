@@ -20,6 +20,19 @@ const RoomCard: React.FC<RoomCardProps> = ({ room, onClick }) => {
   const normalizeImage = (img?: string) =>
     img ? (img.startsWith("http") ? img : `${CLOUDINARY_BASE}${img}`) : defaultImage;
 
+  // const normalizeImage = (img?: string) => {
+  //   if (!img) return defaultImage;
+  //   // If Cloudinary URL already complete or includes "res.cloudinary.com", return as is
+  //   if (img.startsWith("http") || img.includes("res.cloudinary.com")) return img;
+
+  //   // If backend includes "image/upload/", remove duplication
+  //   const cleanPath = img.startsWith("image/upload/")
+  //     ? img.replace("image/upload/", "")
+  //     : img;
+
+  //   return `${CLOUDINARY_BASE}${cleanPath}`;
+  // };
+
   const mainImage = normalizeImage(room.image);
   const additionalImages = (room.additional_images || []).map(normalizeImage);
   const allImages = [mainImage, ...additionalImages];
