@@ -13,12 +13,20 @@ interface RoomCardProps {
 
 const RoomCard: React.FC<RoomCardProps> = ({ room, onClick }) => {
   const navigate = useNavigate();
-  const CLOUDINARY_BASE = "https://res.cloudinary.com/dxrsrhqqn/image/upload/";
+  const CLOUDINARY_BASE = "https://res.cloudinary.com/dxrsrhqqn/";
+
   const defaultImage = "/rooms/default.jpg";
 
   // Helper to normalize images (Cloudinary or full URL)
-  const normalizeImage = (img?: string) =>
-    img ? (img.startsWith("http") ? img : `${CLOUDINARY_BASE}${img}`) : defaultImage;
+  const normalizeImage = (img?: string) => {
+  if (!img) return defaultImage;
+
+  // If full URL, return as is
+  if (img.startsWith("http")) return img;
+
+  // Cloudinary public_id → prepend base
+  return `${CLOUDINARY_BASE}${img}`;
+};
 
   // const normalizeImage = (img?: string) => {
   //   if (!img) return defaultImage;

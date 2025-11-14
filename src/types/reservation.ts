@@ -24,6 +24,7 @@ export interface Reservation {
   status: ReservationStatus;
   price: number;
   roomImage?: string;
+  room_image?: string;     // snake_case (backend)
 }
 
 
